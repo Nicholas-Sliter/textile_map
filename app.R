@@ -11,6 +11,13 @@ library(leaflet)
 #source to function file
 source('functions.R')
 
+latLongZoom.original <- data.frame("Area" = c("World", "Europe", "Africa", 
+                                     "Middle East", "Pacfic Islands", "Asia"),
+                          "Lat" = c(30, 49.8, -6, 27, 0, 32),
+                          "Long" = c(53, 15.47, 30, 72.5, 116, 115),
+                          "Magnify" = c(2, 4.25, 2.5, 4, 4, 3.25))
+latLongZoom <- latLongZoom
+
 #Read in the data
 VOC.data <- read_csv("VOC_clean.csv")
 WIC.data <- read_csv("WIC_clean.csv")
@@ -57,6 +64,10 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                                label = "Choose data type of interest",
                                choices = c("Quantity", "Value"),
                                selected = "Quantity"),
+                  selectizeInput(inputId = "zoomTo",
+                                 label = "Zoom to:",
+                                 choices = levels(factor(latLongZoom$Area)),
+                                 selected = "World"),
                   selectizeInput(inputId = "textileName",
                                  label = "Choose textile(s) of interest",
                                  choices = levels(factor(joined.data$textile_name)),
@@ -116,6 +127,7 @@ server <- function(input, output, session) {
     geography <- isolate(input$geography)
     qualities <- isolate(input$qualities)
     inferredQualities <- isolate(input$inferredQualities)
+    area <- isolate(input$zoomTo)
     
     joined.data <- joined.data.original
     
@@ -175,9 +187,12 @@ server <- function(input, output, session) {
                                totalValues,
                                by = c("ADMIN" = "dest_country"))
     
-    viewLat <- 35
-    viewLong <- 53
-    viewZoom <- 2
+    latLongZoom <- latLongZoom.original %>%
+      filter(Area == area)
+    
+    viewLat <- latLongZoom[,"Lat"]
+    viewLong <- latLongZoom[,"Long"]
+    viewZoom <- latLongZoom[,"Magnify"]
     
     library(binr)
     
