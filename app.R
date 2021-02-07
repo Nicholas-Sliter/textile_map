@@ -7,6 +7,7 @@ library(tidyverse)
 library(stringr)
 library(debkeepr)
 library(leaflet)
+library(binr)
 
 #source to function file
 source('functions.R')
@@ -211,6 +212,7 @@ server <- function(input, output, session) {
                     fillOpacity = .7,
                     color = "black",
                     opacity = 1,
+                    weight = 1,
                     label = ~ADMIN,
                     popup = ~as.character(total_Quant)) %>%
         setView(lat = viewLat, lng = viewLong, zoom = viewZoom) %>%

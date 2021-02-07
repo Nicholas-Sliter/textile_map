@@ -108,34 +108,50 @@ to_numeric_naToZero <- function(colname){
 
 
 
-convert_RegionToCountryName <- function(nameList,geoMatchList){
+convert_RegionToCountryName <- function(data,colvector,type='dest',returnValue=1){
   #takes a list of regions containing country names and returns clean country names
   #sep by ", " then take second portion of string to get country name from region
   #then need to deal with " x, southwest coast of India" while respecting things like
   # "Sri Lanka"
-
-  countries <- typeof(nameList)
-  for (i in 1:length(nameList)){
-    temp <- str_split(nameList[i], ', ')[[1]][2]
-    #if length is now > 1
-    #compare length to number of capitals
-    if (str_count("[[:upper:]]" < length(temp))) {
-      #we need to remove words, keep last word plus preceding if upper
-      
-    }
-    else{
-      countries[i] <- temp
-    }
-  }
   
-  countries <- str_split(nameList, ', ')[[1]][2]
-  #split by space, keep last word then check if prior words are capitalized, if so, keep them
-  countries <- str_split(nameList, ' ')
-  countries <- if(str_detect(countries,"[[:upper:]]")){
-
+  
+  #two types: dest and orig
+  nameList <- colvector
+  #data <- data %>% mutate (countries = "")
+  vector <- nameList
+  for(i in 1:length(nameList)){
+    
+    
+    #only split if necessary
+    temp <- nameList[i]
+    if(str_detect(temp,", ")){
+      
+      temp <- str_split(nameList[i], ', ')[[1]][2]
+      if(str_detect(temp, 'and ')){
+      temp <- str_split(temp, 'and ')[[1]][2]}
+      if(str_detect(temp, 'of ')){
+        temp <- str_split(temp, 'of ')[[1]][2]}
+      l <- length(temp)
+      if(l>1){
+        if(str_count(tmp,"[[:upper:]]" < l)){
+          temp <- str_split(temp, " ")
+          lword <- temp[-1]
+          pword <- temp[-2]
+          if(str_detect(pword,"[[:upper:]]")){
+            pword <- paste(pword, " ", sep="")
+          }
+          else{
+            pword <- ""
+          }
+          temp <- paste(pword,lword,sep="")
+        }
+      }
+    }
+    vector[i] <- temp
+    #getElement(data,get(new_colname))[i] <- temp
+    
   }
-  return(countries)
-
+  return(vector)
 }
 
 
@@ -161,20 +177,110 @@ value_per_cols <- function(data){
 
 
 get_quantity <- function(data){
+  #gets quantity from dataframe and returns a vector
   col1 <- getElement(data,"quant_ells")
   col2 <- getElement(data, "textile_quantity")
-  Vectorize(FUN = get_quantity_base(col1,col2))
-
-}
-
-
-get_quantity_base <- function(element1,element2){
-  if(is.na(element1)){
-    return(element2)
-  }
-  else{
-    return(element1)
-    
-  }
+  vector <- select(mutate(data,quantity=ifelse(is.na(col1) & is.na(col2),
+                                               0,
+                                               ifelse(is.na(col1),
+                                                      col2,
+                                                      col1))),'quantity')
   
+  return(vector)
 }
+
+
+add_quantity <- function(data){
+  #adds quantity to dataframe
+  col1 <- getElement(data,"quant_ells")
+  col2 <- getElement(data, "textile_quantity")
+  data <- mutate(data,quantity=ifelse(is.na(col1) & is.na(col2),
+                                      0,
+                                      ifelse(is.na(col1),
+                                             col2,
+                                             col1)))
+  
+  return(data)
+}
+
+
+
+
+# get_quantity_base <- function(element1,element2){
+#   #vectorized
+#   ifelse(is.na(element1) & is.na(element2),
+#          return(0),
+#          ifelse(is.na(element1),
+#                 return(element2),
+#                 return(element1)))
+#   
+# }
+
+# get_quantity_base <- function(element1,element2){
+#   if(is.na(element1) & is.na(element2)){
+#     return(0)
+#   }
+#   else if(is.na(element1)){
+#     return(element2)
+#   }
+#   else if(is.na(element2)){
+#     return(element1) 
+#   }
+#   else{
+#     return(0) 
+#   }
+# }
+
+
+
+
+
+# countries <- typeof(nameList)
+# for (i in 1:length(nameList)){
+#   temp <- str_split(nameList[i], ', ')[[1]][2]
+#   #if length is now > 1
+#   #compare length to number of capitals
+#   if (str_count("[[:upper:]]" < length(temp))) {
+#     #we need to remove words, keep last word plus preceding if upper
+#     
+#   }
+#   else{
+#     countries[i] <- temp
+#   }
+# }
+# 
+# countries <- str_split(nameList, ', ')[[1]][2]
+# #split by space, keep last word then check if prior words are capitalized, if so, keep them
+# countries <- str_split(nameList, ' ')
+# countries <- if(str_detect(countries,"[[:upper:]]")){
+#   
+# }
+# return(countries)
+
+
+# get_quantity <- function(data){
+#   col1 <- getElement(data,"quant_ells")
+#   col2 <- getElement(data, "textile_quantity")
+#   Vectorize(FUN = get_quantity_base(col1,col2))
+#   
+# }
+# 
+# 
+# test <-  Vectorize(get_quantity_base,
+#                    vectorize.args = c('element1','element2'))
+# getElement(data,new_colname) <- 
+# 
+# data <- data %>% 
+#   mutate(new_colname = str_split(nameList, ', ')[[1]][2]) %>%
+#   mutate(new_colname = ifelse(
+#     str_count(new_colname,"[[:upper:]]" < length(nameList)),
+#     new_colname,
+#     paste(ifelse(str_detect(new_colname[length(new_colname)-1],"[[:upper:]]")),
+#           as.character(new_colname[length(new_colname)-1]),
+#           NULL)
+#     
+#   #new_colname <- paste(type,'_countries', sep="")
+#     
+#   )            
+#   )
+# 
