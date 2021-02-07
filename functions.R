@@ -172,6 +172,7 @@ value_per_cols <- function(data){
 #                    vectorize.args = c('element1','element2'))
 
 get_quantity <- function(data){
+  #gets quantity from dataframe and returns a vector
   col1 <- getElement(data,"quant_ells")
   col2 <- getElement(data, "textile_quantity")
   vector <- select(mutate(data,quantity=ifelse(is.na(col1) & is.na(col2),
@@ -181,6 +182,20 @@ get_quantity <- function(data){
                                                       col1))),'quantity')
   
   return(vector)
+}
+
+
+add_quantity <- function(data){
+  #adds quantity to dataframe
+  col1 <- getElement(data,"quant_ells")
+  col2 <- getElement(data, "textile_quantity")
+  data <- mutate(data,quantity=ifelse(is.na(col1) & is.na(col2),
+                                               0,
+                                               ifelse(is.na(col1),
+                                                      col2,
+                                                      col1)))
+  
+  return(data)
 }
 
 
