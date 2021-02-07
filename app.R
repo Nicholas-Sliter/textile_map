@@ -51,7 +51,7 @@ joined.data.original <- joined.data.original %>%
                                                                               "yellow",
                                                                               ifelse(str_detect(textile_color_arch, "silver"),
                                                                                      "silver",
-                                                                                     no = "No Color Indicated"))))))))))
+                                                                                     no = "Other"))))))))))
 
 joined.data <- joined.data.original
 
