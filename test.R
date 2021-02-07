@@ -6,6 +6,7 @@ library(readxl)
 library(stringr)
 library(leaflet)
 library(debkeepr)
+library(rgdal)
 #source to function file
 source('functions.R')
 
@@ -132,15 +133,15 @@ joined <- full_join(WIC_toJoin,VOC_toJoin,by=colnames(WIC_toJoin))
 #use quant_ells if available if not, use textile_quantity
 
 
-VOC_toJoin <- VOC_toJoin %>%
-  mutate(ID = paste(company, row_number(), sep = "_"))
-WIC_toJoin <- WIC_toJoin %>%
-  mutate(ID = paste(company, row_number(), sep = "_"))
+#VOC_toJoin <- VOC_toJoin %>%
+#  mutate(ID = paste(company, row_number(), sep = "_"))
+#WIC_toJoin <- WIC_toJoin %>%
+#  mutate(ID = paste(company, row_number(), sep = "_"))
 
 
 
-joined <- full_join(VOC_toJoin, WIC_toJoin,
-                    by = "ID")
+#joined <- full_join(VOC_toJoin, WIC_toJoin,
+#                    by = "ID")
 
 #write all to files
 write.csv(joined,'joined.csv')
@@ -150,9 +151,38 @@ write.csv(VOC_toJoin,'VOC_clean.csv')
 #replace x with 0, replace strings to NA, replace entire string with NA if / is present?
 #split weird fractions before fraction
 
+map.data <- readOGR("countries.geojson")         
+
+map.data %>%
+  leaflet() %>%
+  addPolygons()
          
+countries <- joined.data %>%
+  group_by(dest_loc_region) %>%
+  summarise()
+
+joined.data <- joined.data %>%
+  mutate(dest_country = ifelse(str_detect(dest_loc_region, "Indonesia"),
+                               "Indonesia",
+                               ifelse(str_detect(dest_loc_region, "India"),
+                                      "India",
+                                      ifelse(str_detect(dest_loc_region, "Malaysia"),
+                                             "Malaysia",
+                                             dest_loc_region))))
          
-         
-         
-         
-         
+joined.data %>%
+  group_by(dest_country) %>%
+  select(dest_country, textile_quantity) %>%
+  na.omit() %>%
+  summarise(total_Quant = sum(textile_quantity))
+
+map.data %>%
+  leaflet() %>%
+  addPolygons(fillColor = ~country.colors(textile_quantity),
+              fillOpacity = .7,
+              color = "black",
+              opacity = 1,
+              layerId = ~ADMIN) %>%
+  addLegend(pal = country.colors(),
+            values = ~textile_quantity,
+            title = "Textile Imports by Region")
