@@ -84,5 +84,15 @@ get_graphType <- function(data,x,y,args=c(main=c(),aes=c())){
   
 }
 
+auto_bin <- function(data) {
+  maxValue <- max(data)
+  if(maxValue < 50){
+    maxValue <- 50
+  }
+  
+  return(c(0, ceiling(maxValue / 50), ceiling(maxValue / 25), 
+           ceiling(maxValue / 5), ceiling(maxValue * 2 / 5), ceiling(maxValue)))
+}
+
 
 

@@ -15,7 +15,7 @@ source('functions.R')
 VOC.data <- read_csv("VOC_clean.csv")
 WIC.data <- read_csv("WIC_clean.csv")
 joined.data.original <- read_csv("joined.csv")
-map.data.original <- readOGR("countries.geojson")
+map.data.original <- readOGR("filteredCountries.GeoJSON") 
 
 joined.data.original <- joined.data.original %>%
   mutate(dest_country = ifelse(str_detect(dest_loc_region, "Indonesia"),
@@ -65,6 +65,30 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                                  label = "Choose color(s) of interest",
                                  choices = levels(factor(joined.data$textile_color_arch)),
                                  multiple = TRUE),
+                  selectizeInput(inputId = "patterns",
+                                 label = "Choose pattern(s) of interest",
+                                 choices = levels(factor(joined.data$textile_pattern_arch)),
+                                 multiple = TRUE),
+                  selectizeInput(inputId = "process",
+                                 label = "Choose process(es) of interest",
+                                 choices = levels(factor(joined.data$textile_process_arch)),
+                                 multiple = TRUE),
+                  selectizeInput(inputId = "fibers",
+                                 label = "Choose fiber(s) of interest",
+                                 choices = levels(factor(joined.data$textile_fiber_arch)),
+                                 multiple = TRUE),
+                  selectizeInput(inputId = "geography",
+                                 label = "Choose geography of interest",
+                                 choices = levels(factor(joined.data$textile_geography_arch)),
+                                 multiple = TRUE),
+                  selectizeInput(inputId = "qualities",
+                                 label = "Choose quality(s) of interest",
+                                 choices = levels(factor(joined.data$textile_quality_arch)),
+                                 multiple = TRUE),
+                  selectizeInput(inputId = "inferredQualities",
+                                 label = "Choose inferred quality(s) of interest",
+                                 choices = levels(factor(joined.data$textile_quality_inferred)),
+                                 multiple = TRUE),
                   actionButton(inputId = "updateBtn",
                                label = "Click to update map!"),
                 ),
@@ -86,6 +110,12 @@ server <- function(input, output, session) {
     dataType <- isolate(input$dataType)
     textileName <- isolate(input$textileName)
     colors <- isolate(input$colors)
+    patterns <- isolate(input$patterns)
+    process <- isolate(input$process)
+    fibers <- isolate(input$fibers)
+    geography <- isolate(input$geography)
+    qualities <- isolate(input$qualities)
+    inferredQualities <- isolate(input$inferredQualities)
     
     joined.data <- joined.data.original
     
@@ -97,6 +127,30 @@ server <- function(input, output, session) {
     if(length(colors) != 0){
       joined.data <- joined.data %>% 
         filter(textile_color_arch %in% colors)
+    }
+    if(length(patterns) != 0){
+      joined.data <- joined.data %>% 
+        filter(textile_pattern_arch %in% patterns)
+    }
+    if(length(process) != 0){
+      joined.data <- joined.data %>% 
+        filter(textile_process_arch %in% process)
+    }
+    if(length(fibers) != 0){
+      joined.data <- joined.data %>% 
+        filter(textile_fiber_arch %in% fibers)
+    }
+    if(length(geography) != 0){
+      joined.data <- joined.data %>% 
+        filter(textile_geography_arch %in% geography)
+    }
+    if(length(qualities) != 0){
+      joined.data <- joined.data %>% 
+        filter(textile_quality_arch %in% qualities)
+    }
+    if(length(inferredQualities) != 0){
+      joined.data <- joined.data %>% 
+        filter(textile_quality_inferred %in% inferredQualities)
     }
     
     if(dataSet != "Both"){
@@ -118,15 +172,18 @@ server <- function(input, output, session) {
     }
     
     map.data@data <- left_join(map.data.original@data,
-                                        totalValues,
-                                        by = c("ADMIN" = "dest_country"))
+                               totalValues,
+                               by = c("ADMIN" = "dest_country"))
     
     viewLat <- 35
     viewLong <- 53
     viewZoom <- 2
     
+    library(binr)
+    
     if(dataType == "Quantity"){
-      bins <- c(0, 30000, 100000, 250000, 1000000, 2500000, 5500000)
+      bins <- totalValues$total_Quant %>%
+        auto_bin() 
       
       country.colors <- colorBin(palette = "YlOrRd",
                                  domain = totalValues$total_Quant,
@@ -134,6 +191,7 @@ server <- function(input, output, session) {
       
       map.data %>%
         leaflet() %>%
+        addTiles() %>%
         addPolygons(fillColor = ~country.colors(total_Quant),
                     fillOpacity = .7,
                     color = "black",
@@ -146,7 +204,8 @@ server <- function(input, output, session) {
                   title = "Quantities of Textiles Shipped")
     }
     else if(dataType == "Value"){
-      bins <- c(0, 30000, 100000, 250000, 1000000, 2500000, 5500000, 21000000)
+      bins <- totalValues$total_Dec %>%
+        auto_bin()
       
       country.colors <- colorBin(palette = "YlOrRd",
                                  domain = totalValues$total_Quant,
@@ -154,6 +213,7 @@ server <- function(input, output, session) {
       
       map.data %>%
         leaflet() %>%
+        addTiles() %>%
         addPolygons(fillColor = ~country.colors(total_Dec),
                     fillOpacity = .7,
                     color = "black",
