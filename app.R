@@ -7,7 +7,6 @@ library(tidyverse)
 library(stringr)
 library(debkeepr)
 library(leaflet)
-library(binr)
 
 #source to function file
 source('functions.R')
@@ -21,8 +20,6 @@ latLongZoom.original <- data.frame("Area" = c("World", "Europe", "Africa",
 latLongZoom <- latLongZoom.original
 
 #Read in the data
-VOC.data <- read_csv("VOC_clean.csv")
-WIC.data <- read_csv("WIC_clean.csv")
 joined.data.original <- read_csv("joined.csv")
 map.data.original <- readOGR("filteredCountries.GeoJSON") 
 
@@ -199,7 +196,7 @@ server <- function(input, output, session) {
                     opacity = 1,
                     weight = 1,
                     label = ~ADMIN,
-                    popup = ~as.character(total_Quant)) %>%
+                    popup = ~paste("Total Quantity:", format(total_Quant, big.mark = ",", scientific = FALSE), sep = " ")) %>%
         setView(lat = viewLat, lng = viewLong, zoom = viewZoom) %>%
         addLegend(pal = country.colors,
                   values = map.data@data$ADMIN,
@@ -221,7 +218,7 @@ server <- function(input, output, session) {
                     color = "black",
                     opacity = 1,
                     label = ~ADMIN,
-                    popup = ~as.character(total_Dec)) %>%
+                    popup = ~paste("Total Value:", format(total_Dec, big.mark = ",", scientific = FALSE), "guilders", sep = " ")) %>%
         setView(lat = viewLat, lng = viewLong, zoom = viewZoom) %>%
         addLegend(pal = country.colors,
                   values = map.data@data$ADMIN,
