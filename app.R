@@ -7,14 +7,19 @@ library(tidyverse)
 library(stringr)
 library(debkeepr)
 library(leaflet)
-library(binr)
 
 #source to function file
 source('functions.R')
 
+latLongZoom.original <- data.frame("Area" = c("World", "Europe", "Africa", 
+                                     "Middle East", "Pacfic Islands", "Asia"),
+                          "Lat" = c(30, 49.8, -6, 27, 0, 32),
+                          "Long" = c(53, 15.47, 30, 72.5, 116, 115),
+                          "Magnify" = c(2, 4.25, 2.5, 4, 4, 3.25))
+
+latLongZoom <- latLongZoom.original
+
 #Read in the data
-VOC.data <- read_csv("VOC_clean.csv")
-WIC.data <- read_csv("WIC_clean.csv")
 joined.data.original <- read_csv("joined.csv")
 map.data.original <- readOGR("filteredCountries.GeoJSON") 
 
@@ -26,45 +31,55 @@ joined.data.original <- joined.data.original %>%
                                       ifelse(str_detect(dest_loc_region, "Malaysia"),
                                              "Malaysia",
                                              dest_loc_region))))
-joined.data <- joined.data.original
 
-totalValues <- joined.data %>%
-  group_by(dest_country) %>%
-  select(dest_country, textile_quantity, deb_dec) %>%
-  na.omit() %>%
-  summarise(total_Quant = sum(textile_quantity),
-            total_Dec = sum(deb_dec))
+joined.data.original <- joined.data.original %>%
+  mutate(colorGroup = ifelse(is.na(textile_color_arch),
+                             "No color indicated",
+                             ifelse(str_detect(textile_color_arch, "gold"),
+                                    "gold",
+                                    ifelse(str_detect(textile_color_arch, "red") | str_detect(textile_color_arch, "scarlet") | str_detect(textile_color_arch, "purple"),
+                                           "red",
+                                           ifelse(str_detect(textile_color_arch, "blue") | str_detect(textile_color_arch, "green"),
+                                                  "blue-green",
+                                                  ifelse(str_detect(textile_color_arch, "white"),
+                                                         "white",
+                                                         ifelse(str_detect(textile_color_arch, "black"),
+                                                                "black",
+                                                                ifelse(str_detect(textile_color_arch, "grey"),
+                                                                       "grey",
+                                                                       ifelse(str_detect(textile_color_arch, "yellow"),
+                                                                              "yellow",
+                                                                              ifelse(str_detect(textile_color_arch, "silver"),
+                                                                                     "silver",
+                                                                                     no = "No Color Indicated"))))))))))
+
+joined.data <- joined.data.original
 
 map.data <- map.data.original
 
-map.data@data <- left_join(map.data.original@data,
-                           totalValues,
-                           by = c("ADMIN" = "dest_country"))
-
-bins <- c(0, 30000, 100000, 250000, 1000000, 2500000, 5500000)
-
-country.colors <- colorBin(palette = "YlOrRd",
-                           domain = totalValues$total_Quant,
-                           bins = bins)
 
 ui <- fluidPage(theme = shinytheme("darkly"),
                 titlePanel("Textiles"),
                 sidebarPanel(
                   radioButtons(inputId = "dataSet",
-                               label = "Choose data of interest",
+                               label = "Choose company of interest",
                                choices = c("WIC", "VOC", "Both"),
                                selected = "Both"),
                   radioButtons(inputId = "dataType",
                                label = "Choose data type of interest",
                                choices = c("Quantity", "Value"),
                                selected = "Quantity"),
+                  selectizeInput(inputId = "zoomTo",
+                                 label = "Zoom to:",
+                                 choices = levels(factor(latLongZoom$Area)),
+                                 selected = "World"),
                   selectizeInput(inputId = "textileName",
                                  label = "Choose textile(s) of interest",
                                  choices = levels(factor(joined.data$textile_name)),
                                  multiple = TRUE),
                   selectizeInput(inputId = "colors",
                                  label = "Choose color(s) of interest",
-                                 choices = levels(factor(joined.data$textile_color_arch)),
+                                 choices = levels(factor(joined.data$colorGroup)),
                                  multiple = TRUE),
                   selectizeInput(inputId = "patterns",
                                  label = "Choose pattern(s) of interest",
@@ -117,6 +132,7 @@ server <- function(input, output, session) {
     geography <- isolate(input$geography)
     qualities <- isolate(input$qualities)
     inferredQualities <- isolate(input$inferredQualities)
+    area <- isolate(input$zoomTo)
     
     joined.data <- joined.data.original
     
@@ -127,7 +143,7 @@ server <- function(input, output, session) {
     }
     if(length(colors) != 0){
       joined.data <- joined.data %>% 
-        filter(textile_color_arch %in% colors)
+        filter(colorGroup %in% colors)
     }
     if(length(patterns) != 0){
       joined.data <- joined.data %>% 
@@ -176,11 +192,12 @@ server <- function(input, output, session) {
                                totalValues,
                                by = c("ADMIN" = "dest_country"))
     
-    viewLat <- 35
-    viewLong <- 53
-    viewZoom <- 2
+    latLongZoom <- latLongZoom.original %>%
+      filter(Area == area)
     
-    library(binr)
+    viewLat <- latLongZoom[,"Lat"]
+    viewLong <- latLongZoom[,"Long"]
+    viewZoom <- latLongZoom[,"Magnify"]
     
     if(dataType == "Quantity"){
       bins <- totalValues$total_Quant %>%
@@ -199,7 +216,7 @@ server <- function(input, output, session) {
                     opacity = 1,
                     weight = 1,
                     label = ~ADMIN,
-                    popup = ~paste("Quantity shipped |",as.character(total_Quant))) %>%
+                    popup = ~paste("Total Quantity:", format(ifelse(is.na(total_Quant), 0, total_Quant), big.mark = ",", scientific = FALSE), sep = " ")) %>%
         setView(lat = viewLat, lng = viewLong, zoom = viewZoom) %>%
         addLegend(pal = country.colors,
                   values = map.data@data$ADMIN,
@@ -221,7 +238,7 @@ server <- function(input, output, session) {
                     color = "black",
                     opacity = 1,
                     label = ~ADMIN,
-                    popup = ~as.character(total_Dec)) %>%
+                    popup = ~paste("Total Value:", format(ifelse(is.na(total_Dec), 0, total_Dec), big.mark = ",", scientific = FALSE), "guilders", sep = " ")) %>%
         setView(lat = viewLat, lng = viewLong, zoom = viewZoom) %>%
         addLegend(pal = country.colors,
                   values = map.data@data$ADMIN,
