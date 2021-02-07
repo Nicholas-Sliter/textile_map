@@ -17,7 +17,8 @@ latLongZoom.original <- data.frame("Area" = c("World", "Europe", "Africa",
                           "Lat" = c(30, 49.8, -6, 27, 0, 32),
                           "Long" = c(53, 15.47, 30, 72.5, 116, 115),
                           "Magnify" = c(2, 4.25, 2.5, 4, 4, 3.25))
-latLongZoom <- latLongZoom
+
+latLongZoom <- latLongZoom.original
 
 #Read in the data
 VOC.data <- read_csv("VOC_clean.csv")
@@ -35,30 +36,14 @@ joined.data.original <- joined.data.original %>%
                                              dest_loc_region))))
 joined.data <- joined.data.original
 
-totalValues <- joined.data %>%
-  group_by(dest_country) %>%
-  select(dest_country, textile_quantity, deb_dec) %>%
-  na.omit() %>%
-  summarise(total_Quant = sum(textile_quantity),
-            total_Dec = sum(deb_dec))
-
 map.data <- map.data.original
 
-map.data@data <- left_join(map.data.original@data,
-                           totalValues,
-                           by = c("ADMIN" = "dest_country"))
-
-bins <- c(0, 30000, 100000, 250000, 1000000, 2500000, 5500000)
-
-country.colors <- colorBin(palette = "YlOrRd",
-                           domain = totalValues$total_Quant,
-                           bins = bins)
 
 ui <- fluidPage(theme = shinytheme("darkly"),
                 titlePanel("Textiles"),
                 sidebarPanel(
                   radioButtons(inputId = "dataSet",
-                               label = "Choose data of interest",
+                               label = "Choose company of interest",
                                choices = c("WIC", "VOC", "Both"),
                                selected = "Both"),
                   radioButtons(inputId = "dataType",
