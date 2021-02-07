@@ -95,4 +95,86 @@ auto_bin <- function(data) {
 }
 
 
+to_numeric_naToZero <- function(colname){
+  
+  
+  return(colname <- colname %>%
+           apply(margin=2,
+                 FUN=(if(is.na(as.numeric(colname))){return(0)}
+                      else{return(as.numeric(colname))}))
+  )
+  
+}
 
+
+
+convert_RegionToCountryName <- function(nameList,geoMatchList){
+  #takes a list of regions containing country names and returns clean country names
+  #sep by ", " then take second portion of string to get country name from region
+  #then need to deal with " x, southwest coast of India" while respecting things like
+  # "Sri Lanka"
+
+  countries <- typeof(nameList)
+  for (i in 1:length(nameList)){
+    temp <- str_split(nameList[i], ', ')[[1]][2]
+    #if length is now > 1
+    #compare length to number of capitals
+    if (str_count("[[:upper:]]" < length(temp))) {
+      #we need to remove words, keep last word plus preceding if upper
+      
+    }
+    else{
+      countries[i] <- temp
+    }
+  }
+  
+  countries <- str_split(nameList, ', ')[[1]][2]
+  #split by space, keep last word then check if prior words are capitalized, if so, keep them
+  countries <- str_split(nameList, ' ')
+  countries <- if(str_detect(countries,"[[:upper:]]")){
+
+  }
+  return(countries)
+
+}
+
+
+get_uniqueCountryList <- function(nameList1,namelist2){
+  return(unique())
+  
+}
+
+
+
+value_per_cols <- function(data){
+  return(data %>%
+           mutate(value_per_piece = deb_dec/as.numeric(textile_quantity)) %>%
+           mutate(textile_quality_inferred = ifelse(value_per_piece < 4, 
+                                                    "Inexpensive",
+                                                    ifelse(value_per_piece >= 4 & value_per_piece <= 10,
+                                                           "Mid-range",
+                                                           ifelse(value_per_piece > 10,
+                                                                  "Expensive",
+                                                                  NA)))))
+}
+
+
+
+get_quantity <- function(data){
+  col1 <- getElement(data,"quant_ells")
+  col2 <- getElement(data, "textile_quantity")
+  Vectorize(FUN = get_quantity_base(col1,col2))
+
+}
+
+
+get_quantity_base <- function(element1,element2){
+  if(is.na(element1)){
+    return(element2)
+  }
+  else{
+    return(element1)
+    
+  }
+  
+}
