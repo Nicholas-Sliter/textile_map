@@ -1,0 +1,356 @@
+"","X1","company","means_of_exchange","orig_yr","orig_loc_port_modern","orig_loc_region_modern","orig_loc_lat","orig_loc_long","dest_yr","dest_loc_port","dest_loc_region","dest_loc_lat","dest_loc_long","textile_quantity","textile_unit","quant_ells","units_ells","textile_category","textile_name","textile_color_arch","textile_pattern_arch","textile_process_arch","textile_fiber_arch","textile_geography_arch","textile_quality_arch","textile_quality_inferred","value_per_piece","deb_dec"
+"1",1,"WIC","Ship: Johanna Machteld",1710,"Texel","Netherlands",53.053921,4.79605,1711,"Loanda","Angola",-8.838333,13.234444,2000,"ps.",2000,NA,NA,"annebassen",NA,"blocks",NA,NA,NA,NA,"Inexpensive",0.8375,1675
+"2",2,"WIC","Ship: Johanna Machteld",1710,"Texel","Netherlands",53.053921,4.79605,1711,"Loanda","Angola",-8.838333,13.234444,1000,"ps.",1000,NA,NA,"annebassen",NA,"blocks",NA,NA,NA,NA,"Inexpensive",0.83725,837.25
+"3",3,"WIC","Ship: Johanna Machteld",1710,"Texel","Netherlands",53.053921,4.79605,1711,"Loanda","Angola",-8.838333,13.234444,2000,"ps.",2000,NA,NA,"annebassen",NA,"stripes",NA,NA,NA,NA,"Inexpensive",0.8375,1675
+"4",4,"WIC","Ship: Johanna Machteld",1710,"Texel","Netherlands",53.053921,4.79605,1711,"Loanda","Angola",-8.838333,13.234444,1000,"ps.",1000,NA,NA,"annebassen",NA,"stripes",NA,NA,NA,NA,"Inexpensive",0.83725,837.25
+"5",5,"WIC","Ship: Adrichem",1714,"Vlissingen","Netherlands",51.455681,3.57649,1715,"Loanda","Angola",-8.838333,13.234444,6500,"ps.",6500,NA,NA,"annebassen",NA,NA,NA,NA,NA,NA,"Inexpensive",0.875,5687.5
+"6",6,"WIC","Ship: Bosbeek",1715,"Texel","Netherlands",53.053921,4.79605,1715,"Loanda","Angola",-8.838333,13.234444,3000,"ps.",3000,NA,NA,"annebassen",NA,"blokken",NA,NA,"London",NA,"Inexpensive",0.85,2550
+"7",7,"WIC","Ship: Nieuwe Post",1715,"Texel","Netherlands",53.053921,4.79605,1715,"Loanda","Angola",-8.838333,13.234444,6000,"ps.",6000,NA,NA,"annebassen",NA,NA,NA,NA,NA,NA,"Inexpensive",0.85,5100
+"8",8,"WIC","Ship: Acredam",1714,"Texel","Netherlands",53.053921,4.79605,1715,"Ardra","Benin",6.47216,2.62652,131,"ells",131,NA,NA,"atlassen",NA,NA,NA,NA,"London",NA,"Inexpensive",1.15,150.65
+"9",9,"WIC","Ship: St Clara 2",1710,"Texel","Netherlands",53.053921,4.79605,1710,"Ouidah","Benin",6.3601,2.08266,90,"ps.",90,NA,NA,"baftas",NA,"floral",NA,NA,NA,NA,"Mid-range",7.13055555555556,641.75
+"10",10,"WIC","Ship: St Clara 2",1710,"Texel","Netherlands",53.053921,4.79605,1710,"Ouidah","Benin",6.3601,2.08266,90,"""half"" ps.",45,NA,NA,"baftas",NA,NA,NA,NA,NA,NA,"Mid-range",4.5,405
+"11",11,"WIC","Ship: Jacoba Galeij",1713,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,37,"ps.",37,NA,NA,"baftas","blue",NA,NA,NA,NA,NA,"Mid-range",5,185
+"12",12,"WIC","Ship: St. Marcus",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,76,"ps.",76,NA,NA,"baftas","blue",NA,NA,NA,NA,NA,"Mid-range",5,380
+"13",13,"WIC","Ship: Koningin Hester",1713,"Vlissingen","Netherlands",51.455681,3.57649,1713,"Ouidah","Benin",6.3601,2.08266,80,"ps.",80,NA,NA,"baftas",NA,NA,NA,NA,NA,NA,"Mid-range",8.125,650
+"14",14,"WIC","Ship: Guntersteijn",1713,"Texel","Netherlands",53.053921,4.79605,1714,"Ardra","Benin",6.47216,2.62652,165,"ps.",165,NA,NA,"baftas","brown-blue",NA,NA,NA,NA,NA,"Inexpensive",3.5,577.5
+"15",15,"WIC","Ship: Adrichem",1714,"Vlissingen","Netherlands",51.455681,3.57649,1715,"Loanda","Angola",-8.838333,13.234444,80,"ps.",80,NA,NA,"baftas","black",NA,NA,NA,NA,NA,"Mid-range",8.25,660
+"16",16,"WIC","Ship: Emmenes",1714,"Texel","Netherlands",53.053921,4.79605,1714,"Ouidah","Benin",6.3601,2.08266,160,"ps.",160,NA,NA,"baftas","black-blue",NA,NA,NA,NA,NA,"Mid-range",10,1600
+"17",17,"WIC","Ship: St Clara 2",1710,"Texel","Netherlands",53.053921,4.79605,1710,"Ouidah","Benin",6.3601,2.08266,20,"ps.",20,NA,NA,"boelangs","blue",NA,NA,NA,NA,NA,"Mid-range",5.5,110
+"18",18,"WIC","Ship: Accra",1711,"Texel","Netherlands",53.053921,4.79605,1711,"Elmina","Ghana",5.0847,-1.35093,20,"ps.",1480,NA,NA,"bontje","blue","striped",NA,"cotton","Haarlem",NA,"Expensive",28.2125,564.25
+"19",19,"WIC","Ship: Accra",1711,"Texel","Netherlands",53.053921,4.79605,1711,"Elmina","Ghana",5.0847,-1.35093,20,"ps.",759,NA,NA,"bontje",NA,NA,NA,"cotton","Haarlem",NA,"Expensive",19.2125,384.25
+"20",20,"WIC","Ship: Jacoba Galeij",1713,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,1402,"ps.",1402,NA,NA,"bontje",NA,NA,NA,NA,"Haarlem",NA,"Inexpensive",0.306241084165478,429.35
+"21",21,"WIC","Ship: Jacoba Galeij",1713,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,3894,"ps.",3894,NA,NA,"bontje",NA,NA,NA,NA,"Haarlem",NA,"Inexpensive",0.4,1557.6
+"22",22,"WIC","Ship: St. Marcus",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,2796,"ells",2796,NA,NA,"bontje",NA,NA,NA,NA,"Haarlem",NA,"Inexpensive",0.306241058655222,856.25
+"23",23,"WIC","Ship: St. Marcus",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,3930,"ells",3930,NA,NA,"bontje",NA,NA,NA,NA,"Haarlem",NA,"Inexpensive",0.4,1572
+"24",24,"WIC","Ship: Koningin Hester",1713,"Vlissingen","Netherlands",51.455681,3.57649,1713,"Ouidah","Benin",6.3601,2.08266,6619,"ells",6619,NA,NA,"bontje",NA,NA,NA,NA,"Haarlem",NA,"Inexpensive",0.4,2647.6
+"25",25,"WIC","Ship: Bosbeek",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Elmina","Ghana",5.0847,-1.35093,4436,"ells",4436,NA,NA,"bontje",NA,NA,NA,NA,"Haarlem",NA,"Inexpensive",0.396145175834085,1757.3
+"26",26,"WIC","Ship: Guntersteijn",1713,"Texel","Netherlands",53.053921,4.79605,1714,"Ardra","Benin",6.47216,2.62652,8190,"ells",8190,NA,NA,"bontje",NA,NA,NA,NA,"Haarlem",NA,"Inexpensive",0.406251526251526,3327.2
+"27",27,"WIC","Ship: St Clara 2",1710,"Texel","Netherlands",53.053921,4.79605,1710,"Ouidah","Benin",6.3601,2.08266,204,"ps.",204,NA,NA,"brawles",NA,NA,NA,NA,NA,NA,"Inexpensive",2.8,571.2
+"28",28,"WIC","Ship: Johanna Machteld",1710,"Texel","Netherlands",53.053921,4.79605,1711,"Loanda","Angola",-8.838333,13.234444,140,"ps.",140,NA,NA,"brawles",NA,NA,NA,NA,NA,NA,"Inexpensive",2.8,392
+"29",29,"WIC","Ship: Johanna Machteld",1710,"Texel","Netherlands",53.053921,4.79605,1711,"Loanda","Angola",-8.838333,13.234444,60,"ps.",60,NA,NA,"brawles",NA,NA,NA,NA,NA,NA,"Inexpensive",2.75,165
+"30",30,"WIC","Ship: Eva Maria 2",1712,"Vlissingen","Netherlands",51.455681,3.57649,1712,"Elmina","Ghana",5.0847,-1.35093,160,"ps.",160,NA,NA,"brawles",NA,NA,NA,NA,NA,NA,"Inexpensive",3.5,560
+"31",31,"WIC","Ship: Koningin Hester",1713,"Vlissingen","Netherlands",51.455681,3.57649,1713,"Ouidah","Benin",6.3601,2.08266,140,"ps.",140,NA,NA,"brawles",NA,NA,NA,NA,NA,NA,"Inexpensive",2.375,332.5
+"32",32,"WIC","Ship: Koningin Hester",1713,"Vlissingen","Netherlands",51.455681,3.57649,1713,"Ouidah","Benin",6.3601,2.08266,153,"ps.",153,NA,NA,"brawles",NA,NA,NA,NA,NA,NA,"Inexpensive",3.25,497.25
+"33",33,"WIC","Ship: Bosbeek",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Elmina","Ghana",5.0847,-1.35093,66,"ps.",66,NA,NA,"brawles",NA,NA,NA,NA,NA,NA,"Inexpensive",2,132
+"34",34,"WIC","Ship: Bosbeek",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Elmina","Ghana",5.0847,-1.35093,138,"ps.",138,NA,NA,"brawles",NA,NA,NA,NA,NA,NA,"Inexpensive",1.8,248.4
+"35",35,"WIC","Ship: Apam",1714,"Vlissingen","Netherlands",51.455681,3.57649,NA,"Elmina","Ghana",5.0847,-1.35093,200,"ps.",200,NA,NA,"brawles",NA,NA,NA,NA,NA,NA,"Inexpensive",2.85,570
+"36",36,"WIC","Ship: Jacoba Galeij",1714,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,1536,"ps.",1536,NA,NA,"brawles",NA,NA,NA,NA,NA,NA,"Inexpensive",2.35,3609.6
+"37",37,"WIC","Ship: Adrichem",1714,"Vlissingen","Netherlands",51.455681,3.57649,1715,"Loanda","Angola",-8.838333,13.234444,250,"ps.",250,NA,NA,"brawles",NA,NA,NA,NA,NA,NA,"Inexpensive",3.625,906.25
+"38",38,"WIC","Ship: Adrichem",1714,"Vlissingen","Netherlands",51.455681,3.57649,1715,"Loanda","Angola",-8.838333,13.234444,50,"ps.",50,NA,NA,"brawles",NA,NA,NA,NA,NA,NA,"Inexpensive",2.85,142.5
+"39",39,"WIC","Ship: Agatha",1714,"Vlissingen","Netherlands",51.455681,3.57649,1714,"Elmina","Ghana",5.0847,-1.35093,250,"ps.",250,NA,NA,"brawles",NA,NA,NA,NA,NA,NA,"Inexpensive",3.25,812.5
+"40",40,"WIC","Ship: Bosbeek",1715,"Texel","Netherlands",53.053921,4.79605,1715,"Loanda","Angola",-8.838333,13.234444,70,"ps.",70,NA,NA,"brawles",NA,NA,NA,NA,NA,NA,"Inexpensive",2.35,164.5
+"41",41,"WIC","Ship: Eva Maria 2",1711,"Texel","Netherlands",53.053921,4.79605,1711,"Elmina","Ghana",5.0847,-1.35093,225,"ps.",225,NA,NA,"cabajen",NA,NA,NA,NA,NA,NA,"Inexpensive",3.4,765
+"42",42,"WIC","Ship: Accra",1711,"Texel","Netherlands",53.053921,4.79605,1711,"Elmina","Ghana",5.0847,-1.35093,225,"ps.",225,NA,NA,"cabajen",NA,NA,NA,NA,NA,NA,"Inexpensive",3.4,765
+"43",43,"WIC","Ship: St. Marcus",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,60,"ps.",60,NA,NA,"caffa",NA,NA,NA,NA,NA,NA,"Mid-range",8.25,495
+"44",44,"WIC","Ship: St. Marcus",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,20,"ps.",20,NA,NA,"caffa",NA,NA,NA,NA,NA,NA,"Mid-range",7.5,150
+"45",45,"WIC","Ship: Koningin Hester",1713,"Vlissingen","Netherlands",51.455681,3.57649,1713,"Ouidah","Benin",6.3601,2.08266,24,"ps.",24,NA,NA,"caffa","white",NA,NA,NA,NA,NA,"Mid-range",7.4,177.6
+"46",46,"WIC","Ship: Koningin Hester",1713,"Vlissingen","Netherlands",51.455681,3.57649,1713,"Ouidah","Benin",6.3601,2.08266,70,"ps.",70,NA,NA,"caffa",NA,NA,NA,NA,NA,NA,"Mid-range",9,630
+"47",47,"WIC","Ship: Guntersteijn",1713,"Texel","Netherlands",53.053921,4.79605,1714,"Ardra","Benin",6.47216,2.62652,100,"ps.",100,NA,NA,"caffa",NA,NA,NA,NA,NA,NA,"Mid-range",8.5,850
+"48",48,"WIC","Ship: Emmenes",1714,"Texel","Netherlands",53.053921,4.79605,1714,"Ouidah","Benin",6.3601,2.08266,80,"ps.",80,NA,NA,"caffa",NA,NA,NA,NA,NA,NA,"Mid-range",8.75,700
+"49",49,"WIC","Ship: Acredam",1714,"Texel","Netherlands",53.053921,4.79605,1715,"Ardra","Benin",6.47216,2.62652,80,"ps.",80,NA,NA,"caffa",NA,NA,NA,NA,NA,NA,"Mid-range",9.5,760
+"50",50,"WIC","Ship: Johanna Machteld",1710,"Texel","Netherlands",53.053921,4.79605,1711,"Loanda","Angola",-8.838333,13.234444,20,"ps.",500,NA,NA,"chintz","blue",NA,NA,NA,NA,NA,"Expensive",13.75,275
+"51",51,"WIC","Ship: Johanna Machteld",1710,"Texel","Netherlands",53.053921,4.79605,1711,"Loanda","Angola",-8.838333,13.234444,100,"ps.",2500,NA,NA,"chintz","red",NA,NA,NA,NA,NA,"Expensive",12.8125,1281.25
+"52",52,"WIC","Ship: Johanna Machteld",1710,"Texel","Netherlands",53.053921,4.79605,1711,"Loanda","Angola",-8.838333,13.234444,20,"ps.",500,NA,NA,"chintz","red",NA,NA,NA,NA,NA,"Expensive",12.8125,256.25
+"53",53,"WIC","Ship: Adrichem",1711,"Vlissingen","Netherlands",51.455681,3.57649,1711,"Ouidah","Benin",6.3601,2.08266,100,"ps.",100,NA,NA,"chintz",NA,NA,NA,NA,NA,NA,"Expensive",13.125,1312.5
+"54",54,"WIC","Ship: Acredam",1712,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,100,"ps.",100,NA,NA,"chintz",NA,NA,NA,NA,NA,NA,"Expensive",11.5,1150
+"55",55,"WIC","Ship: St. Marcus",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,75,"ps.",75,NA,NA,"chintz","red",NA,NA,NA,NA,NA,"Expensive",11,825
+"56",56,"WIC","Ship: Guntersteijn",1713,"Texel","Netherlands",53.053921,4.79605,1714,"Ardra","Benin",6.47216,2.62652,76,"ps.",76,NA,NA,"chintz",NA,NA,"dyed",NA,NA,NA,"Expensive",11.8,896.8
+"57",57,"WIC","Ship: Adrichem",1714,"Vlissingen","Netherlands",51.455681,3.57649,1715,"Loanda","Angola",-8.838333,13.234444,630,"ells",630,NA,NA,"chintz",NA,NA,NA,NA,"Inlandse",NA,"Inexpensive",0.525,330.75
+"58",58,"WIC","Ship: Adrichem",1714,"Vlissingen","Netherlands",51.455681,3.57649,1715,"Loanda","Angola",-8.838333,13.234444,2026,"ells",2026,NA,NA,"chintz",NA,NA,NA,NA,"Inlandse",NA,"Inexpensive",0.55,1114.3
+"59",59,"WIC","Ship: Adrichem",1714,"Vlissingen","Netherlands",51.455681,3.57649,1715,"Loanda","Angola",-8.838333,13.234444,45.75,"ps.",45.75,NA,NA,"chintz",NA,NA,NA,NA,NA,NA,"Inexpensive",0.549726775956284,25.15
+"60",60,"WIC","Ship: Acredam",1714,"Texel","Netherlands",53.053921,4.79605,1715,"Ardra","Benin",6.47216,2.62652,167,"ps.",167,NA,NA,"chintz",NA,NA,NA,NA,"Inlandse",NA,"Mid-range",6.25,1043.75
+"61",61,"WIC","Ship: Bosbeek",1715,"Texel","Netherlands",53.053921,4.79605,1715,"Loanda","Angola",-8.838333,13.234444,244.5,"ells",244.5,NA,NA,"chintz",NA,NA,NA,NA,NA,NA,"Inexpensive",0.572597137014315,140
+"62",62,"WIC","Ship: Nieuwe Post",1715,"Texel","Netherlands",53.053921,4.79605,1715,"Loanda","Angola",-8.838333,13.234444,100,"ps.",100,NA,NA,"chintz",NA,NA,NA,NA,NA,NA,"Expensive",15.5,1550
+"63",63,"WIC","Ship: St Clara 2",1710,"Texel","Netherlands",53.053921,4.79605,1710,"Ouidah","Benin",6.3601,2.08266,100,"ps.",100,NA,NA,"corroots",NA,NA,NA,NA,NA,NA,"Inexpensive",2.125,212.5
+"64",64,"WIC","Ship: Honard",1710,"Hellevoetsluis","Netherlands",51.833698,4.13838,1711,"Ouidah","Benin",6.3601,2.08266,400,"ps.",400,NA,NA,"dekens",NA,NA,NA,NA,"Leiden",NA,"Mid-range",4,1600
+"65",65,"WIC","Ship: Eva Maria 2",1711,"Texel","Netherlands",53.053921,4.79605,1711,"Elmina","Ghana",5.0847,-1.35093,90,"ps.",90,NA,NA,"dekens","green",NA,NA,NA,NA,NA,"Inexpensive",3.55,319.5
+"66",66,"WIC","Ship: Eva Maria 2",1711,"Texel","Netherlands",53.053921,4.79605,1711,"Elmina","Ghana",5.0847,-1.35093,45,"ps.",45,NA,NA,"dekens","red",NA,NA,NA,NA,NA,"Inexpensive",3.55,159.75
+"67",67,"WIC","Ship: Eva Maria 2",1711,"Texel","Netherlands",53.053921,4.79605,1711,"Elmina","Ghana",5.0847,-1.35093,45,"ps.",45,NA,NA,"dekens","white",NA,NA,NA,NA,NA,"Inexpensive",3.55,159.75
+"68",68,"WIC","Ship: Accra",1711,"Texel","Netherlands",53.053921,4.79605,1711,"Elmina","Ghana",5.0847,-1.35093,46,"ps.",46,NA,NA,"dekens",NA,NA,NA,NA,NA,NA,"Mid-range",4.25,195.5
+"69",69,"WIC","Ship: Accra",1711,"Texel","Netherlands",53.053921,4.79605,1711,"Elmina","Ghana",5.0847,-1.35093,24,"ps.",24,NA,NA,"dekens",NA,NA,NA,NA,NA,NA,"Mid-range",4.25,102
+"70",70,"WIC","Ship: Accra",1711,"Texel","Netherlands",53.053921,4.79605,1711,"Elmina","Ghana",5.0847,-1.35093,10,"ps.",10,NA,NA,"dekens",NA,NA,NA,NA,NA,NA,"Mid-range",4.25,42.5
+"71",71,"WIC","Ship: Adrichem",1711,"Vlissingen","Netherlands",51.455681,3.57649,1711,"Ouidah","Benin",6.3601,2.08266,180,"ps.",180,NA,NA,"dekens","green",NA,NA,NA,NA,NA,"Inexpensive",3.25,585
+"72",72,"WIC","Ship: Adrichem",1711,"Vlissingen","Netherlands",51.455681,3.57649,1711,"Ouidah","Benin",6.3601,2.08266,72,"ps.",72,NA,NA,"dekens","red",NA,NA,NA,NA,NA,"Inexpensive",3.25,234
+"73",73,"WIC","Ship: Adrichem",1711,"Vlissingen","Netherlands",51.455681,3.57649,1711,"Ouidah","Benin",6.3601,2.08266,108,"ps.",108,NA,NA,"dekens","white",NA,NA,NA,NA,NA,"Inexpensive",3.25,351
+"74",74,"WIC","Ship: St. Clara 2",1712,"Texel","Netherlands",53.053921,4.79605,1712,"Ouidah","Benin",6.3601,2.08266,64,"ps.",64,NA,NA,"dekens","green",NA,NA,NA,"Leiden",NA,"Mid-range",4,256
+"75",75,"WIC","Ship: St. Clara 2",1712,"Texel","Netherlands",53.053921,4.79605,1712,"Ouidah","Benin",6.3601,2.08266,64,"ps.",64,NA,NA,"dekens","green",NA,NA,NA,"Leiden",NA,"Mid-range",4,256
+"76",76,"WIC","Ship: St. Clara 2",1712,"Texel","Netherlands",53.053921,4.79605,1712,"Ouidah","Benin",6.3601,2.08266,232,"ps.",232,NA,NA,"dekens","white",NA,NA,NA,"Leiden",NA,"Mid-range",4,928
+"77",77,"WIC","Ship: Eva Maria 2",1712,"Vlissingen","Netherlands",51.455681,3.57649,1712,"Elmina","Ghana",5.0847,-1.35093,34,"ps.",34,NA,NA,"dekens",NA,NA,NA,NA,"Leiden",NA,"Inexpensive",3.25,110.5
+"78",78,"WIC","Ship: Bosbeek",1712,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,20,"ps.",20,NA,NA,"dekens","green",NA,NA,NA,"Leiden",NA,"Mid-range",4.5,90
+"79",79,"WIC","Ship: Bosbeek",1712,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,10,"ps.",10,NA,NA,"dekens","red",NA,NA,NA,"Leiden",NA,"Mid-range",4.5,45
+"80",80,"WIC","Ship: Bosbeek",1712,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,10,"ps.",10,NA,NA,"dekens","white",NA,NA,NA,"Leiden",NA,"Mid-range",4.5,45
+"81",81,"WIC","Ship: Africaanse Galeij",1713,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,62,"ps",62,NA,NA,"dekens",NA,NA,NA,NA,"Leiden",NA,"Inexpensive",3.2,198.4
+"82",82,"WIC","Ship: Africaanse Galeij",1713,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,21,"ps.",21,NA,NA,"dekens",NA,NA,NA,NA,"Leiden",NA,"Inexpensive",3.2,67.2
+"83",83,"WIC","Ship: Jacoba Galeij",1713,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,62,"ps.",62,NA,NA,"dekens","green",NA,NA,NA,NA,NA,"Inexpensive",3.2,198.4
+"84",84,"WIC","Ship: Jacoba Galeij",1713,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,21,"ps.",21,NA,NA,"dekens","white",NA,NA,NA,NA,NA,"Inexpensive",3.2,67.2
+"85",85,"WIC","Ship: St. Marcus",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,125,"ps.",125,NA,NA,"dekens","green",NA,NA,NA,"Leiden",NA,"Mid-range",4.2496,531.2
+"86",86,"WIC","Ship: Koningin Hester",1713,"Vlissingen","Netherlands",51.455681,3.57649,1713,"Ouidah","Benin",6.3601,2.08266,135,"ps.",135,NA,NA,"dekens","green",NA,NA,NA,"Leiden",NA,"Inexpensive",3.25,438.75
+"87",87,"WIC","Ship: Koningin Hester",1713,"Vlissingen","Netherlands",51.455681,3.57649,1713,"Ouidah","Benin",6.3601,2.08266,32,"ps.",32,NA,NA,"dekens","white",NA,NA,NA,"Leiden",NA,"Inexpensive",3.25,104
+"88",88,"WIC","Ship: Bosbeek",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Elmina","Ghana",5.0847,-1.35093,83,"ps.",83,NA,NA,"dekens",NA,NA,NA,NA,"Leiden",NA,"Inexpensive",3.25,269.75
+"89",89,"WIC","Ship: Guntersteijn",1713,"Texel","Netherlands",53.053921,4.79605,1714,"Ardra","Benin",6.47216,2.62652,125,"ps.",125,NA,NA,"dekens","green",NA,NA,NA,"Leiden",NA,"Inexpensive",3.25,406.25
+"90",90,"WIC","Ship: Guntersteijn",1713,"Texel","Netherlands",53.053921,4.79605,1714,"Ardra","Benin",6.47216,2.62652,42,"ps.",42,NA,NA,"dekens","white",NA,NA,NA,"Leiden",NA,"Inexpensive",3.25,136.5
+"91",91,"WIC","Ship: Jacoba Galeij",1714,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,60,"ps.",60,NA,NA,"dekens","green",NA,NA,NA,"Leiden",NA,"Inexpensive",3.25,195
+"92",92,"WIC","Ship: Jacoba Galeij",1714,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,20,"ps.",20,NA,NA,"dekens","white",NA,NA,NA,"Leiden",NA,"Inexpensive",3.25,65
+"93",93,"WIC","Ship: Adrichem",1714,"Vlissingen","Netherlands",51.455681,3.57649,1715,"Loanda","Angola",-8.838333,13.234444,394,"ps.",394,NA,NA,"dekens","green",NA,NA,NA,NA,NA,"Inexpensive",1.31725888324873,519
+"94",94,"WIC","Ship: Adrichem",1714,"Vlissingen","Netherlands",51.455681,3.57649,1715,"Loanda","Angola",-8.838333,13.234444,54,"ps.",54,NA,NA,"dekens","white",NA,NA,NA,NA,NA,"Inexpensive",3.22222222222222,174
+"95",95,"WIC","Ship: Emmenes",1714,"Texel","Netherlands",53.053921,4.79605,1714,"Ouidah","Benin",6.3601,2.08266,105,"ps",105,NA,NA,"dekens","green",NA,NA,NA,"Leiden",NA,"Inexpensive",3.25,341.25
+"96",96,"WIC","Ship: Emmenes",1714,"Texel","Netherlands",53.053921,4.79605,1714,"Ouidah","Benin",6.3601,2.08266,35,"ps.",35,NA,NA,"dekens","white",NA,NA,NA,"Leiden",NA,"Inexpensive",3.25,113.75
+"97",97,"WIC","Ship: Acredam",1712,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,100,"ps.",100,NA,NA,"graaties","white",NA,NA,NA,NA,NA,"Mid-range",6.25,625
+"98",98,"WIC","Ship: St. Marcus",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,100,"ps.",100,NA,NA,"graaties",NA,NA,NA,NA,NA,NA,"Mid-range",6,600
+"99",99,"WIC","Ship: Koningin Hester",1713,"Vlissingen","Netherlands",51.455681,3.57649,1713,"Ouidah","Benin",6.3601,2.08266,234,"ps.",234,NA,NA,"graaties","white",NA,NA,NA,NA,NA,"Mid-range",6.5,1521
+"100",100,"WIC","Ship: Emmenes",1714,"Texel","Netherlands",53.053921,4.79605,1714,"Ouidah","Benin",6.3601,2.08266,138,"ps.",138,NA,NA,"graaties","white",NA,NA,NA,NA,NA,"Mid-range",7,966
+"101",101,"WIC","Ship: Emmenes",1714,"Texel","Netherlands",53.053921,4.79605,1714,"Ouidah","Benin",6.3601,2.08266,20,"ps.",20,NA,NA,"graaties","white",NA,NA,NA,NA,NA,"Mid-range",6.75,135
+"102",102,"WIC","Ship: Acredam",1714,"Texel","Netherlands",53.053921,4.79605,1715,"Ardra","Benin",6.47216,2.62652,43,"ps.",43,NA,NA,"graaties",NA,NA,NA,NA,NA,NA,"Mid-range",8,344
+"103",103,"WIC","Ship: St Clara 2",1710,"Texel","Netherlands",53.053921,4.79605,1710,"Ouidah","Benin",6.3601,2.08266,100,"ps.",100,NA,NA,"guinees","blue",NA,NA,NA,NA,NA,"Expensive",20,2000
+"104",104,"WIC","Ship: Johanna Machteld",1710,"Texel","Netherlands",53.053921,4.79605,1711,"Loanda","Angola",-8.838333,13.234444,100,"""half"" pieces",50,NA,NA,"guinees","blue",NA,NA,NA,NA,NA,"Inexpensive",0.15,15
+"105",105,"WIC","Ship: Johanna Machteld",1710,"Texel","Netherlands",53.053921,4.79605,1711,"Loanda","Angola",-8.838333,13.234444,800,"""half"" pieces",400,NA,NA,"guinees","brown-blue",NA,NA,NA,NA,NA,"Mid-range",9.6875,7750
+"106",106,"WIC","Ship: Eva Maria 2",1712,"Vlissingen","Netherlands",51.455681,3.57649,1712,"Elmina","Ghana",5.0847,-1.35093,166,"half ps.",83,NA,NA,"guinees","blue",NA,NA,NA,NA,NA,"Expensive",10.6,1759.6
+"107",107,"WIC","Ship: Bosbeek",1712,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,164,"half ps.",82,NA,NA,"guinees","blue",NA,NA,NA,NA,NA,"Mid-range",10,1640
+"108",108,"WIC","Ship: Koningin Hester",1713,"Vlissingen","Netherlands",51.455681,3.57649,1713,"Ouidah","Benin",6.3601,2.08266,50,"ps.",50,NA,NA,"guinees","white",NA,NA,NA,NA,NA,"Expensive",17.625,881.25
+"109",109,"WIC","Ship: Apam",1714,"Vlissingen","Netherlands",51.455681,3.57649,NA,"Elmina","Ghana",5.0847,-1.35093,40,"ps.",40,NA,NA,"guinees","brown-blue",NA,NA,NA,NA,NA,"Expensive",24.375,975
+"110",110,"WIC","Ship: Jacoba Galeij",1714,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,140,"ps.",140,NA,NA,"guinees","brown-blue",NA,NA,NA,NA,NA,"Expensive",25,3500
+"111",111,"WIC","Ship: Adrichem",1714,"Vlissingen","Netherlands",51.455681,3.57649,1715,"Loanda","Angola",-8.838333,13.234444,80,"ps.",80,NA,NA,"guinees","blue",NA,NA,NA,NA,NA,"Expensive",24.25,1940
+"112",112,"WIC","Ship: Adrichem",1714,"Vlissingen","Netherlands",51.455681,3.57649,1715,"Loanda","Angola",-8.838333,13.234444,420,"ps.",420,NA,NA,"guinees","brown-blue",NA,NA,NA,NA,NA,"Expensive",24.25,10185
+"113",113,"WIC","Ship: Emmenes",1714,"Texel","Netherlands",53.053921,4.79605,1714,"Ouidah","Benin",6.3601,2.08266,200,"ps.",200,NA,NA,"guinees","brown-blue",NA,NA,NA,NA,NA,"Expensive",24.5,4900
+"114",114,"WIC","Ship: Bosbeek",1715,"Texel","Netherlands",53.053921,4.79605,1715,"Loanda","Angola",-8.838333,13.234444,200,"half ps.",100,NA,NA,"guinees",NA,NA,NA,NA,"Inlandse",NA,"Expensive",14.6,2920
+"115",115,"WIC","Ship: Nieuwe Post",1715,"Texel","Netherlands",53.053921,4.79605,1715,"Loanda","Angola",-8.838333,13.234444,420,"ps.",420,NA,NA,"guinees","blue",NA,NA,NA,NA,NA,"Expensive",31,13020
+"116",116,"WIC","Ship: Nieuwe Post",1715,"Texel","Netherlands",53.053921,4.79605,1715,"Loanda","Angola",-8.838333,13.234444,100,"ps.",100,NA,NA,"guinees",NA,NA,NA,NA,NA,NA,"Inexpensive",2.2,220
+"117",117,"WIC","Ship: St Clara 2",1710,"Texel","Netherlands",53.053921,4.79605,1710,"Ouidah","Benin",6.3601,2.08266,180,"ps.",180,NA,NA,"kannekyns",NA,NA,NA,NA,NA,NA,"Inexpensive",1.8,324
+"118",118,"WIC","Ship: Johanna Machteld",1710,"Texel","Netherlands",53.053921,4.79605,1711,"Loanda","Angola",-8.838333,13.234444,80,"ells",80,NA,NA,"laken","blue",NA,NA,NA,NA,NA,"Mid-range",4,320
+"119",119,"WIC","Ship: Johanna Machteld",1710,"Texel","Netherlands",53.053921,4.79605,1711,"Loanda","Angola",-8.838333,13.234444,74,"ells",74,NA,NA,"laken","red",NA,NA,NA,NA,NA,"Mid-range",4.25675675675676,315
+"120",120,"WIC","Ship: Adrichem",1711,"Vlissingen","Netherlands",51.455681,3.57649,1711,"Ouidah","Benin",6.3601,2.08266,100,"elles",100,NA,NA,"laken","blue",NA,NA,NA,NA,NA,"Inexpensive",3.9,390
+"121",121,"WIC","Ship: Adrichem",1711,"Vlissingen","Netherlands",51.455681,3.57649,1711,"Ouidah","Benin",6.3601,2.08266,168,"elles",168,NA,NA,"laken","scarlet",NA,NA,NA,NA,NA,"Mid-range",4.5,756
+"122",122,"WIC","Ship: Adrichem",1711,"Vlissingen","Netherlands",51.455681,3.57649,1711,"Ouidah","Benin",6.3601,2.08266,58,"ells",58,NA,NA,"laken","scarlet",NA,NA,NA,NA,NA,"Mid-range",4.5,261
+"123",123,"WIC","Ship: St. Clara 2",1712,"Texel","Netherlands",53.053921,4.79605,1712,"Ouidah","Benin",6.3601,2.08266,51,"ell",51,NA,NA,"laken","blue",NA,NA,NA,NA,NA,"Mid-range",6,306
+"124",124,"WIC","Ship: St. Clara 2",1712,"Texel","Netherlands",53.053921,4.79605,1712,"Ouidah","Benin",6.3601,2.08266,100.5,"ell",100.5,NA,NA,"laken","red",NA,NA,NA,NA,NA,"Mid-range",6,603
+"125",125,"WIC","Ship: Bosbeek",1712,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,8,"ell",8,NA,NA,"laken","blue",NA,NA,NA,NA,NA,"Inexpensive",3.9,31.2
+"126",126,"WIC","Ship: Bosbeek",1712,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,18,"ell",18,NA,NA,"laken","red",NA,NA,NA,NA,NA,"Mid-range",5,90
+"127",127,"WIC","Ship: Acredam",1712,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,55.75,"ps.",55.75,NA,NA,"laken","scarlet",NA,NA,NA,NA,NA,"Mid-range",5.34977578475336,298.25
+"128",128,"WIC","Ship: Adrichem",1714,"Vlissingen","Netherlands",51.455681,3.57649,1715,"Loanda","Angola",-8.838333,13.234444,97.5,"ells",97.5,NA,NA,"laken","blue",NA,NA,NA,NA,NA,"Mid-range",4.8,468
+"129",129,"WIC","Ship: Adrichem",1714,"Vlissingen","Netherlands",51.455681,3.57649,1715,"Loanda","Angola",-8.838333,13.234444,47,"ells",47,NA,NA,"laken","scarlet",NA,NA,NA,NA,NA,"Mid-range",5.5,258.5
+"130",130,"WIC","Ship: Nieuwe Post",1715,"Texel","Netherlands",53.053921,4.79605,1715,"Loanda","Angola",-8.838333,13.234444,148,"ps.",148,NA,NA,"laken",NA,NA,NA,NA,NA,NA,"Mid-range",6.52195945945946,965.25
+"131",131,"WIC","Ship: Johanna Machteld",1710,"Texel","Netherlands",53.053921,4.79605,1711,"Loanda","Angola",-8.838333,13.234444,100,"ps.",2500,NA,NA,"lhymenias","blue",NA,NA,NA,NA,NA,"Expensive",13.75,1375
+"132",132,"WIC","Ship: Africaanse Galeij",1713,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,50,"ps.",50,NA,NA,"lhymenias",NA,NA,NA,NA,NA,NA,"Expensive",12.625,631.25
+"133",133,"WIC","Ship: Jacoba Galeij",1713,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,50,"ps.",50,NA,NA,"lhymenias",NA,NA,NA,NA,NA,NA,"Expensive",12.625,631.25
+"134",134,"WIC","Ship: St. Marcus",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,100,"ps.",100,NA,NA,"lhymenias",NA,NA,NA,NA,NA,NA,"Expensive",12.625,1262.5
+"135",135,"WIC","Ship: St. Marcus",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,25,"ps.",25,NA,NA,"lhymenias",NA,NA,NA,NA,NA,NA,"Expensive",12.625,315.625
+"136",136,"WIC","Ship: Guntersteijn",1713,"Texel","Netherlands",53.053921,4.79605,1714,"Ardra","Benin",6.47216,2.62652,76,"ps.",76,NA,NA,"lhymenias",NA,NA,"stamped",NA,NA,NA,"Expensive",12.4315789473684,944.8
+"137",137,"WIC","Ship: Guntersteijn",1713,"Texel","Netherlands",53.053921,4.79605,1714,"Ardra","Benin",6.47216,2.62652,262,"schok",262,NA,NA,"lhymenias",NA,NA,NA,NA,NA,NA,"Expensive",11.75,3078.5
+"138",138,"WIC","Ship: Guntersteijn",1713,"Texel","Netherlands",53.053921,4.79605,1714,"Ardra","Benin",6.47216,2.62652,132,"schok",132,NA,NA,"lhymenias",NA,NA,NA,NA,NA,NA,"Expensive",13.75,1815
+"139",139,"WIC","Ship: Guntersteijn",1713,"Texel","Netherlands",53.053921,4.79605,1714,"Ardra","Benin",6.47216,2.62652,85.5,"schok",85.5,NA,NA,"lhymenias",NA,NA,NA,NA,NA,NA,"Expensive",11,940.5
+"140",140,"WIC","Ship: Guntersteijn",1713,"Texel","Netherlands",53.053921,4.79605,1714,"Ardra","Benin",6.47216,2.62652,80,"ps.",80,NA,NA,"lhymenias",NA,NA,NA,NA,NA,NA,"Expensive",12.3,984
+"141",141,"WIC","Ship: Adrichem",1714,"Vlissingen","Netherlands",51.455681,3.57649,1715,"Loanda","Angola",-8.838333,13.234444,2621.5,"ells",2621.5,NA,NA,"lhymenias",NA,NA,NA,NA,NA,NA,"Inexpensive",0.537497615868777,1409.05
+"142",142,"WIC","Ship: Acredam",1714,"Texel","Netherlands",53.053921,4.79605,1715,"Ardra","Benin",6.47216,2.62652,83,"ps.",83,NA,NA,"lhymenias",NA,NA,NA,NA,NA,NA,"Mid-range",6.25,518.75
+"143",143,"WIC","Ship: Bosbeek",1715,"Texel","Netherlands",53.053921,4.79605,1715,"Loanda","Angola",-8.838333,13.234444,1247,"ells",1247,NA,NA,"lhymenias",NA,NA,NA,NA,NA,NA,"Inexpensive",0.574979951884523,717
+"144",144,"WIC","Ship: Nieuwe Post",1715,"Texel","Netherlands",53.053921,4.79605,1715,"Loanda","Angola",-8.838333,13.234444,100,"ps.",100,NA,NA,"lhymenias",NA,NA,NA,NA,NA,NA,"Expensive",14,1400
+"145",145,"WIC","Ship: St Clara 2",1710,"Texel","Netherlands",53.053921,4.79605,1710,"Ouidah","Benin",6.3601,2.08266,60,"ps.",60,NA,NA,"nicanees",NA,NA,NA,NA,NA,"fine","Mid-range",6.5,390
+"146",146,"WIC","Ship: Johanna Machteld",1710,"Texel","Netherlands",53.053921,4.79605,1711,"Loanda","Angola",-8.838333,13.234444,60,"ps.",60,NA,NA,"nicanees",NA,NA,NA,NA,NA,"fine","Mid-range",6.375,382.5
+"147",147,"WIC","Ship: Eva Maria 2",1711,"Texel","Netherlands",53.053921,4.79605,1711,"Elmina","Ghana",5.0847,-1.35093,330,"ps.",330,NA,NA,"nicanees",NA,NA,NA,NA,NA,"fine","Mid-range",7.45,2458.5
+"148",148,"WIC","Ship: Eva Maria 2",1711,"Texel","Netherlands",53.053921,4.79605,1711,"Elmina","Ghana",5.0847,-1.35093,64,"ps.",64,NA,NA,"nicanees",NA,NA,NA,NA,NA,NA,"Mid-range",7.75,496
+"149",149,"WIC","Ship: Eva Maria 2",1711,"Texel","Netherlands",53.053921,4.79605,1711,"Elmina","Ghana",5.0847,-1.35093,161,"ps.",161,NA,NA,"nicanees",NA,NA,NA,NA,NA,NA,"Mid-range",7.75,1247.75
+"150",150,"WIC","Ship: Adrichem",1711,"Vlissingen","Netherlands",51.455681,3.57649,1711,"Ouidah","Benin",6.3601,2.08266,261,"ps.",261,NA,NA,"nicanees",NA,NA,NA,NA,NA,"fine","Mid-range",5.95,1552.95
+"151",151,"WIC","Ship: Adrichem",1711,"Vlissingen","Netherlands",51.455681,3.57649,1711,"Ouidah","Benin",6.3601,2.08266,450,"ps.",450,NA,NA,"nicanees",NA,NA,NA,NA,NA,NA,"Mid-range",7.35,3307.5
+"152",152,"WIC","Ship: St. Clara 2",1712,"Texel","Netherlands",53.053921,4.79605,1712,"Ouidah","Benin",6.3601,2.08266,450,"ps.",450,NA,NA,"nicanees",NA,NA,NA,NA,NA,NA,"Mid-range",7,3150
+"153",153,"WIC","Ship: St. Clara 2",1712,"Texel","Netherlands",53.053921,4.79605,1712,"Ouidah","Benin",6.3601,2.08266,660,"ps.",660,NA,NA,"nicanees",NA,NA,NA,NA,NA,NA,"Mid-range",6.125,4042.5
+"154",154,"WIC","Ship: Eva Maria 2",1712,"Vlissingen","Netherlands",51.455681,3.57649,1712,"Elmina","Ghana",5.0847,-1.35093,166,"ps.",166,NA,NA,"nicanees",NA,NA,NA,NA,NA,"fine","Mid-range",6.375,1058.25
+"155",155,"WIC","Ship: Eva Maria 2",1712,"Vlissingen","Netherlands",51.455681,3.57649,1712,"Elmina","Ghana",5.0847,-1.35093,84,"ps.",84,NA,NA,"nicanees",NA,NA,NA,NA,NA,NA,"Mid-range",7.75,651
+"156",156,"WIC","Ship: Bosbeek",1712,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,86,"ps.",86,NA,NA,"nicanees",NA,NA,NA,NA,NA,NA,"Mid-range",6.25,537.5
+"157",157,"WIC","Ship: Bosbeek",1712,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,180,"ps.",180,NA,NA,"nicanees",NA,NA,NA,NA,NA,NA,"Mid-range",4.5,810
+"158",158,"WIC","Ship: Acredam",1712,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,378,"ps.",378,NA,NA,"nicanees",NA,NA,NA,NA,NA,NA,"Mid-range",7.29431216931217,2757.25
+"159",159,"WIC","Ship: Acredam",1712,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,480,"ps.",480,NA,NA,"nicanees",NA,NA,NA,NA,NA,NA,"Mid-range",4.4375,2130
+"160",160,"WIC","Ship: Acredam",1712,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,120,"ps.",120,NA,NA,"nicanees",NA,NA,NA,NA,NA,NA,"Inexpensive",3.5,420
+"161",161,"WIC","Ship: Africaanse Galeij",1713,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,449,"ps.",449,NA,NA,"nicanees","brown-blue",NA,NA,NA,NA,"fine","Mid-range",6.375,2862.375
+"162",162,"WIC","Ship: Africaanse Galeij",1713,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,110,"ps.",110,NA,NA,"nicanees","brown-blue",NA,NA,NA,NA,NA,"Inexpensive",3.13068181818182,344.375
+"163",163,"WIC","Ship: Africaanse Galeij",1713,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,84,"ps.",84,NA,NA,"nicanees","brown-blue",NA,NA,NA,NA,NA,"Mid-range",7,588
+"164",164,"WIC","Ship: Africaanse Galeij",1713,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,37,"ps.",37,NA,NA,"nicanees","brown-blue",NA,NA,NA,NA,NA,"Mid-range",5,185
+"165",165,"WIC","Ship: Africaanse Galeij",1713,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,83,"ps.",83,NA,NA,"nicanees","brown-blue",NA,NA,NA,NA,NA,"Mid-range",8.375,695.125
+"166",166,"WIC","Ship: Jacoba Galeij",1713,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,140,"ps.",140,NA,NA,"nicanees",NA,NA,NA,NA,NA,"coarse","Inexpensive",3.37502232142857,472.503125
+"167",167,"WIC","Ship: Jacoba Galeij",1713,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,84,"ps.",84,NA,NA,"nicanees",NA,NA,NA,NA,NA,"fine","Mid-range",5.55,466.2
+"168",168,"WIC","Ship: Jacoba Galeij",1713,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,270,"ps.",270,NA,NA,"nicanees",NA,NA,NA,NA,NA,"fine","Mid-range",5.8,1566
+"169",169,"WIC","Ship: Jacoba Galeij",1713,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,90,"ps.",90,NA,NA,"nicanees",NA,NA,NA,NA,NA,NA,"Mid-range",8.375,753.75
+"170",170,"WIC","Ship: St. Marcus",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,225,"ps.",225,NA,NA,"nicanees",NA,NA,NA,NA,"Holland","coarse","Inexpensive",3.75,843.75
+"171",171,"WIC","Ship: St. Marcus",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,200,"ps.",200,NA,NA,"nicanees",NA,NA,NA,NA,"English","fine","Mid-range",6.25,1250
+"172",172,"WIC","Ship: St. Marcus",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,364,"ps.",364,NA,NA,"nicanees",NA,NA,NA,NA,"English","fine","Mid-range",5.25,1911
+"173",173,"WIC","Ship: St. Marcus",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,320,"ps.",320,NA,NA,"nicanees",NA,NA,NA,NA,"Holland","fine","Mid-range",6.25,2000
+"174",174,"WIC","Ship: St. Marcus",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,283,"ps.",283,NA,NA,"nicanees",NA,NA,NA,NA,"English",NA,"Mid-range",5.25,1485.75
+"175",175,"WIC","Ship: St. Marcus",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,132,"ps.",132,NA,NA,"nicanees",NA,NA,NA,NA,"Holland",NA,"Mid-range",7.25,957
+"176",176,"WIC","Ship: Koningin Hester",1713,"Vlissingen","Netherlands",51.455681,3.57649,1713,"Ouidah","Benin",6.3601,2.08266,100,"ps.",100,NA,NA,"nicanees",NA,NA,NA,NA,NA,NA,"Mid-range",7,700
+"177",177,"WIC","Ship: Koningin Hester",1713,"Vlissingen","Netherlands",51.455681,3.57649,1713,"Ouidah","Benin",6.3601,2.08266,32,"ps.",32,NA,NA,"nicanees",NA,NA,NA,NA,NA,NA,"Mid-range",7.25,232
+"178",178,"WIC","Ship: Koningin Hester",1713,"Vlissingen","Netherlands",51.455681,3.57649,1713,"Ouidah","Benin",6.3601,2.08266,280,"ps.",280,NA,NA,"nicanees",NA,NA,NA,NA,NA,NA,"Mid-range",7.25,2030
+"179",179,"WIC","Ship: Koningin Hester",1713,"Vlissingen","Netherlands",51.455681,3.57649,1713,"Ouidah","Benin",6.3601,2.08266,100,"ps.",100,NA,NA,"nicanees",NA,NA,NA,NA,NA,NA,"Mid-range",7.75,775
+"180",180,"WIC","Ship: Koningin Hester",1713,"Vlissingen","Netherlands",51.455681,3.57649,1713,"Ouidah","Benin",6.3601,2.08266,240,"ps.",240,NA,NA,"nicanees",NA,NA,NA,NA,NA,NA,"Mid-range",6.1875,1485
+"181",181,"WIC","Ship: Koningin Hester",1713,"Vlissingen","Netherlands",51.455681,3.57649,1713,"Ouidah","Benin",6.3601,2.08266,120,"ps.",120,NA,NA,"nicanees",NA,NA,NA,NA,NA,NA,"Inexpensive",3.25,390
+"182",182,"WIC","Ship: Bosbeek",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Elmina","Ghana",5.0847,-1.35093,85,"ps.",85,NA,NA,"nicanees",NA,NA,NA,NA,NA,"coarse","Inexpensive",3.75,318.75
+"183",183,"WIC","Ship: Bosbeek",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Elmina","Ghana",5.0847,-1.35093,438,"ps.",438,NA,NA,"nicanees",NA,NA,NA,NA,NA,"fine","Mid-range",5.25,2299.5
+"184",184,"WIC","Ship: Bosbeek",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Elmina","Ghana",5.0847,-1.35093,83,"ps.",83,NA,NA,"nicanees",NA,NA,NA,NA,NA,NA,"Mid-range",6.25,518.75
+"185",185,"WIC","Ship: Bosbeek",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Elmina","Ghana",5.0847,-1.35093,150,"ps.",150,NA,NA,"nicanees",NA,NA,NA,NA,NA,NA,"Mid-range",6.25,937.5
+"186",186,"WIC","Ship: Bosbeek",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Elmina","Ghana",5.0847,-1.35093,500,"ps.",500,NA,NA,"nicanees",NA,NA,NA,NA,NA,NA,"Mid-range",5.25,2625
+"187",187,"WIC","Ship: Guntersteijn",1713,"Texel","Netherlands",53.053921,4.79605,1714,"Ardra","Benin",6.47216,2.62652,315,"ps.",315,NA,NA,"nicanees",NA,NA,NA,NA,NA,"coarse","Inexpensive",3.75,1181.25
+"188",188,"WIC","Ship: Guntersteijn",1713,"Texel","Netherlands",53.053921,4.79605,1714,"Ardra","Benin",6.47216,2.62652,767,"ps.",767,NA,NA,"nicanees",NA,NA,NA,NA,NA,NA,"Mid-range",6.25,4793.75
+"189",189,"WIC","Ship: Apam",1714,"Vlissingen","Netherlands",51.455681,3.57649,NA,"Elmina","Ghana",5.0847,-1.35093,360,"ps.",360,NA,NA,"nicanees",NA,NA,NA,NA,NA,"fine","Mid-range",8.26388888888889,2975
+"190",190,"WIC","Ship: Jacoba Galeij",1714,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,360,"ps.",360,NA,NA,"nicanees",NA,NA,NA,NA,NA,"coarse","Mid-range",4.5,1620
+"191",191,"WIC","Ship: Jacoba Galeij",1714,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,720,"ps.",720,NA,NA,"nicanees",NA,NA,NA,NA,NA,"fine","Mid-range",7.125,5130
+"192",192,"WIC","Ship: Jacoba Galeij",1714,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,600,"ps.",600,NA,NA,"nicanees",NA,NA,NA,NA,NA,NA,"Mid-range",7.75,4650
+"193",193,"WIC","Ship: Adrichem",1714,"Vlissingen","Netherlands",51.455681,3.57649,1715,"Loanda","Angola",-8.838333,13.234444,150,"ps.",150,NA,NA,"nicanees",NA,NA,NA,NA,NA,NA,"Mid-range",8.25,1237.5
+"194",194,"WIC","Ship: Agatha",1714,"Vlissingen","Netherlands",51.455681,3.57649,1714,"Elmina","Ghana",5.0847,-1.35093,240,"ps.",240,NA,NA,"nicanees",NA,NA,NA,NA,NA,"coarse","Mid-range",4.5,1080
+"195",195,"WIC","Ship: Agatha",1714,"Vlissingen","Netherlands",51.455681,3.57649,1714,"Elmina","Ghana",5.0847,-1.35093,360,"ps.",360,NA,NA,"nicanees",NA,NA,NA,NA,NA,"fine","Mid-range",6.875,2475
+"196",196,"WIC","Ship: Agatha",1714,"Vlissingen","Netherlands",51.455681,3.57649,1714,"Elmina","Ghana",5.0847,-1.35093,500,"ps.",500,NA,NA,"nicanees",NA,NA,NA,NA,NA,NA,"Mid-range",7.75,3875
+"197",197,"WIC","Ship: Honard",1710,"Hellevoetsluis","Netherlands",51.833698,4.13838,1711,"Ouidah","Benin",6.3601,2.08266,1115,"ps.",1115,NA,NA,"perpetuanen","blue",NA,"dyed",NA,NA,NA,"Inexpensive",3.925,4376.375
+"198",198,"WIC","Ship: Honard",1710,"Hellevoetsluis","Netherlands",51.833698,4.13838,1711,"Ouidah","Benin",6.3601,2.08266,647,"ps.",647,NA,NA,"perpetuanen","green",NA,NA,NA,NA,NA,"Mid-range",4.775,3089.425
+"199",199,"WIC","Ship: Eva Maria 2",1711,"Texel","Netherlands",53.053921,4.79605,1711,"Elmina","Ghana",5.0847,-1.35093,91,"ps.",91,NA,NA,"perpetuanen","blue",NA,NA,NA,NA,NA,"Mid-range",6.5,591.5
+"200",200,"WIC","Ship: Accra",1711,"Texel","Netherlands",53.053921,4.79605,1711,"Elmina","Ghana",5.0847,-1.35093,680,"ps.",680,NA,NA,"perpetuanen","blue",NA,"dyed",NA,NA,NA,"Inexpensive",3.875,2635
+"201",201,"WIC","Ship: Accra",1711,"Texel","Netherlands",53.053921,4.79605,1711,"Elmina","Ghana",5.0847,-1.35093,113,"ps.",113,NA,NA,"perpetuanen","green",NA,"dyed",NA,NA,NA,"Mid-range",5.2,587.6
+"202",202,"WIC","Ship: Accra",1711,"Texel","Netherlands",53.053921,4.79605,1711,"Elmina","Ghana",5.0847,-1.35093,340,"ps.",340,NA,NA,"perpetuanen","green",NA,"dyed",NA,NA,NA,"Mid-range",4.2,1428
+"203",203,"WIC","Ship: Adrichem",1711,"Vlissingen","Netherlands",51.455681,3.57649,1711,"Ouidah","Benin",6.3601,2.08266,183,"ps.",183,NA,NA,"perpetuanen","blue",NA,NA,NA,NA,NA,"Mid-range",4.8,878.4
+"204",204,"WIC","Ship: Adrichem",1711,"Vlissingen","Netherlands",51.455681,3.57649,1711,"Ouidah","Benin",6.3601,2.08266,602,"ps.",602,NA,NA,"perpetuanen","blue",NA,NA,NA,NA,NA,"Inexpensive",3.45,2076.9
+"205",205,"WIC","Ship: Adrichem",1711,"Vlissingen","Netherlands",51.455681,3.57649,1711,"Ouidah","Benin",6.3601,2.08266,995,"ps.",995,NA,NA,"perpetuanen","blue",NA,NA,NA,NA,NA,"Inexpensive",3.45,3432.75
+"206",206,"WIC","Ship: Adrichem",1711,"Vlissingen","Netherlands",51.455681,3.57649,1711,"Ouidah","Benin",6.3601,2.08266,37,"ps.",37,NA,NA,"perpetuanen","blue",NA,NA,NA,NA,NA,"Mid-range",6.5,240.5
+"207",207,"WIC","Ship: Adrichem",1711,"Vlissingen","Netherlands",51.455681,3.57649,1711,"Ouidah","Benin",6.3601,2.08266,91,"ps.",91,NA,NA,"perpetuanen","green",NA,NA,NA,NA,NA,"Mid-range",4.8,436.8
+"208",208,"WIC","Ship: Adrichem",1711,"Vlissingen","Netherlands",51.455681,3.57649,1711,"Ouidah","Benin",6.3601,2.08266,575,"ps.",575,NA,NA,"perpetuanen","green",NA,NA,NA,NA,NA,"Inexpensive",3.45,1983.75
+"209",209,"WIC","Ship: St. Clara 2",1712,"Texel","Netherlands",53.053921,4.79605,1712,"Ouidah","Benin",6.3601,2.08266,1165,"ps.",1165,NA,NA,"perpetuanen","blue",NA,NA,NA,NA,NA,"Mid-range",5.25,6116.25
+"210",210,"WIC","Ship: St. Clara 2",1712,"Texel","Netherlands",53.053921,4.79605,1712,"Ouidah","Benin",6.3601,2.08266,270,"ps.",270,NA,NA,"perpetuanen","blue",NA,NA,NA,NA,NA,"Mid-range",4,1080
+"211",211,"WIC","Ship: St. Clara 2",1712,"Texel","Netherlands",53.053921,4.79605,1712,"Ouidah","Benin",6.3601,2.08266,549,"ps.",549,NA,NA,"perpetuanen","green",NA,NA,NA,NA,NA,"Mid-range",5.25,2882.25
+"212",212,"WIC","Ship: St. Clara 2",1712,"Texel","Netherlands",53.053921,4.79605,1712,"Ouidah","Benin",6.3601,2.08266,90,"ps.",90,NA,NA,"perpetuanen","green",NA,NA,NA,NA,NA,"Mid-range",4,360
+"213",213,"WIC","Ship: Eva Maria 2",1712,"Vlissingen","Netherlands",51.455681,3.57649,1712,"Elmina","Ghana",5.0847,-1.35093,152,"ps.",152,NA,NA,"perpetuanen","blue",NA,NA,NA,NA,NA,"Inexpensive",3.5,532
+"214",214,"WIC","Ship: Eva Maria 2",1712,"Vlissingen","Netherlands",51.455681,3.57649,1712,"Elmina","Ghana",5.0847,-1.35093,152,"ps.",152,NA,NA,"perpetuanen",NA,NA,NA,NA,NA,NA,"Inexpensive",3.5,532
+"215",215,"WIC","Ship: Bosbeek",1712,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,300,"ps.",300,NA,NA,"perpetuanen","green and blue",NA,"dyed",NA,NA,NA,"Mid-range",5.75,1725
+"216",216,"WIC","Ship: Bosbeek",1712,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,600,"ps.",600,NA,NA,"perpetuanen","green and blue",NA,"dyed",NA,NA,NA,"Mid-range",4,2400
+"217",217,"WIC","Ship: Acredam",1712,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,141,"ps.",141,NA,NA,"perpetuanen","blue",NA,NA,NA,NA,NA,"Mid-range",4.22695035460993,596
+"218",218,"WIC","Ship: Acredam",1712,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,352,"ps.",352,NA,NA,"perpetuanen","blue",NA,NA,NA,NA,NA,"Inexpensive",3.5,1232
+"219",219,"WIC","Ship: Acredam",1712,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,131,"ps.",131,NA,NA,"perpetuanen","green",NA,NA,NA,NA,NA,"Mid-range",4.25,556.75
+"220",220,"WIC","Ship: Acredam",1712,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,347,"ps.",347,NA,NA,"perpetuanen","green",NA,NA,NA,NA,NA,"Inexpensive",3.5,1214.5
+"221",221,"WIC","Ship: Jacoba Galeij",1713,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,640,"ps.",640,NA,NA,"perpetuanen","blue",NA,NA,NA,"Scottish",NA,"Inexpensive",3.3,2112
+"222",222,"WIC","Ship: Jacoba Galeij",1713,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,160,"ps.",160,NA,NA,"perpetuanen","green",NA,NA,NA,"Scottish",NA,"Inexpensive",3.65,584
+"223",223,"WIC","Ship: St. Marcus",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,1356,"ps.",1356,NA,NA,"perpetuanen","blue",NA,"dyed",NA,NA,NA,"Inexpensive",3.3,4474.8
+"224",224,"WIC","Ship: St. Marcus",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,555,"ps.",555,NA,NA,"perpetuanen","green",NA,"dyed",NA,NA,NA,"Inexpensive",3.65,2025.75
+"225",225,"WIC","Ship: Koningin Hester",1713,"Vlissingen","Netherlands",51.455681,3.57649,1713,"Ouidah","Benin",6.3601,2.08266,1310,"ps.",1310,NA,NA,"perpetuanen","blue",NA,NA,NA,NA,NA,"Inexpensive",3.3,4323
+"226",226,"WIC","Ship: Koningin Hester",1713,"Vlissingen","Netherlands",51.455681,3.57649,1713,"Ouidah","Benin",6.3601,2.08266,300,"ps.",300,NA,NA,"perpetuanen","green",NA,NA,NA,NA,NA,"Inexpensive",3.5,1050
+"227",227,"WIC","Ship: Bosbeek",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Elmina","Ghana",5.0847,-1.35093,729,"ps.",729,NA,NA,"perpetuanen","blue",NA,"dyed",NA,NA,NA,"Mid-range",4.1,2988.9
+"228",228,"WIC","Ship: Bosbeek",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Elmina","Ghana",5.0847,-1.35093,300,"ps.",300,NA,NA,"perpetuanen","green",NA,"dyed",NA,NA,NA,"Mid-range",4.5,1350
+"229",229,"WIC","Ship: Bosbeek",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Elmina","Ghana",5.0847,-1.35093,57,"ps.",57,NA,NA,"perpetuanen","green",NA,"dyed",NA,NA,NA,"Mid-range",4.75,270.75
+"230",230,"WIC","Ship: Bosbeek",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Elmina","Ghana",5.0847,-1.35093,109,"ps.",109,NA,NA,"perpetuanen",NA,NA,NA,NA,NA,NA,"Mid-range",4.75,517.75
+"231",231,"WIC","Ship: Guntersteijn",1713,"Texel","Netherlands",53.053921,4.79605,1714,"Ardra","Benin",6.47216,2.62652,1481,"ps.",1481,NA,NA,"perpetuanen","blue",NA,NA,NA,NA,NA,"Inexpensive",3.55,5257.55
+"232",232,"WIC","Ship: Guntersteijn",1713,"Texel","Netherlands",53.053921,4.79605,1714,"Ardra","Benin",6.47216,2.62652,560,"ps.",560,NA,NA,"perpetuanen","green",NA,NA,NA,NA,NA,"Mid-range",4.1,2296
+"233",233,"WIC","Ship: Guntersteijn",1713,"Texel","Netherlands",53.053921,4.79605,1714,"Ardra","Benin",6.47216,2.62652,28,"ps.",28,NA,NA,"perpetuanen","purple",NA,NA,NA,NA,NA,"Mid-range",4.1,114.8
+"234",234,"WIC","Ship: Apam",1714,"Vlissingen","Netherlands",51.455681,3.57649,NA,"Elmina","Ghana",5.0847,-1.35093,1518,"ps.",1518,NA,NA,"perpetuanen","blue",NA,NA,NA,NA,NA,"Inexpensive",3.8,5768.4
+"235",235,"WIC","Ship: Apam",1714,"Vlissingen","Netherlands",51.455681,3.57649,NA,"Elmina","Ghana",5.0847,-1.35093,66,"ps.",66,NA,NA,"perpetuanen","dark green",NA,NA,NA,NA,NA,"Mid-range",4.05,267.3
+"236",236,"WIC","Ship: Apam",1714,"Vlissingen","Netherlands",51.455681,3.57649,NA,"Elmina","Ghana",5.0847,-1.35093,66,"ps.",66,NA,NA,"perpetuanen","light green",NA,NA,NA,NA,NA,"Mid-range",4.05,267.3
+"237",237,"WIC","Ship: Jacoba Galeij",1714,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,12,"ps.",12,NA,NA,"perpetuanen","blue",NA,NA,NA,NA,NA,"Mid-range",4.2,50.4
+"238",238,"WIC","Ship: Jacoba Galeij",1714,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,148,"ps",148,NA,NA,"perpetuanen","green",NA,NA,NA,NA,NA,"Mid-range",4.6,680.8
+"239",239,"WIC","Ship: Adrichem",1714,"Vlissingen","Netherlands",51.455681,3.57649,1715,"Loanda","Angola",-8.838333,13.234444,215,"ps.",215,NA,NA,"perpetuanen","blue",NA,NA,NA,NA,NA,"Mid-range",5.24767441860465,1128.25
+"240",240,"WIC","Ship: Adrichem",1714,"Vlissingen","Netherlands",51.455681,3.57649,1715,"Loanda","Angola",-8.838333,13.234444,527,"ps.",527,NA,NA,"perpetuanen","blue",NA,NA,NA,NA,NA,"Inexpensive",3.8,2002.6
+"241",241,"WIC","Ship: Adrichem",1714,"Vlissingen","Netherlands",51.455681,3.57649,1715,"Loanda","Angola",-8.838333,13.234444,394,"ps.",394,NA,NA,"perpetuanen","green",NA,NA,NA,NA,NA,"Mid-range",4.05,1595.7
+"242",242,"WIC","Ship: Emmenes",1714,"Texel","Netherlands",53.053921,4.79605,1714,"Ouidah","Benin",6.3601,2.08266,219,"ps.",219,NA,NA,"perpetuanen","blue",NA,NA,NA,NA,NA,"Mid-range",4.95456621004566,1085.05
+"243",243,"WIC","Ship: Eva Maria 2",1712,"Vlissingen","Netherlands",51.455681,3.57649,1712,"Elmina","Ghana",5.0847,-1.35093,85,"""schok""",340,NA,NA,"platilios",NA,NA,NA,NA,NA,NA,"Expensive",10.6,901
+"244",244,"WIC","Ship: Eva Maria 2",1712,"Vlissingen","Netherlands",51.455681,3.57649,1712,"Elmina","Ghana",5.0847,-1.35093,212,"ps.",212,NA,NA,"platilios",NA,NA,NA,NA,NA,NA,"Inexpensive",2.65,561.8
+"245",245,"WIC","Ship: Bosbeek",1712,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,88,"schok",352,NA,NA,"platilios",NA,NA,NA,NA,NA,NA,"Expensive",10.75,946
+"246",246,"WIC","Ship: Acredam",1712,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,396,"schok",1584,NA,NA,"platilios",NA,NA,NA,NA,NA,NA,"Expensive",11,4356
+"247",247,"WIC","Ship: Acredam",1712,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,212,"schok",212,NA,NA,"platilios",NA,NA,NA,NA,NA,NA,"Inexpensive",2.65,561.8
+"248",248,"WIC","Ship: Jacoba Galeij",1713,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,87.5,"schok",350,NA,NA,"platilios",NA,NA,NA,NA,NA,NA,"Mid-range",10,875
+"249",249,"WIC","Ship: St. Marcus",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,88,"schok",352,NA,NA,"platilios",NA,NA,NA,NA,NA,NA,"Expensive",10.75,946
+"250",250,"WIC","Ship: St. Marcus",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,88,"schok",352,NA,NA,"platilios",NA,NA,NA,NA,NA,NA,"Expensive",10.25,902
+"251",251,"WIC","Ship: St. Marcus",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,88,"schok",352,NA,NA,"platilios",NA,NA,NA,NA,NA,NA,"Expensive",11.5,1012
+"252",252,"WIC","Ship: St. Marcus",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,88,"schok",352,NA,NA,"platilios",NA,NA,NA,NA,NA,NA,"Expensive",12,1056
+"253",253,"WIC","Ship: Koningin Hester",1713,"Vlissingen","Netherlands",51.455681,3.57649,1713,"Ouidah","Benin",6.3601,2.08266,167,"schok",668,NA,NA,"platilios",NA,NA,NA,NA,NA,NA,"Mid-range",9.95,1661.65
+"254",254,"WIC","Ship: Koningin Hester",1713,"Vlissingen","Netherlands",51.455681,3.57649,1713,"Ouidah","Benin",6.3601,2.08266,466,"schok",1864,NA,NA,"platilios",NA,NA,NA,NA,NA,NA,"Mid-range",9.95,4636.7
+"255",255,"WIC","Ship: Bosbeek",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Elmina","Ghana",5.0847,-1.35093,88,"schok",352,NA,NA,"platilios",NA,NA,NA,NA,NA,NA,"Expensive",10.375,913
+"256",256,"WIC","Ship: Guntersteijn",1713,"Texel","Netherlands",53.053921,4.79605,1714,"Ardra","Benin",6.47216,2.62652,83,"schok",332,NA,NA,"platilios",NA,NA,NA,NA,NA,NA,"Expensive",11,913
+"257",257,"WIC","Ship: Apam",1714,"Vlissingen","Netherlands",51.455681,3.57649,NA,"Elmina","Ghana",5.0847,-1.35093,173,"schok",692,NA,NA,"platilios",NA,NA,NA,NA,NA,NA,"Expensive",13.4971098265896,2335
+"258",258,"WIC","Ship: Jacoba Galeij",1714,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,88,"schok",352,NA,NA,"platilios",NA,NA,NA,NA,NA,NA,"Expensive",13.5,1188
+"259",259,"WIC","Ship: Agatha",1714,"Vlissingen","Netherlands",51.455681,3.57649,1714,"Elmina","Ghana",5.0847,-1.35093,88,"schok",352,NA,NA,"platilios",NA,NA,NA,NA,NA,NA,"Expensive",12.5,1100
+"260",260,"WIC","Ship: Agatha",1714,"Vlissingen","Netherlands",51.455681,3.57649,1714,"Elmina","Ghana",5.0847,-1.35093,44,"schok",176,NA,NA,"platilios",NA,NA,NA,NA,NA,NA,"Expensive",12.5,550
+"261",261,"WIC","Ship: Emmenes",1714,"Texel","Netherlands",53.053921,4.79605,1714,"Ouidah","Benin",6.3601,2.08266,132,"schok",528,NA,NA,"platilios",NA,NA,NA,NA,NA,NA,"Expensive",13.25,1749
+"262",262,"WIC","Ship: Emmenes",1714,"Texel","Netherlands",53.053921,4.79605,1714,"Ouidah","Benin",6.3601,2.08266,44,"schok",176,NA,NA,"platilios",NA,NA,NA,NA,NA,NA,"Expensive",13.25,583
+"263",263,"WIC","Ship: Emmenes",1714,"Texel","Netherlands",53.053921,4.79605,1714,"Ouidah","Benin",6.3601,2.08266,352,"schok",1408,NA,NA,"platilios",NA,NA,NA,NA,NA,NA,"Expensive",13.75,4840
+"264",264,"WIC","Ship: Emmenes",1714,"Texel","Netherlands",53.053921,4.79605,1714,"Ouidah","Benin",6.3601,2.08266,44,"schok",176,NA,NA,"platilios",NA,NA,NA,NA,NA,NA,"Expensive",13.25,583
+"265",265,"WIC","Ship: Acredam",1714,"Texel","Netherlands",53.053921,4.79605,1715,"Ardra","Benin",6.47216,2.62652,220,"schok",880,NA,NA,"platilios",NA,NA,NA,NA,NA,NA,"Expensive",13.5,2970
+"266",266,"WIC","Ship: Acredam",1714,"Texel","Netherlands",53.053921,4.79605,1715,"Ardra","Benin",6.47216,2.62652,2,"ps.",2,NA,NA,"rokken",NA,NA,NA,NA,"Japan",NA,"Expensive",29.5,59
+"267",267,"WIC","Ship: Adrichem",1711,"Vlissingen","Netherlands",51.455681,3.57649,1711,"Ouidah","Benin",6.3601,2.08266,1,"ps.",1,NA,NA,"saai","blue",NA,NA,NA,"Leiden",NA,"Expensive",22.875,22.875
+"268",268,"WIC","Ship: Jacoba Galeij",1713,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,88,"ps.",88,NA,NA,"saai","blue",NA,NA,NA,"Bremen",NA,"Expensive",12.8863636363636,1134
+"269",269,"WIC","Ship: St. Marcus",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,132,"ps.",132,NA,NA,"saai","blue",NA,"dyed",NA,"Bremen",NA,"Expensive",13.5,1782
+"270",270,"WIC","Ship: Koningin Hester",1713,"Vlissingen","Netherlands",51.455681,3.57649,1713,"Ouidah","Benin",6.3601,2.08266,167,"ps.",167,NA,NA,"saai","blue",NA,NA,NA,"Leiden",NA,"Expensive",18.75,3131.25
+"271",271,"WIC","Ship: Bosbeek",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Elmina","Ghana",5.0847,-1.35093,83,"ps.",83,NA,NA,"saai",NA,NA,"dyed",NA,"Bremen",NA,"Expensive",16,1328
+"272",272,"WIC","Ship: Guntersteijn",1713,"Texel","Netherlands",53.053921,4.79605,1714,"Ardra","Benin",6.47216,2.62652,170,"ps.",170,NA,NA,"saai",NA,NA,NA,NA,"Leiden",NA,"Expensive",15.5,2635
+"273",273,"WIC","Ship: Apam",1714,"Vlissingen","Netherlands",51.455681,3.57649,NA,"Elmina","Ghana",5.0847,-1.35093,70,"ps.",70,NA,NA,"saai","blue",NA,NA,NA,"Leiden",NA,"Expensive",20,1400
+"274",274,"WIC","Ship: Apam",1714,"Vlissingen","Netherlands",51.455681,3.57649,NA,"Elmina","Ghana",5.0847,-1.35093,28,"ps.",28,NA,NA,"saai","blue",NA,NA,NA,"Leiden",NA,"Expensive",20,560
+"275",275,"WIC","Ship: Jacoba Galeij",1714,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,140,"ps.",140,NA,NA,"saai",NA,NA,"dyed",NA,"Bremen",NA,"Expensive",16,2240
+"276",276,"WIC","Ship: Adrichem",1714,"Vlissingen","Netherlands",51.455681,3.57649,1715,"Loanda","Angola",-8.838333,13.234444,27,"ps.",27,NA,NA,"saai","blue",NA,NA,NA,"Leiden",NA,"Expensive",20,540
+"277",277,"WIC","Ship: Adrichem",1714,"Vlissingen","Netherlands",51.455681,3.57649,1715,"Loanda","Angola",-8.838333,13.234444,24,"ps.",24,NA,NA,"saai","blue",NA,NA,NA,"Leiden",NA,"Expensive",21,504
+"278",278,"WIC","Ship: Agatha",1714,"Vlissingen","Netherlands",51.455681,3.57649,1714,"Elmina","Ghana",5.0847,-1.35093,51,"ps",51,NA,NA,"saai","blue",NA,NA,NA,"Leiden",NA,"Expensive",20,1020
+"279",279,"WIC","Ship: Agatha",1714,"Vlissingen","Netherlands",51.455681,3.57649,1714,"Elmina","Ghana",5.0847,-1.35093,15,"ps.",15,NA,NA,"saai","blue",NA,NA,NA,"Leiden",NA,"Expensive",21,315
+"280",280,"WIC","Ship: Emmenes",1714,"Texel","Netherlands",53.053921,4.79605,1714,"Ouidah","Benin",6.3601,2.08266,2442,"ps.",2442,NA,NA,"saai","blue",NA,NA,NA,"Scottish",NA,"Inexpensive",3.6,8791.2
+"281",281,"WIC","Ship: Emmenes",1714,"Texel","Netherlands",53.053921,4.79605,1714,"Ouidah","Benin",6.3601,2.08266,422,"ps.",422,NA,NA,"saai","green",NA,NA,NA,"Scottish",NA,"Inexpensive",3.95,1666.9
+"282",282,"WIC","Ship: Emmenes",1714,"Texel","Netherlands",53.053921,4.79605,1714,"Ouidah","Benin",6.3601,2.08266,175,"ps.",175,NA,NA,"saai",NA,NA,"dyed",NA,"Leiden",NA,"Expensive",15.5,2712.5
+"283",283,"WIC","Ship: Emmenes",1714,"Texel","Netherlands",53.053921,4.79605,1714,"Ouidah","Benin",6.3601,2.08266,113,"ps.",113,NA,NA,"saai",NA,NA,"dyed",NA,"Scottish",NA,"Mid-range",4.17477876106195,471.75
+"284",284,"WIC","Ship: Adrichem",1711,"Vlissingen","Netherlands",51.455681,3.57649,1711,"Ouidah","Benin",6.3601,2.08266,100,"ps.",100,NA,NA,"salempouris","white",NA,NA,NA,NA,NA,"Mid-range",8.375,837.5
+"285",285,"WIC","Ship: Acredam",1712,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,100,"ps.",100,NA,NA,"salempouris","white",NA,NA,NA,NA,NA,"Mid-range",8,800
+"286",286,"WIC","Ship: Apam",1714,"Vlissingen","Netherlands",51.455681,3.57649,NA,"Elmina","Ghana",5.0847,-1.35093,160,"ps.",160,NA,NA,"salempouris","brown-blue",NA,NA,NA,NA,NA,"Expensive",10.25,1640
+"287",287,"WIC","Ship: Adrichem",1714,"Vlissingen","Netherlands",51.455681,3.57649,1715,"Loanda","Angola",-8.838333,13.234444,240,"ps.",240,NA,NA,"salempouris","brown-blue",NA,NA,NA,NA,NA,"Expensive",10.125,2430
+"288",288,"WIC","Ship: Emmenes",1714,"Texel","Netherlands",53.053921,4.79605,1714,"Ouidah","Benin",6.3601,2.08266,160,"ps.",160,NA,NA,"salempouris","brown-blue",NA,NA,NA,NA,NA,"Expensive",10.125,1620
+"289",289,"WIC","Ship: Adrichem",1711,"Vlissingen","Netherlands",51.455681,3.57649,1711,"Ouidah","Benin",6.3601,2.08266,500,"ps.",500,NA,NA,"servietten",NA,NA,NA,NA,NA,NA,"Inexpensive",2.15,1075
+"290",290,"WIC","Ship: Acredam",1712,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,500,"ps.",500,NA,NA,"servietten",NA,NA,NA,NA,NA,NA,"Inexpensive",2.15,1075
+"291",291,"WIC","Ship: St. Marcus",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,500,"ps.",500,NA,NA,"servietten",NA,NA,NA,NA,NA,NA,"Inexpensive",2.175,1087.5
+"292",292,"WIC","Ship: Koningin Hester",1713,"Vlissingen","Netherlands",51.455681,3.57649,1713,"Ouidah","Benin",6.3601,2.08266,750,"ps.",750,NA,NA,"servietten",NA,NA,NA,NA,"Silesian",NA,"Inexpensive",2.25,1687.5
+"293",293,"WIC","Ship: Guntersteijn",1713,"Texel","Netherlands",53.053921,4.79605,1714,"Ardra","Benin",6.47216,2.62652,649,"ps.",649,NA,NA,"servietten",NA,NA,NA,NA,NA,NA,"Inexpensive",2.673343605547,1735
+"294",294,"WIC","Ship: Guntersteijn",1713,"Texel","Netherlands",53.053921,4.79605,1714,"Ardra","Benin",6.47216,2.62652,256,"ps.",256,NA,NA,"servietten",NA,NA,NA,NA,NA,NA,"Inexpensive",2.4,614.4
+"295",295,"WIC","Ship: Emmenes",1714,"Texel","Netherlands",53.053921,4.79605,1714,"Ouidah","Benin",6.3601,2.08266,408,"ps.",408,NA,NA,"servietten",NA,NA,NA,NA,NA,NA,"Inexpensive",2.675,1091.4
+"296",296,"WIC","Ship: Emmenes",1714,"Texel","Netherlands",53.053921,4.79605,1714,"Ouidah","Benin",6.3601,2.08266,60,NA,60,NA,NA,"servietten",NA,NA,NA,NA,NA,NA,"Inexpensive",2.5,150
+"297",297,"WIC","Ship: Emmenes",1714,"Texel","Netherlands",53.053921,4.79605,1714,"Ouidah","Benin",6.3601,2.08266,106,"ps.",106,NA,NA,"servietten",NA,NA,NA,NA,NA,NA,"Inexpensive",2.65,280.9
+"298",298,"WIC","Ship: Acredam",1714,"Texel","Netherlands",53.053921,4.79605,1715,"Ardra","Benin",6.47216,2.62652,500,"ps.",500,NA,NA,"servietten",NA,NA,NA,NA,NA,NA,"Inexpensive",2.6,1300
+"299",299,"WIC","Ship: Honard",1710,"Hellevoetsluis","Netherlands",51.833698,4.13838,1711,"Ouidah","Benin",6.3601,2.08266,25000,"ps.",25000,NA,NA,"slaaplakens",NA,NA,NA,NA,NA,NA,"Inexpensive",0.850524,21263.1
+"300",300,"WIC","Ship: Africaanse Galeij",1710,"Texel","Netherlands",53.053921,4.79605,1711,"Elmina","Ghana",5.0847,-1.35093,5000,"ps.",5000,NA,NA,"slaaplakens",NA,NA,NA,NA,NA,NA,"Inexpensive",0.85,4250
+"301",301,"WIC","Ship: Johanna Machteld",1710,"Texel","Netherlands",53.053921,4.79605,1711,"Loanda","Angola",-8.838333,13.234444,7000,"ps.",7000,NA,NA,"slaaplakens",NA,NA,NA,NA,NA,NA,"Inexpensive",0.00142857142857143,10
+"302",302,"WIC","Ship: Eva Maria 2",1711,"Texel","Netherlands",53.053921,4.79605,1711,"Elmina","Ghana",5.0847,-1.35093,2300,"ps.",2300,NA,NA,"slaaplakens",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"303",303,"WIC","Ship: Accra",1711,"Texel","Netherlands",53.053921,4.79605,1711,"Elmina","Ghana",5.0847,-1.35093,7000,"ps.",7000,NA,NA,"slaaplakens",NA,NA,NA,NA,NA,NA,"Inexpensive",0.9125,6387.5
+"304",304,"WIC","Ship: Adrichem",1711,"Vlissingen","Netherlands",51.455681,3.57649,1711,"Ouidah","Benin",6.3601,2.08266,910,"ps.",910,NA,NA,"slaaplakens",NA,NA,NA,NA,NA,NA,"Inexpensive",0.85,773.5
+"305",305,"WIC","Ship: Adrichem",1711,"Vlissingen","Netherlands",51.455681,3.57649,1711,"Ouidah","Benin",6.3601,2.08266,68,"ps.",68,NA,NA,"slaaplakens",NA,NA,NA,NA,NA,NA,"Inexpensive",0.85,57.8
+"306",306,"WIC","Ship: Adrichem",1711,"Vlissingen","Netherlands",51.455681,3.57649,1711,"Ouidah","Benin",6.3601,2.08266,3600,"ps.",3600,NA,NA,"slaaplakens",NA,NA,NA,NA,NA,NA,"Inexpensive",0.85,3060
+"307",307,"WIC","Ship: St. Clara 2",1712,"Texel","Netherlands",53.053921,4.79605,1712,"Ouidah","Benin",6.3601,2.08266,4500,"ps.",4500,NA,NA,"slaaplakens",NA,NA,NA,NA,NA,NA,"Inexpensive",0.863722222222222,3886.75
+"308",308,"WIC","Ship: Eva Maria 2",1712,"Vlissingen","Netherlands",51.455681,3.57649,1712,"Elmina","Ghana",5.0847,-1.35093,2000,"ps.",2000,NA,NA,"slaaplakens",NA,NA,NA,NA,NA,NA,"Inexpensive",0.875,1750
+"309",309,"WIC","Ship: Eva Maria 2",1712,"Vlissingen","Netherlands",51.455681,3.57649,1712,"Elmina","Ghana",5.0847,-1.35093,2000,"ps.",2000,NA,NA,"slaaplakens",NA,NA,NA,NA,NA,NA,"Inexpensive",0.875,1750
+"310",310,"WIC","Ship: Bosbeek",1712,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,4500,"ps.",4500,NA,NA,"slaaplakens",NA,NA,NA,NA,NA,NA,"Inexpensive",0.9,4050
+"311",311,"WIC","Ship: Bosbeek",1712,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,4500,"ps.",4500,NA,NA,"slaaplakens",NA,NA,NA,NA,NA,NA,"Inexpensive",0.925,4162.5
+"312",312,"WIC","Ship: Acredam",1712,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,4500,"ps",4500,NA,NA,"slaaplakens",NA,NA,NA,NA,NA,NA,"Inexpensive",0.783333333333333,3525
+"313",313,"WIC","Ship: Acredam",1712,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,3500,"ps.",3500,NA,NA,"slaaplakens",NA,NA,NA,NA,NA,NA,"Inexpensive",0.875,3062.5
+"314",314,"WIC","Ship: Acredam",1712,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,3500,"ps.",3500,NA,NA,"slaaplakens",NA,NA,NA,NA,NA,NA,"Inexpensive",0.875,3062.5
+"315",315,"WIC","Ship: Africaanse Galeij",1713,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,8000,"ps.",8000,NA,NA,"slaaplakens",NA,NA,NA,NA,NA,NA,"Inexpensive",0.85,6800
+"316",316,"WIC","Ship: Jacoba Galeij",1713,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,16000,"ps.",16000,NA,NA,"slaaplakens",NA,NA,NA,NA,NA,NA,"Inexpensive",0.85,13600
+"317",317,"WIC","Ship: St. Marcus",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,9100,"ps.",9100,NA,NA,"slaaplakens",NA,NA,NA,NA,NA,NA,"Inexpensive",0.85,7735
+"318",318,"WIC","Ship: Koningin Hester",1713,"Vlissingen","Netherlands",51.455681,3.57649,1713,"Ouidah","Benin",6.3601,2.08266,3700,"ps.",3700,NA,NA,"slaaplakens",NA,NA,NA,NA,NA,NA,"Inexpensive",0.9,3330
+"319",319,"WIC","Ship: Koningin Hester",1713,"Vlissingen","Netherlands",51.455681,3.57649,1713,"Ouidah","Benin",6.3601,2.08266,3500,"ps.",3500,NA,NA,"slaaplakens",NA,NA,NA,NA,NA,NA,"Inexpensive",0.9,3150
+"320",320,"WIC","Ship: Bosbeek",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Elmina","Ghana",5.0847,-1.35093,8400,"ps.",8400,NA,NA,"slaaplakens",NA,NA,NA,NA,NA,NA,"Inexpensive",0.85,7140
+"321",321,"WIC","Ship: Guntersteijn",1713,"Texel","Netherlands",53.053921,4.79605,1714,"Ardra","Benin",6.47216,2.62652,15000,"ps.",15000,NA,NA,"slaaplakens",NA,NA,NA,NA,NA,NA,"Inexpensive",0.85,12750
+"322",322,"WIC","Ship: Apam",1714,"Vlissingen","Netherlands",51.455681,3.57649,NA,"Elmina","Ghana",5.0847,-1.35093,2300,"ps.",2300,NA,NA,"slaaplakens",NA,NA,NA,NA,NA,NA,"Inexpensive",0.943478260869565,2170
+"323",323,"WIC","Ship: Apam",1714,"Vlissingen","Netherlands",51.455681,3.57649,NA,"Elmina","Ghana",5.0847,-1.35093,8400,"ps.",8400,NA,NA,"slaaplakens",NA,NA,NA,NA,NA,NA,"Inexpensive",0.8625,7245
+"324",324,"WIC","Ship: Jacoba Galeij",1714,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,3000,"ps.",3000,NA,NA,"slaaplakens",NA,NA,NA,NA,NA,NA,"Inexpensive",0.8625,2587.5
+"325",325,"WIC","Ship: Jacoba Galeij",1714,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,1000,"ps.",1000,NA,NA,"slaaplakens",NA,NA,NA,NA,NA,NA,"Inexpensive",0.8625,862.5
+"326",326,"WIC","Ship: Adrichem",1714,"Vlissingen","Netherlands",51.455681,3.57649,1715,"Loanda","Angola",-8.838333,13.234444,1000,"ps.",1000,NA,NA,"slaaplakens",NA,NA,NA,NA,NA,NA,"Inexpensive",0.95,950
+"327",327,"WIC","Ship: Agatha",1714,"Vlissingen","Netherlands",51.455681,3.57649,1714,"Elmina","Ghana",5.0847,-1.35093,2000,"ps.",2000,NA,NA,"slaaplakens",NA,NA,NA,NA,NA,NA,"Inexpensive",0.8625,1725
+"328",328,"WIC","Ship: Agatha",1714,"Vlissingen","Netherlands",51.455681,3.57649,1714,"Elmina","Ghana",5.0847,-1.35093,1500,"ps.",1500,NA,NA,"slaaplakens",NA,NA,NA,NA,NA,NA,"Inexpensive",0.9,1350
+"329",329,"WIC","Ship: Agatha",1714,"Vlissingen","Netherlands",51.455681,3.57649,1714,"Elmina","Ghana",5.0847,-1.35093,3400,"ps.",3400,NA,NA,"slaaplakens",NA,NA,NA,NA,NA,NA,"Inexpensive",0.9,3060
+"330",330,"WIC","Ship: Emmenes",1714,"Texel","Netherlands",53.053921,4.79605,1714,"Ouidah","Benin",6.3601,2.08266,6700,"ps.",6700,NA,NA,"slaaplakens",NA,NA,NA,NA,NA,NA,"Inexpensive",0.9,6030
+"331",331,"WIC","Ship: Emmenes",1714,"Texel","Netherlands",53.053921,4.79605,1714,"Ouidah","Benin",6.3601,2.08266,6600,"ps.",6600,NA,NA,"slaaplakens",NA,NA,NA,NA,NA,NA,"Inexpensive",0.9,5940
+"332",332,"WIC","Ship: Emmenes",1714,"Texel","Netherlands",53.053921,4.79605,1714,"Ouidah","Benin",6.3601,2.08266,1000,"ps.",1000,NA,NA,"slaaplakens",NA,NA,NA,NA,NA,NA,"Inexpensive",0.9,900
+"333",333,"WIC","Ship: Adrichem",1714,"Vlissingen","Netherlands",51.455681,3.57649,1715,"Loanda","Angola",-8.838333,13.234444,100,"ps.",100,NA,NA,"snaphaan",NA,NA,NA,NA,NA,NA,"Inexpensive",3.6,360
+"334",334,"WIC","Ship: Adrichem",1714,"Vlissingen","Netherlands",51.455681,3.57649,1715,"Loanda","Angola",-8.838333,13.234444,100,"ps.",100,NA,NA,"snaphaan",NA,NA,NA,NA,NA,NA,"Inexpensive",3.6,360
+"335",335,"WIC","Ship: St Clara 2",1710,"Texel","Netherlands",53.053921,4.79605,1710,"Ouidah","Benin",6.3601,2.08266,200,"ps.",200,NA,NA,"tappseels",NA,NA,NA,NA,NA,NA,"Mid-range",7.875,1575
+"336",336,"WIC","Ship: Africaanse Galeij",1710,"Texel","Netherlands",53.053921,4.79605,1711,"Elmina","Ghana",5.0847,-1.35093,260,"ps.",260,NA,NA,"tappseels",NA,NA,NA,NA,NA,"fine","Mid-range",6.5,1690
+"337",337,"WIC","Ship: Africaanse Galeij",1710,"Texel","Netherlands",53.053921,4.79605,1711,"Elmina","Ghana",5.0847,-1.35093,330,"ps.",330,NA,NA,"tappseels",NA,NA,NA,NA,NA,NA,"Mid-range",4.5,1485
+"338",338,"WIC","Ship: Africaanse Galeij",1710,"Texel","Netherlands",53.053921,4.79605,1711,"Elmina","Ghana",5.0847,-1.35093,14,"ps.",14,NA,NA,"tappseels",NA,NA,NA,NA,NA,NA,"Mid-range",5.25,73.5
+"339",339,"WIC","Ship: Africaanse Galeij",1710,"Texel","Netherlands",53.053921,4.79605,1711,"Elmina","Ghana",5.0847,-1.35093,330,"ps.",330,NA,NA,"tappseels",NA,NA,NA,NA,NA,NA,"Mid-range",8.62545454545455,2846.4
+"340",340,"WIC","Ship: Eva Maria 2",1711,"Texel","Netherlands",53.053921,4.79605,1711,"Elmina","Ghana",5.0847,-1.35093,208,"ps.",208,NA,NA,"tappseels",NA,NA,NA,NA,NA,NA,"Mid-range",8.375,1742
+"341",341,"WIC","Ship: Eva Maria 2",1711,"Texel","Netherlands",53.053921,4.79605,1711,"Elmina","Ghana",5.0847,-1.35093,122,"ps.",122,NA,NA,"tappseels",NA,NA,NA,NA,NA,NA,"Mid-range",8.375,1021.75
+"342",342,"WIC","Ship: Eva Maria 2",1711,"Texel","Netherlands",53.053921,4.79605,1711,"Elmina","Ghana",5.0847,-1.35093,110,"ps.",110,NA,NA,"tappseels",NA,NA,NA,NA,NA,NA,"Mid-range",6.5,715
+"343",343,"WIC","Ship: Adrichem",1711,"Vlissingen","Netherlands",51.455681,3.57649,1711,"Ouidah","Benin",6.3601,2.08266,660,"ps.",660,NA,NA,"tappseels",NA,NA,NA,NA,NA,NA,"Mid-range",8.4,5544
+"344",344,"WIC","Ship: St. Clara 2",1712,"Texel","Netherlands",53.053921,4.79605,1712,"Ouidah","Benin",6.3601,2.08266,682,"ps.",682,NA,NA,"tappseels",NA,NA,NA,NA,NA,NA,"Mid-range",8.375,5711.75
+"345",345,"WIC","Ship: St. Clara 2",1712,"Texel","Netherlands",53.053921,4.79605,1712,"Ouidah","Benin",6.3601,2.08266,220,"ps.",220,NA,NA,"tappseels",NA,NA,NA,NA,NA,NA,"Mid-range",4.875,1072.5
+"346",346,"WIC","Ship: Eva Maria 2",1712,"Vlissingen","Netherlands",51.455681,3.57649,1712,"Elmina","Ghana",5.0847,-1.35093,166,"ps.",166,NA,NA,"tappseels",NA,NA,NA,NA,NA,NA,"Mid-range",9.75,1618.5
+"347",347,"WIC","Ship: Bosbeek",1712,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,166,"ps.",166,NA,NA,"tappseels",NA,NA,NA,NA,NA,NA,"Mid-range",8.375,1390.25
+"348",348,"WIC","Ship: Bosbeek",1712,"Texel","Netherlands",53.053921,4.79605,NA,"Elmina","Ghana",5.0847,-1.35093,80,"ps.",80,NA,NA,"tappseels",NA,NA,NA,NA,NA,NA,"Mid-range",5.25,420
+"349",349,"WIC","Ship: Acredam",1712,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,500,"ps.",500,NA,NA,"tappseels",NA,NA,NA,NA,NA,NA,"Mid-range",7.75,3875
+"350",350,"WIC","Ship: Acredam",1712,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,160,"ps.",160,NA,NA,"tappseels",NA,NA,NA,NA,NA,NA,"Mid-range",4.875,780
+"351",351,"WIC","Ship: St. Marcus",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Ouidah","Benin",6.3601,2.08266,227,"ps.",227,NA,NA,"tappseels",NA,NA,NA,NA,NA,NA,"Mid-range",8.37488986784141,1901.1
+"352",352,"WIC","Ship: Koningin Hester",1713,"Vlissingen","Netherlands",51.455681,3.57649,1713,"Ouidah","Benin",6.3601,2.08266,200,"ps.",200,NA,NA,"tappseels",NA,NA,NA,NA,NA,NA,"Mid-range",8.125,1625
+"353",353,"WIC","Ship: Bosbeek",1713,"Texel","Netherlands",53.053921,4.79605,1713,"Elmina","Ghana",5.0847,-1.35093,100,"ps.",100,NA,NA,"tappseels",NA,NA,NA,NA,NA,NA,"Mid-range",8.5,850
+"354",354,"WIC","Ship: Adrichem",1714,"Vlissingen","Netherlands",51.455681,3.57649,1715,"Loanda","Angola",-8.838333,13.234444,100,"ps.",100,NA,NA,"tappseels",NA,NA,NA,NA,NA,NA,"Mid-range",9.25,925
+"355",355,"WIC","Ship: Nieuwe Post",1715,"Texel","Netherlands",53.053921,4.79605,1715,"Loanda","Angola",-8.838333,13.234444,55,"ps.",55,NA,NA,"tappseels",NA,NA,NA,NA,NA,NA,"Inexpensive",3.86363636363636,212.5
