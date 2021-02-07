@@ -31,6 +31,28 @@ joined.data.original <- joined.data.original %>%
                                       ifelse(str_detect(dest_loc_region, "Malaysia"),
                                              "Malaysia",
                                              dest_loc_region))))
+
+joined.data.original <- joined.data.original %>%
+  mutate(colorGroup = ifelse(is.na(textile_color_arch),
+                             "No color indicated",
+                             ifelse(str_detect(textile_color_arch, "gold"),
+                                    "gold",
+                                    ifelse(str_detect(textile_color_arch, "red") | str_detect(textile_color_arch, "scarlet") | str_detect(textile_color_arch, "purple"),
+                                           "red",
+                                           ifelse(str_detect(textile_color_arch, "blue") | str_detect(textile_color_arch, "green"),
+                                                  "blue-green",
+                                                  ifelse(str_detect(textile_color_arch, "white"),
+                                                         "white",
+                                                         ifelse(str_detect(textile_color_arch, "black"),
+                                                                "black",
+                                                                ifelse(str_detect(textile_color_arch, "grey"),
+                                                                       "grey",
+                                                                       ifelse(str_detect(textile_color_arch, "yellow"),
+                                                                              "yellow",
+                                                                              ifelse(str_detect(textile_color_arch, "silver"),
+                                                                                     "silver",
+                                                                                     no = "No Color Indicated"))))))))))
+
 joined.data <- joined.data.original
 
 map.data <- map.data.original
@@ -57,7 +79,7 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                                  multiple = TRUE),
                   selectizeInput(inputId = "colors",
                                  label = "Choose color(s) of interest",
-                                 choices = levels(factor(joined.data$textile_color_arch)),
+                                 choices = levels(factor(joined.data$colorGroup)),
                                  multiple = TRUE),
                   selectizeInput(inputId = "patterns",
                                  label = "Choose pattern(s) of interest",
@@ -121,7 +143,7 @@ server <- function(input, output, session) {
     }
     if(length(colors) != 0){
       joined.data <- joined.data %>% 
-        filter(textile_color_arch %in% colors)
+        filter(colorGroup %in% colors)
     }
     if(length(patterns) != 0){
       joined.data <- joined.data %>% 
@@ -177,8 +199,6 @@ server <- function(input, output, session) {
     viewLong <- latLongZoom[,"Long"]
     viewZoom <- latLongZoom[,"Magnify"]
     
-    library(binr)
-    
     if(dataType == "Quantity"){
       bins <- totalValues$total_Quant %>%
         auto_bin() 
@@ -196,7 +216,7 @@ server <- function(input, output, session) {
                     opacity = 1,
                     weight = 1,
                     label = ~ADMIN,
-                    popup = ~paste("Total Quantity:", format(total_Quant, big.mark = ",", scientific = FALSE), sep = " ")) %>%
+                    popup = ~paste("Total Quantity:", format(ifelse(is.na(total_Quant), 0, total_Quant), big.mark = ",", scientific = FALSE), sep = " ")) %>%
         setView(lat = viewLat, lng = viewLong, zoom = viewZoom) %>%
         addLegend(pal = country.colors,
                   values = map.data@data$ADMIN,
@@ -218,7 +238,7 @@ server <- function(input, output, session) {
                     color = "black",
                     opacity = 1,
                     label = ~ADMIN,
-                    popup = ~paste("Total Value:", format(total_Dec, big.mark = ",", scientific = FALSE), "guilders", sep = " ")) %>%
+                    popup = ~paste("Total Value:", format(ifelse(is.na(total_Dec), 0, total_Dec), big.mark = ",", scientific = FALSE), "guilders", sep = " ")) %>%
         setView(lat = viewLat, lng = viewLong, zoom = viewZoom) %>%
         addLegend(pal = country.colors,
                   values = map.data@data$ADMIN,
