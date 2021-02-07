@@ -20,10 +20,7 @@ new_deb_dec_col<- function(data,
                            l="value_guldens",
                            s="value_stuivers",
                            d="value_penningen"){
-  return(data %>% mutate(deb_dec = as.numeric(deb_as_decimal(deb_lsd(getElement(data,l),
-                                                                     getElement(data,s),
-                                                                     getElement(data,d),
-                                                                     bases = c(20, 16))))))
+  return(data %>% mutate(deb_dec = as.numeric(deb_as_decimal(new_deb_lsd_col(data,l,s,d)))))
   
 }
 
@@ -61,7 +58,7 @@ get_graphType <- function(data,x,y,args=c(main=c(),aes=c())){
   if (x_type & y_type){
     #scatterplot
     return(
-      geom_point(args[1],aes(args[2]))
+      geom_point()
     )
     
   }
@@ -76,7 +73,8 @@ get_graphType <- function(data,x,y,args=c(main=c(),aes=c())){
   else{
     #use a bubble plot using geom_count
     return(
-      geom_count(args[1],aes(args[2]))
+      geom_count()
+      #args[1],aes(args[2])
     )
   }
   
