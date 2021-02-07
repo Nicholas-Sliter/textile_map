@@ -169,12 +169,21 @@ joined.data <- joined.data %>%
                                       ifelse(str_detect(dest_loc_region, "Malaysia"),
                                              "Malaysia",
                                              dest_loc_region))))
-         
-joined.data %>%
+
+totalValues <- joined.data %>%
   group_by(dest_country) %>%
-  select(dest_country, textile_quantity) %>%
+  select(dest_country, textile_quantity, deb_dec) %>%
   na.omit() %>%
-  summarise(total_Quant = sum(textile_quantity))
+  summarise(total_Quant = sum(textile_quantity),
+            total_Dec = sum(deb_dec))
+
+countries <- as.vector(totalValues[['dest_country']])
+
+map.data <- map.data %>%
+  subset(ADMIN %in% countries)
+
+map.data %>%
+  writeOGR(dsn = "countriesFiltered.geoJSON", layer = "countriesFiltered.geoJSON", driver = "geoJSON")
 
 map.data %>%
   leaflet() %>%
