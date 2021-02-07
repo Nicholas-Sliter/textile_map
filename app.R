@@ -199,7 +199,7 @@ server <- function(input, output, session) {
                     opacity = 1,
                     weight = 1,
                     label = ~ADMIN,
-                    popup = ~as.character(total_Quant)) %>%
+                    popup = ~paste("Quantity shipped |",as.character(total_Quant))) %>%
         setView(lat = viewLat, lng = viewLong, zoom = viewZoom) %>%
         addLegend(pal = country.colors,
                   values = map.data@data$ADMIN,
