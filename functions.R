@@ -128,7 +128,7 @@ convert_RegionToCountryName <- function(data,colvector,type='dest',returnValue=1
       
       temp <- str_split(nameList[i], ', ')[[1]][2]
       if(str_detect(temp, 'and ')){
-      temp <- str_split(temp, 'and ')[[1]][2]}
+        temp <- str_split(temp, 'and ')[[1]][2]}
       if(str_detect(temp, 'of ')){
         temp <- str_split(temp, 'of ')[[1]][2]}
       l <- length(temp)
@@ -204,6 +204,77 @@ add_quantity <- function(data){
 }
 
 
+
+clean_textile_name <- function(data){
+  cleaned <- data %>%
+    mutate(textile_name = str_replace_all(data$textile_name,
+                                          "adaties", 
+                                          "adathaies")) %>%
+    mutate(textile_name = str_replace_all(data$textile_name,
+                                          "aliabalijs", 
+                                          "alliballes")) %>%
+    mutate(textile_name = str_replace_all(data$textile_name,
+                                          "alibanees", 
+                                          "allibannes")) %>%
+    mutate(textile_name = str_replace_all(data$textile_name,
+                                          "allegias", 
+                                          "allejaes")) %>%
+    mutate(textile_name = str_replace_all(data$textile_name,
+                                          "amirtje|amirtjes", 
+                                          "amirtje")) %>%
+    mutate(textile_name = str_replace_all(data$textile_name,
+                                          "armozijn", 
+                                          "armosynen")) %>%
+    mutate(textile_name = str_replace_all(data$textile_name,
+                                          "atchiabanijs", 
+                                          "aichuabannys")) %>%
+    mutate(textile_name = str_replace_all(data$textile_name,
+                                          "broules|sjadderboraal", 
+                                          "Chiadder Boraal")) %>%
+    mutate(textile_name = str_replace_all(data$textile_name,
+                                          "cabayen|cambayen", 
+                                          "cabajen")) %>%
+    mutate(textile_name = str_replace_all(data$textile_name,
+                                          "cambolin", 
+                                          "camboolees")) %>%
+    mutate(textile_name = str_replace_all(data$textile_name,
+                                          "mannenhoed", 
+                                          "hoed")) %>%
+    mutate(textile_name = str_replace_all(data$textile_name,
+                                          "muris", 
+                                          "morees")) %>%
+    mutate(textile_name = str_replace_all(data$textile_name,
+                                          "negros kleden", 
+                                          "negro kleden")) %>%
+    mutate(textile_name = str_replace_all(data$textile_name,
+                                          "niquanias", 
+                                          "nickanees")) %>%
+    mutate(textile_name = str_replace_all(data$textile_name,
+                                          "patholen", 
+                                          "patola")) %>%
+    mutate(textile_name = str_replace_all(data$textile_name,
+                                          "photas", 
+                                          "photaes")) %>%
+    mutate(textile_name = str_replace_all(data$textile_name,
+                                          "rok", 
+                                          "rocken")) %>%
+    mutate(textile_name = str_replace_all(data$textile_name,
+                                          "salempuris", 
+                                          "salempores")) %>%
+    mutate(textile_name = str_replace_all(data$textile_name,
+                                          "serassen", 
+                                          "sarassa")) %>%
+    mutate(textile_name = str_replace_all(data$textile_name,
+                                          "sjaalkoord|sjaalstof", 
+                                          "sjaal")) %>%
+    mutate(textile_name = str_replace_all(data$textile_name,
+                                          "tansjeebs", 
+                                          "tanjeebs")) %>%
+    mutate(textile_name = str_replace_all(data$textile_name,
+                                          "tesser|tessergaren", 
+                                          "tussur"))
+  return(cleaned)
+}
 
 
 # get_quantity_base <- function(element1,element2){
