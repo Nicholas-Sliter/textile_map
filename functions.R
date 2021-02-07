@@ -103,7 +103,7 @@ convert_RegionToCountryName <- function(nameList,geoMatchList){
   #sep by ", " then take second portion of string to get country name from region
   #then need to deal with " x, southwest coast of India" while respecting things like
   # "Sri Lanka"
-
+  
   countries <- typeof(nameList)
   for (i in 1:length(nameList)){
     temp <- str_split(nameList[i], ', ')[[1]][2]
@@ -122,10 +122,10 @@ convert_RegionToCountryName <- function(nameList,geoMatchList){
   #split by space, keep last word then check if prior words are capitalized, if so, keep them
   countries <- str_split(nameList, ' ')
   countries <- if(str_detect(countries,"[[:upper:]]")){
-
+    
   }
   return(countries)
-
+  
 }
 
 
@@ -150,21 +150,53 @@ value_per_cols <- function(data){
 
 
 
+# get_quantity <- function(data){
+#   col1 <- getElement(data,"quant_ells")
+#   col2 <- getElement(data, "textile_quantity")
+#   Vectorize(FUN = get_quantity_base(col1,col2))
+#   
+# }
+# 
+# 
+# test <-  Vectorize(get_quantity_base,
+#                    vectorize.args = c('element1','element2'))
+
 get_quantity <- function(data){
   col1 <- getElement(data,"quant_ells")
   col2 <- getElement(data, "textile_quantity")
-  Vectorize(FUN = get_quantity_base(col1,col2))
-
-}
-
-
-get_quantity_base <- function(element1,element2){
-  if(is.na(element1)){
-    return(element2)
-  }
-  else{
-    return(element1)
-    
-  }
+  vector <- select(mutate(data,quantity=ifelse(is.na(col1) & is.na(col2),
+                                               0,
+                                               ifelse(is.na(col1),
+                                                      col2,
+                                                      col1))),'quantity')
   
+  return(vector)
 }
+
+
+
+
+# get_quantity_base <- function(element1,element2){
+#   #vectorized
+#   ifelse(is.na(element1) & is.na(element2),
+#          return(0),
+#          ifelse(is.na(element1),
+#                 return(element2),
+#                 return(element1)))
+#   
+# }
+
+# get_quantity_base <- function(element1,element2){
+#   if(is.na(element1) & is.na(element2)){
+#     return(0)
+#   }
+#   else if(is.na(element1)){
+#     return(element2)
+#   }
+#   else if(is.na(element2)){
+#     return(element1) 
+#   }
+#   else{
+#     return(0) 
+#   }
+# }
