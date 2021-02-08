@@ -315,14 +315,16 @@ server <- function(input, output, session) {
           filter(dest_country == name) %>%
           select(textile_quantity,
                  deb_dec,
-                 all_of(modifier))
+                 all_of(modifier),
+                 company)
       }
       else { #Only orig_country
         pie.data <- joined.data %>%
           filter(orig_country == name) %>%
           select(textile_quantity,
                  deb_dec,
-                 all_of(modifier))
+                 all_of(modifier),
+                 company)
       }
       
       #Omit na of the selected columns to avoid errors
@@ -451,7 +453,8 @@ server <- function(input, output, session) {
           select(textile_quantity,
                  deb_dec,
                  orig_yr,
-                 all_of(modifier))
+                 all_of(modifier),
+                 company)
       }
       else{
         bar.data <- joined.data %>%
@@ -459,7 +462,8 @@ server <- function(input, output, session) {
           select(textile_quantity,
                  deb_dec,
                  orig_yr,
-                 all_of(modifier))
+                 all_of(modifier),
+                 company)
       }
       
       if(input$omitNAs){
