@@ -221,7 +221,7 @@ get_uniqueCountryList <- function(nameList1,namelist2){
 
 value_per_cols <- function(data){
   return(data %>%
-           mutate(value_per_piece = round(deb_dec/as.numeric(textile_quantity)),2) %>%
+           mutate(value_per_piece = ceiling(deb_dec/as.numeric(textile_quantity))) %>%
            mutate(textile_quality_inferred = ifelse(value_per_piece < 4, 
                                                     "Inexpensive",
                                                     ifelse(value_per_piece >= 4 & value_per_piece <= 10,
