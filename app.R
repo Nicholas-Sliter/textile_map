@@ -65,7 +65,7 @@ map.data <- map.data.original
 
 
 ui <- fluidPage(theme = shinytheme("darkly"),
-                titlePanel("Textiles"),
+                titlePanel("Interactive Textile Explorer"),
                 sidebarPanel(
                   radioButtons(inputId = "dataSet",
                                label = "Choose company of interest",
