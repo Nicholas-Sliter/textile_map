@@ -95,7 +95,7 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                               choices = c(colnames(joined.data[,c(19:26)])),
                               selected = "textile_name"),
                   checkboxInput(inputId = "facet",
-                                label = "Facet by textile names")
+                                label = "Facet by modifier")
                 ),
                 mainPanel(
                   tabsetPanel(#All of the outputs go here (introduction, map/graphs, data tables)
@@ -488,7 +488,7 @@ server <- function(input, output, session) {
               scale_fill_discrete(name = paste(modifier)) +
               theme_bw() +
               ggtitle(label = paste(modifier, "distribution for", name, "with these filters.")) +
-              facet_wrap(~textile_name)
+              facet_wrap(~get(modifier))
           }
           else{
             bar.data %>%
@@ -519,7 +519,7 @@ server <- function(input, output, session) {
               scale_fill_discrete(name = paste(modifier)) +
               theme_bw() +
               ggtitle(label = paste(modifier, "distribution for", name, "with these filters.")) +
-              facet_wrap(~textile_name)
+              facet_wrap(~get(modifier))
           }
           else{
             bar.data %>%
