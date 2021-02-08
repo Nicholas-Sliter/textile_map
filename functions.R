@@ -354,6 +354,7 @@ clean_textile_name <- function(data){
 }
 
 
+#get color groups
 getColorGroups <- function(data){
   
   data <- data %>% mutate(colorGroup = ifelse(is.na(textile_color_arch),
@@ -401,7 +402,7 @@ sort_inputs <- function(){
 # }
 
 
-
+#filter inputs
 filter_by_inputs <- function(data,input){
   private_filter_by <- function(data, col, data_col){
     if(length(col) != 0){
