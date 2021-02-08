@@ -117,6 +117,10 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                                label = "Choose a modifier for the pie chart:",
                                choices = c(colnames(joined.data[,c(19:26)])),
                                selected = "textile_name"),
+                  radioButtons(inputId = "barChart",
+                               label = "Choose a modifier for the bar chart:",
+                               choices = c(colnames(joined.data[,c(19:26)])),
+                               selected = "textile_name"),
                   checkboxInput(inputId = "omitNAs",
                                 label = "Omit NAs in pie chart"),
                 ),
@@ -124,7 +128,8 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                   tabsetPanel(
                     tabPanel(title = "Map Explorer",
                              leafletOutput(outputId = "countriesMap"),
-                             plotOutput(outputId = "pieChart")
+                             plotOutput(outputId = "pieChart"),
+                             plotOutput(outputId = "barChart")
                     )
                   )
                 )
@@ -345,9 +350,8 @@ server <- function(input, output, session) {
           labs(x = NULL,
                y = NULL,
                fill = NULL) +
-          theme(axis.ticks = element_blank()) +
-          #theme_bw() +
-          theme_void() +
+
+          theme_bw() +
           ggtitle(label = paste(modifier, "distribution for", name, "with these filters."))
       }
       else{
@@ -358,6 +362,101 @@ server <- function(input, output, session) {
     else{
       ggplot() +
         ggtitle(label = "Select a country with data for these textiles in order to display a pie chart here.")
+    }
+    
+  })
+  
+  output$barChart <- renderPlot({
+    input$updateBtn
+    name <- input$countriesMap_shape_click$id
+    
+    if(length(name) != 0){
+      modifier <- isolate(input$barChart)
+      modifierObj <- paste("`", modifier, "`", sep = "")
+      dataSet <- isolate(input$dataSet)
+      textileName <- isolate(input$textileName)
+      colors <- isolate(input$colors)
+      patterns <- isolate(input$patterns)
+      process <- isolate(input$process)
+      fibers <- isolate(input$fibers)
+      geography <- isolate(input$geography)
+      qualities <- isolate(input$qualities)
+      inferredQualities <- isolate(input$inferredQualities)
+      orig_yr <- isolate(input$orig_yr)
+      
+      joined.data <- joined.data.original
+      
+      if(length(textileName) != 0){
+        joined.data <- joined.data %>% 
+          filter(textile_name %in% textileName)
+      }
+      if(length(colors) != 0){
+        joined.data <- joined.data %>% 
+          filter(colorGroup %in% colors)
+      }
+      if(length(patterns) != 0){
+        joined.data <- joined.data %>% 
+          filter(textile_pattern_arch %in% patterns)
+      }
+      if(length(process) != 0){
+        joined.data <- joined.data %>% 
+          filter(textile_process_arch %in% process)
+      }
+      if(length(fibers) != 0){
+        joined.data <- joined.data %>% 
+          filter(textile_fiber_arch %in% fibers)
+      }
+      if(length(geography) != 0){
+        joined.data <- joined.data %>% 
+          filter(textile_geography_arch %in% geography)
+      }
+      if(length(qualities) != 0){
+        joined.data <- joined.data %>% 
+          filter(textile_quality_arch %in% qualities)
+      }
+      if(length(inferredQualities) != 0){
+        joined.data <- joined.data %>% 
+          filter(textile_quality_inferred %in% inferredQualities)
+      }
+      
+      bar.data <- joined.data %>%
+        filter(dest_country == name) %>%
+        select(textile_quantity, 
+               orig_yr,
+               all_of(modifier))
+      
+      if(input$omitNAs){
+        bar.data <- bar.data %>%
+          na.omit()
+      }
+      else{
+        bar.data[2][is.na(bar.data[2])] <- "None indicated"
+      }
+      
+      if(dataSet != "Both"){
+        bar.data <- bar.data %>%
+          filter(company == dataSet)
+      }
+      
+      if(nrow(bar.data) != 0){
+        bar.data %>%
+          ggplot(aes(x = orig_yr, y = textile_quantity)) + 
+          geom_bar(stat="identity", 
+                   aes_string(fill=modifier)) + 
+          labs(x = "Original Year",
+               y = "Textile Quantity",
+               fill = NULL) +
+          theme_bw() +
+          ggtitle(label = paste(modifier, "distribution for", name, "with these filters."))
+      }
+      else{
+        ggplot() +
+          ggtitle(label = paste(name, " has no data for these filters and ", modifier, ".", sep = ""))
+      }
+    }
+    else{
+      ggplot() +
+        ggtitle(label = "Select a country with data for these textiles in order to display a bar chart here.")
     }
     
   })
