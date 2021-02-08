@@ -131,6 +131,8 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                 ),
                 mainPanel(
                   tabsetPanel(
+                    tabPanel(title= "Introduction",
+                              h3()),
                     tabPanel(title = "Map Explorer",
                              leafletOutput(outputId = "countriesMap"),
                              plotOutput(outputId = "pieChart"),
