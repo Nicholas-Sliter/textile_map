@@ -11,7 +11,7 @@ library(leaflet)
 #source to function file
 source('functions.R')
 
-latLongZoom.original <- data.frame("Area" = c("World", "Europe", "Africa", 
+latLongZoom.original <- data.frame("Area" = c("World", "Europe", "Africa",
                                               "Middle East", "Pacfic Islands", "Asia"),
                                    "Lat" = c(30, 49.8, -6, 27, 0, 32),
                                    "Long" = c(53, 15.47, 30, 72.5, 116, 115),
@@ -21,7 +21,7 @@ latLongZoom <- latLongZoom.original
 
 #Read in the data
 joined.data.original <- read_csv("joined.csv")
-map.data.original <- readOGR("filteredCountries.GeoJSON") 
+map.data.original <- readOGR("filteredCountries.GeoJSON")
 
 
 
@@ -87,14 +87,12 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                                  label = "Choose textile(s) of interest",
                                  choices = levels(factor(joined.data$textile_name)),
                                  multiple = TRUE),
+                  # uiOutput(outputId = 'inputs'),
+
                   selectizeInput(inputId = "colors",
                                  label = "Choose color(s) of interest",
                                  choices = levels(factor(joined.data$colorGroup)),
                                  multiple = TRUE),
-                  # selectizeInput(inputId = "colors",
-                  #                label = "Choose color(s) of interest",
-                  #                choices = unique(factor(getElement(dataTableOutput(outputId = 'update_inputs'),'colorGroup'))),
-                  #                multiple = TRUE),
                   selectizeInput(inputId = "patterns",
                                  label = "Choose pattern(s) of interest",
                                  choices = levels(factor(joined.data$textile_pattern_arch)),
@@ -119,6 +117,7 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                                  label = "Choose inferred quality(s) of interest",
                                  choices = levels(factor(joined.data$textile_quality_inferred)),
                                  multiple = TRUE),
+#Now just try sorting by frequncy
                   actionButton(inputId = "updateBtn",
                                label = "Click to update map!"),
                   br(), br(),
@@ -134,10 +133,12 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                                selected = "textile_name"),
                   checkboxInput(inputId = "facet",
                                 label = "Facet by textile names")
-                  
+
                 ),
                 mainPanel(
                   tabsetPanel(
+                    tabPanel(title= "Introduction",
+                              h3()),
                     tabPanel(title = "Map Explorer",
                              leafletOutput(outputId = "countriesMap"),
                              plotOutput(outputId = "pieChart"),
@@ -150,17 +151,64 @@ ui <- fluidPage(theme = shinytheme("darkly"),
 )
 
 server <- function(input, output, session) {
-  
-  
-  output$update_inputs <- renderDataTable(filter_by_inputs(joined.data.original,input))
-                                          #searchDelay = 1)
+
+  #inputs_table <- reactiveValues(filter_by_inputs(joined.data.original,input))
+  #output$update_inputs <- renderDataTable(filter_by_inputs(joined.data.original,input))
+
+  # observeEvent(input$table_updateBtn, {
+  #
+  #   output$update_inputs <- renderDataTable(filter_by_inputs(joined.data.original,input))
+  # })
+  #
+  output$update_inputs <- renderDataTable(searchDelay = 1000,{
+    input$table_updateBtn
+    isolate(filter_by_inputs(joined.data.original,isolate(input)))})
+
+
+  #searchDelay = 1)
   #Use this to hide modifiers when a user's current selection does not contain them
-  
-  
-  
+
+
+  # output$inputs <- renderUI(
+  #   selectizeInput(inputId = "textileName",
+  #                  label = "Choose textile(s) of interest",
+  #                  choices = levels(factor(inputs_table$textile_name)),
+  #                  multiple = TRUE),
+  #   selectizeInput(inputId = "colors",
+  #                  label = "Choose color(s) of interest",
+  #                  choices = unique(factor(inputs_table$colorGroup)),
+  #                  multiple = TRUE),
+  #   selectizeInput(inputId = "patterns",
+  #                  label = "Choose pattern(s) of interest",
+  #                  choices = levels(factor(inputs_table$textile_pattern_arch)),
+  #                  multiple = TRUE),
+  #   selectizeInput(inputId = "process",
+  #                  label = "Choose process(es) of interest",
+  #                  choices = levels(factor(inputs_table$textile_process_arch)),
+  #                  multiple = TRUE),
+  #   selectizeInput(inputId = "fibers",
+  #                  label = "Choose fiber(s) of interest",
+  #                  choices = levels(factor(inputs_table$textile_fiber_arch)),
+  #                  multiple = TRUE),
+  #   selectizeInput(inputId = "geography",
+  #                  label = "Choose geography of interest",
+  #                  choices = levels(factor(inputs_table$textile_geography_arch)),
+  #                  multiple = TRUE),
+  #   selectizeInput(inputId = "qualities",
+  #                  label = "Choose quality(s) of interest",
+  #                  choices = levels(factor(inputs_table$textile_quality_arch)),
+  #                  multiple = TRUE),
+  #   selectizeInput(inputId = "inferredQualities",
+  #                  label = "Choose inferred quality(s) of interest",
+  #                  choices = levels(factor(inputs_table$textile_quality_inferred)),
+  #                  multiple = TRUE)
+  # )
+
+
+
   output$countriesMap <- renderLeaflet({
     input$updateBtn
-    
+
     dataSet <- isolate(input$dataSet)
     dataType <- isolate(input$dataType)
     regionChoice <- isolate(input$regionChoice)
@@ -173,41 +221,42 @@ server <- function(input, output, session) {
     qualities <- isolate(input$qualities)
     inferredQualities <- isolate(input$inferredQualities)
     area <- isolate(input$zoomTo)
-    
+    table_update <- isolate(input$table_updateBtn)
+
     joined.data <- joined.data.original
-    
+
     joined.data <- filter_by_inputs(joined.data,input)
-    # 
+    #
     # if(length(textileName) != 0){
-    #   joined.data <- joined.data %>% 
+    #   joined.data <- joined.data %>%
     #     filter(textile_name %in% textileName)
     # }
     # if(length(colors) != 0){
-    #   joined.data <- joined.data %>% 
+    #   joined.data <- joined.data %>%
     #     filter(colorGroup %in% colors)
     # }
     # if(length(patterns) != 0){
-    #   joined.data <- joined.data %>% 
+    #   joined.data <- joined.data %>%
     #     filter(textile_pattern_arch %in% patterns)
     # }
     # if(length(process) != 0){
-    #   joined.data <- joined.data %>% 
+    #   joined.data <- joined.data %>%
     #     filter(textile_process_arch %in% process)
     # }
     # if(length(fibers) != 0){
-    #   joined.data <- joined.data %>% 
+    #   joined.data <- joined.data %>%
     #     filter(textile_fiber_arch %in% fibers)
     # }
     # if(length(geography) != 0){
-    #   joined.data <- joined.data %>% 
+    #   joined.data <- joined.data %>%
     #     filter(textile_geography_arch %in% geography)
     # }
     # if(length(qualities) != 0){
-    #   joined.data <- joined.data %>% 
+    #   joined.data <- joined.data %>%
     #     filter(textile_quality_arch %in% qualities)
     # }
     # if(length(inferredQualities) != 0){
-    #   joined.data <- joined.data %>% 
+    #   joined.data <- joined.data %>%
     #     filter(textile_quality_inferred %in% inferredQualities)
     # }
     if(regionChoice == "Destination"){
@@ -228,7 +277,7 @@ server <- function(input, output, session) {
         summarise(total_Quant = sum(textile_quantity),
                   total_Dec = sum(deb_dec))
     }
-    
+
     map.data@data <- left_join(map.data.original@data,
                                totalValues,
                                by = c("ADMIN" = "dest_country"))
@@ -251,27 +300,27 @@ server <- function(input, output, session) {
           summarise(total_Quant = sum(textile_quantity),
                     total_Dec = sum(deb_dec))
       }
-      
+
       map.data@data <- left_join(map.data.original@data,
                                  totalValues,
                                  by = c("ADMIN" = "orig_country"))
     }
-    
+
     latLongZoom <- latLongZoom.original %>%
       filter(Area == area)
-    
+
     viewLat <- latLongZoom[,"Lat"]
     viewLong <- latLongZoom[,"Long"]
     viewZoom <- latLongZoom[,"Magnify"]
-    
+
     if(dataType == "Quantity"){
       bins <- totalValues$total_Quant %>%
-        auto_bin() 
-      
+        auto_bin()
+
       country.colors <- colorBin(palette = "YlOrRd",
                                  domain = totalValues$total_Quant,
                                  bins = bins)
-      
+
       map.data %>%
         leaflet() %>%
         addTiles() %>%
@@ -291,11 +340,11 @@ server <- function(input, output, session) {
     else if(dataType == "Value"){
       bins <- totalValues$total_Dec %>%
         auto_bin()
-      
+
       country.colors <- colorBin(palette = "YlOrRd",
                                  domain = totalValues$total_Quant,
                                  bins = bins)
-      
+
       map.data %>%
         leaflet() %>%
         addTiles() %>%
@@ -313,13 +362,13 @@ server <- function(input, output, session) {
                   title = "Value of Textiles Shipped")
     }
   })
-  
+
   output$pieChart <- renderPlot({
     input$updateBtn
     name <- input$countriesMap_shape_click$id
-    
+
     #name <- "Netherlands"
-    
+
     if(length(name) != 0){
       modifier <- isolate(input$pieChart)
       modifierObj <- paste("`", modifier, "`", sep = "")
@@ -333,42 +382,42 @@ server <- function(input, output, session) {
       geography <- isolate(input$geography)
       qualities <- isolate(input$qualities)
       inferredQualities <- isolate(input$inferredQualities)
-      
+
       joined.data <- joined.data.original
-      
+
       if(length(textileName) != 0){
-        joined.data <- joined.data %>% 
+        joined.data <- joined.data %>%
           filter(textile_name %in% textileName)
       }
       if(length(colors) != 0){
-        joined.data <- joined.data %>% 
+        joined.data <- joined.data %>%
           filter(colorGroup %in% colors)
       }
       if(length(patterns) != 0){
-        joined.data <- joined.data %>% 
+        joined.data <- joined.data %>%
           filter(textile_pattern_arch %in% patterns)
       }
       if(length(process) != 0){
-        joined.data <- joined.data %>% 
+        joined.data <- joined.data %>%
           filter(textile_process_arch %in% process)
       }
       if(length(fibers) != 0){
-        joined.data <- joined.data %>% 
+        joined.data <- joined.data %>%
           filter(textile_fiber_arch %in% fibers)
       }
       if(length(geography) != 0){
-        joined.data <- joined.data %>% 
+        joined.data <- joined.data %>%
           filter(textile_geography_arch %in% geography)
       }
       if(length(qualities) != 0){
-        joined.data <- joined.data %>% 
+        joined.data <- joined.data %>%
           filter(textile_quality_arch %in% qualities)
       }
       if(length(inferredQualities) != 0){
-        joined.data <- joined.data %>% 
+        joined.data <- joined.data %>%
           filter(textile_quality_inferred %in% inferredQualities)
       }
-      
+
       if(regionChoice == "Destination"){
       pie.data <- joined.data %>%
         filter(dest_country == name) %>%
@@ -381,7 +430,7 @@ server <- function(input, output, session) {
           select(textile_quantity,
                  all_of(modifier))
       }
-      
+
       if(input$omitNAs){
         pie.data <- pie.data %>%
           na.omit()
@@ -389,19 +438,19 @@ server <- function(input, output, session) {
       else{
         pie.data[2][is.na(pie.data[2])] <- "None indicated"
       }
-      
+
       if(dataSet != "Both"){
         pie.data <- pie.data %>%
           filter(company == dataSet)
       }
-      
+
       if(nrow(pie.data) != 0){
         pie.data %>%
           ggplot(aes(x="",
-                     y = textile_quantity)) + 
-          geom_bar(stat="identity", 
+                     y = textile_quantity)) +
+          geom_bar(stat="identity",
                    width=1,
-                   aes_string(fill=modifier))+ 
+                   aes_string(fill=modifier))+
           coord_polar("y", start=0) +
           labs(x = NULL,
                y = NULL,
@@ -419,13 +468,13 @@ server <- function(input, output, session) {
       ggplot() +
         ggtitle(label = "Select a country with data for these textiles in order to display a pie chart here.")
     }
-    
+
   })
-  
+
   output$barChart <- renderPlot({
     input$updateBtn
     name <- input$countriesMap_shape_click$id
-    
+
     if(length(name) != 0){
       modifier <- isolate(input$barChart)
       modifierObj <- paste("`", modifier, "`", sep = "")
@@ -440,58 +489,58 @@ server <- function(input, output, session) {
       qualities <- isolate(input$qualities)
       inferredQualities <- isolate(input$inferredQualities)
       orig_yr <- isolate(input$orig_yr)
-      
+
       joined.data <- joined.data.original
-      
+
       if(length(textileName) != 0){
-        joined.data <- joined.data %>% 
+        joined.data <- joined.data %>%
           filter(textile_name %in% textileName)
       }
       if(length(colors) != 0){
-        joined.data <- joined.data %>% 
+        joined.data <- joined.data %>%
           filter(colorGroup %in% colors)
       }
       if(length(patterns) != 0){
-        joined.data <- joined.data %>% 
+        joined.data <- joined.data %>%
           filter(textile_pattern_arch %in% patterns)
       }
       if(length(process) != 0){
-        joined.data <- joined.data %>% 
+        joined.data <- joined.data %>%
           filter(textile_process_arch %in% process)
       }
       if(length(fibers) != 0){
-        joined.data <- joined.data %>% 
+        joined.data <- joined.data %>%
           filter(textile_fiber_arch %in% fibers)
       }
       if(length(geography) != 0){
-        joined.data <- joined.data %>% 
+        joined.data <- joined.data %>%
           filter(textile_geography_arch %in% geography)
       }
       if(length(qualities) != 0){
-        joined.data <- joined.data %>% 
+        joined.data <- joined.data %>%
           filter(textile_quality_arch %in% qualities)
       }
       if(length(inferredQualities) != 0){
-        joined.data <- joined.data %>% 
+        joined.data <- joined.data %>%
           filter(textile_quality_inferred %in% inferredQualities)
       }
       if(regionChoice == "Destination"){
-      
+
         bar.data <- joined.data %>%
-        
+
         filter(dest_country == name) %>%
-        select(textile_quantity, 
+        select(textile_quantity,
                orig_yr,
                all_of(modifier))
         }
       else{
         bar.data <- joined.data %>%
         filter(orig_country == name) %>%
-          select(textile_quantity, 
+          select(textile_quantity,
                  orig_yr,
                  all_of(modifier))
       }
-      
+
       if(input$omitNAs){
         bar.data <- bar.data %>%
           na.omit()
@@ -499,18 +548,18 @@ server <- function(input, output, session) {
       else{
         bar.data[2][is.na(bar.data[2])] <- "None indicated"
       }
-      
+
       if(dataSet != "Both"){
         bar.data <- bar.data %>%
           filter(company == dataSet)
       }
-      
+
       if(nrow(bar.data) != 0){
         if(input$facet){
           bar.data %>%
-            ggplot(aes(x = orig_yr, y = textile_quantity)) + 
-            geom_bar(stat="identity", 
-                     aes_string(fill=modifier)) + 
+            ggplot(aes(x = orig_yr, y = textile_quantity)) +
+            geom_bar(stat="identity",
+                     aes_string(fill=modifier)) +
             labs(x = "Original Year",
                  y = "Textile Quantity",
                  fill = NULL) +
@@ -521,9 +570,9 @@ server <- function(input, output, session) {
         }
         else{
           bar.data %>%
-          ggplot(aes(x = orig_yr, y = textile_quantity)) + 
-          geom_bar(stat="identity", 
-                   aes_string(fill=modifier)) + 
+          ggplot(aes(x = orig_yr, y = textile_quantity)) +
+          geom_bar(stat="identity",
+                   aes_string(fill=modifier)) +
           labs(x = "Original Year",
                y = "Textile Quantity",
                fill = NULL) +
@@ -539,7 +588,7 @@ server <- function(input, output, session) {
       ggplot() +
         ggtitle(label = "Select a country with data for these textiles in order to display a bar chart here.")
     }
-    
+
   })
 }
 
