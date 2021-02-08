@@ -245,6 +245,7 @@ server <- function(input, output, session) {
                     fillOpacity = .7,
                     color = "black",
                     opacity = 1,
+                    weight = 1,
                     label = ~ADMIN,
                     layerId = ~ADMIN,
                     popup = ~paste("Total Value:", format(ifelse(is.na(total_Dec), 0, total_Dec), big.mark = ",", scientific = FALSE), "guilders", sep = " ")) %>%
@@ -344,7 +345,7 @@ server <- function(input, output, session) {
       }
       else{
         ggplot() +
-          ggtitle(label = "Selected country has no data for these filters and this modifier.")
+          ggtitle(label = paste(name, " has no data for these filters and ", modifier, ".", sep = ""))
       }
     }
     else{
