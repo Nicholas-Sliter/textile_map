@@ -140,7 +140,7 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                   tabsetPanel(
                     tabPanel(title= "Introduction",
                              h2("Dutch Textile Trade from 1710 to 1715"),
-                             h4("Interact with Dutch West India Trading Company (WIC) and Dutch East India Trading Company (VOC) textile shipments from 1710 to 1715, with data compiled by Kehoe and Anderson. The Map Explorer allows the user to choose a company and data type of interest, while filtering by textile modifies, and displays an interactive world map with a complementary pie chart and bar chart when a specific country is selected. The Table Explorer displays the compiled and cleaned dataset.")),
+                             h5("Interact with Dutch West India Company (WIC) and East India Company (VOC) textile shipments from 1710 to 1715, with data compiled by Kehoe and Anderson. The Map Explorer allows the user to choose a company and data type of interest, while filtering by textile modifies, and displays an interactive world map with a complementary pie chart and bar chart when a specific country is selected. The Table Explorer displays the compiled and cleaned dataset.")),
                     tabPanel(title = "Map Explorer",
                              leafletOutput(outputId = "countriesMap"),
                              plotOutput(outputId = "pieChart"),
