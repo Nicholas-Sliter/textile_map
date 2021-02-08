@@ -97,6 +97,7 @@ detect_varType <- function(data,colname){
 }
 
 
+
 get_graphType <- function(data,x,y,args=c(main=c(),aes=c())){
   x_type <- detect_varType(data,x)
   y_type <- detect_varType(data,y)
@@ -220,7 +221,7 @@ get_uniqueCountryList <- function(nameList1,namelist2){
 
 value_per_cols <- function(data){
   return(data %>%
-           mutate(value_per_piece = deb_dec/as.numeric(textile_quantity)) %>%
+           mutate(value_per_piece = round(deb_dec/as.numeric(textile_quantity)),2) %>%
            mutate(textile_quality_inferred = ifelse(value_per_piece < 4, 
                                                     "Inexpensive",
                                                     ifelse(value_per_piece >= 4 & value_per_piece <= 10,
@@ -336,7 +337,7 @@ clean_textile_name <- function(data){
 
 #function to get/return orig or dest
 
-
+get_orig_or_dest <- function
 
 
 
