@@ -83,14 +83,12 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                                  label = "Choose textile(s) of interest",
                                  choices = levels(factor(joined.data$textile_name)),
                                  multiple = TRUE),
+                  # uiOutput(outputId = 'inputs'),
+                  
                   selectizeInput(inputId = "colors",
                                  label = "Choose color(s) of interest",
                                  choices = levels(factor(joined.data$colorGroup)),
                                  multiple = TRUE),
-                  # selectizeInput(inputId = "colors",
-                  #                label = "Choose color(s) of interest",
-                  #                choices = unique(factor(getElement(dataTableOutput(outputId = 'update_inputs'),'colorGroup'))),
-                  #                multiple = TRUE),
                   selectizeInput(inputId = "patterns",
                                  label = "Choose pattern(s) of interest",
                                  choices = levels(factor(joined.data$textile_pattern_arch)),
@@ -115,8 +113,11 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                                  label = "Choose inferred quality(s) of interest",
                                  choices = levels(factor(joined.data$textile_quality_inferred)),
                                  multiple = TRUE),
+#Now just try sorting by frequncy
                   actionButton(inputId = "updateBtn",
                                label = "Click to update map!"),
+                  actionButton(inputId = 'table_updateBtn',
+                               label = 'Click to update table!'), 
                   radioButtons(inputId = "pieChart",
                                label = "Choose a modifier for the pie chart:",
                                choices = c(colnames(joined.data[,c(19:26)])),
@@ -126,7 +127,7 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                                choices = c(colnames(joined.data[,c(19:26)])),
                                selected = "textile_name"),
                   checkboxInput(inputId = "omitNAs",
-                                label = "Omit NAs in pie chart"),
+                                label = "Omit NAs in pie chart")
                 ),
                 mainPanel(
                   tabsetPanel(
@@ -143,10 +144,57 @@ ui <- fluidPage(theme = shinytheme("darkly"),
 
 server <- function(input, output, session) {
   
+  #inputs_table <- reactiveValues(filter_by_inputs(joined.data.original,input))
+  #output$update_inputs <- renderDataTable(filter_by_inputs(joined.data.original,input))
+
+  # observeEvent(input$table_updateBtn, {
+  #   
+  #   output$update_inputs <- renderDataTable(filter_by_inputs(joined.data.original,input))
+  # })
+  # 
+  output$update_inputs <- renderDataTable(searchDelay = 1000,{
+    input$table_updateBtn
+    isolate(filter_by_inputs(joined.data.original,isolate(input)))})
   
-  output$update_inputs <- renderDataTable(filter_by_inputs(joined.data.original,input))
-                                          #searchDelay = 1)
+  
+  #searchDelay = 1)
   #Use this to hide modifiers when a user's current selection does not contain them
+  
+  
+  # output$inputs <- renderUI(
+  #   selectizeInput(inputId = "textileName",
+  #                  label = "Choose textile(s) of interest",
+  #                  choices = levels(factor(inputs_table$textile_name)),
+  #                  multiple = TRUE),
+  #   selectizeInput(inputId = "colors",
+  #                  label = "Choose color(s) of interest",
+  #                  choices = unique(factor(inputs_table$colorGroup)),
+  #                  multiple = TRUE),
+  #   selectizeInput(inputId = "patterns",
+  #                  label = "Choose pattern(s) of interest",
+  #                  choices = levels(factor(inputs_table$textile_pattern_arch)),
+  #                  multiple = TRUE),
+  #   selectizeInput(inputId = "process",
+  #                  label = "Choose process(es) of interest",
+  #                  choices = levels(factor(inputs_table$textile_process_arch)),
+  #                  multiple = TRUE),
+  #   selectizeInput(inputId = "fibers",
+  #                  label = "Choose fiber(s) of interest",
+  #                  choices = levels(factor(inputs_table$textile_fiber_arch)),
+  #                  multiple = TRUE),
+  #   selectizeInput(inputId = "geography",
+  #                  label = "Choose geography of interest",
+  #                  choices = levels(factor(inputs_table$textile_geography_arch)),
+  #                  multiple = TRUE),
+  #   selectizeInput(inputId = "qualities",
+  #                  label = "Choose quality(s) of interest",
+  #                  choices = levels(factor(inputs_table$textile_quality_arch)),
+  #                  multiple = TRUE),
+  #   selectizeInput(inputId = "inferredQualities",
+  #                  label = "Choose inferred quality(s) of interest",
+  #                  choices = levels(factor(inputs_table$textile_quality_inferred)),
+  #                  multiple = TRUE)
+  # )
   
   
   
@@ -164,43 +212,12 @@ server <- function(input, output, session) {
     qualities <- isolate(input$qualities)
     inferredQualities <- isolate(input$inferredQualities)
     area <- isolate(input$zoomTo)
+    table_update <- isolate(input$table_updateBtn)
     
     joined.data <- joined.data.original
     
-    joined.data <- filter_by_inputs(joined.data,input)
-    # 
-    # if(length(textileName) != 0){
-    #   joined.data <- joined.data %>% 
-    #     filter(textile_name %in% textileName)
-    # }
-    # if(length(colors) != 0){
-    #   joined.data <- joined.data %>% 
-    #     filter(colorGroup %in% colors)
-    # }
-    # if(length(patterns) != 0){
-    #   joined.data <- joined.data %>% 
-    #     filter(textile_pattern_arch %in% patterns)
-    # }
-    # if(length(process) != 0){
-    #   joined.data <- joined.data %>% 
-    #     filter(textile_process_arch %in% process)
-    # }
-    # if(length(fibers) != 0){
-    #   joined.data <- joined.data %>% 
-    #     filter(textile_fiber_arch %in% fibers)
-    # }
-    # if(length(geography) != 0){
-    #   joined.data <- joined.data %>% 
-    #     filter(textile_geography_arch %in% geography)
-    # }
-    # if(length(qualities) != 0){
-    #   joined.data <- joined.data %>% 
-    #     filter(textile_quality_arch %in% qualities)
-    # }
-    # if(length(inferredQualities) != 0){
-    #   joined.data <- joined.data %>% 
-    #     filter(textile_quality_inferred %in% inferredQualities)
-    # }
+    joined.data <- isolate(filter_by_inputs(joined.data,isolate(input)))
+
     
     if(dataSet != "Both"){
       totalValues <- joined.data %>%
