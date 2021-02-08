@@ -170,8 +170,8 @@ server <- function(input, output, session) {
                                  totalValues,
                                  by = c("ADMIN" = "dest_country"))
     }
-    else{ #Redo everything form before, except now using orig_country
-      if(dataSet != "Both"){
+    else{ #Redo everything from before, except now using orig_country
+      if(dataSet != "Both"){ 
         totalValues <- joined.data %>%
           filter(company == dataSet) %>%
           group_by(orig_country) %>%
@@ -194,6 +194,7 @@ server <- function(input, output, session) {
                                  by = c("ADMIN" = "orig_country"))
     }
     
+    #This will be used to zoom to a specific region on the map
     latLongZoom <- latLongZoom.original %>%
       filter(Area == area)
     
@@ -201,18 +202,18 @@ server <- function(input, output, session) {
     viewLong <- latLongZoom[,"Long"]
     viewZoom <- latLongZoom[,"Magnify"]
     
-    if(dataType == "Quantity"){
+    if(dataType == "Quantity"){ #This will show the total quantity of textiles
       bins <- totalValues$total_Quant %>%
-        auto_bin()
+        auto_bin() #Custom function for determining the bins we will use
       
       country.colors <- colorBin(palette = "YlOrRd",
                                  domain = totalValues$total_Quant,
                                  bins = bins)
-      
+      #Mapping the data
       map.data %>%
         leaflet() %>%
         addTiles() %>%
-        addPolygons(fillColor = ~country.colors(total_Quant),
+        addPolygons(fillColor = ~country.colors(total_Quant), #We only use polygons for countries we may have actually used
                     fillOpacity = .7,
                     color = "black",
                     opacity = 1,
@@ -225,7 +226,7 @@ server <- function(input, output, session) {
                   values = map.data@data$ADMIN,
                   title = "Quantities of Textiles Shipped")
     }
-    else if(dataType == "Value"){
+    else if(dataType == "Value"){ #Redo everything the same except for total value
       bins <- totalValues$total_Dec %>%
         auto_bin()
       
@@ -251,15 +252,15 @@ server <- function(input, output, session) {
     }
   })
   
+  #Used to render the plot for pie chart
   output$pieChart <- renderPlot({
     input$updateBtn
     name <- input$countriesMap_shape_click$id
     
-    #name <- "Netherlands"
-    
+    #only want to do this if they clicked on a country
     if(length(name) != 0){
+      #Read in all of the inputs, but isolated
       modifier <- isolate(input$pieChart)
-      modifierObj <- paste("`", modifier, "`", sep = "")
       dataSet <- isolate(input$dataSet)
       regionChoice <- isolate(input$regionChoice)
       textileName <- isolate(input$textileName)
@@ -271,8 +272,10 @@ server <- function(input, output, session) {
       qualities <- isolate(input$qualities)
       inferredQualities <- isolate(input$inferredQualities)
       
+      #Again, reusing the original data
       joined.data <- joined.data.original
       
+      #Filter all the inputs
       if(length(textileName) != 0){
         joined.data <- joined.data %>%
           filter(textile_name %in% textileName)
@@ -306,14 +309,15 @@ server <- function(input, output, session) {
           filter(textile_quality_inferred %in% inferredQualities)
       }
       
-      if(regionChoice == "Destination"){
+      #We care specifically about the destination here
+      if(regionChoice == "Destination"){ #Only dest_country
         pie.data <- joined.data %>%
           filter(dest_country == name) %>%
           select(textile_quantity,
                  deb_dec,
                  all_of(modifier))
       }
-      else {
+      else { #Only orig_country
         pie.data <- joined.data %>%
           filter(orig_country == name) %>%
           select(textile_quantity,
@@ -321,28 +325,29 @@ server <- function(input, output, session) {
                  all_of(modifier))
       }
       
+      #Omit na of the selected columns to avoid errors
       if(input$omitNAs){
         pie.data <- pie.data %>%
           na.omit()
       }
-      else{
+      else{ #Fix a problem for if NA is the only data point
         pie.data[3][is.na(pie.data[3])] <- "None indicated"
       }
       
-      if(dataSet != "Both"){
+      if(dataSet != "Both"){ #Controlling for company selection
         pie.data <- pie.data %>%
           filter(company == dataSet)
       }
       
-      if(isolate(input$dataType) == "Quantity"){
-        if(nrow(pie.data) != 0){
-          pie.data %>%
+      if(isolate(input$dataType) == "Quantity"){ #If they're interested in quantity
+        if(nrow(pie.data) != 0){ #check to see if there are values left to publish
+          pie.data %>% 
             ggplot(aes(x="",
                        y = textile_quantity)) +
             geom_bar(stat="identity",
                      width=1,
                      aes_string(fill=modifier))+
-            coord_polar("y", start=0) +
+            coord_polar("y", start=0) + #This line in particular changes the bar chart to a pie chart
             labs(x = NULL,
                  y = NULL,
                  fill = NULL) +
@@ -350,12 +355,12 @@ server <- function(input, output, session) {
             theme_void() +
             ggtitle(label = paste(modifier, "distribution for", name, "with these filters."))
         }
-        else{
+        else{ #No rows were found
           ggplot() +
             ggtitle(label = paste(name, " has no data for these filters and ", modifier, ".", sep = ""))
         }
       }
-      else{
+      else{ #This will do total value the same way, except graphing deb_dec
         if(nrow(pie.data) != 0){
           pie.data %>%
             ggplot(aes(x="",
@@ -377,12 +382,14 @@ server <- function(input, output, session) {
         }
       }
     }
-    else{
+    else{ #This comes up if they have not clicked any countries
       ggplot() +
         ggtitle(label = "Select a country with data for these textiles in order to display a pie chart here.")
     }
   })
   
+  #Rendering the bar chart - this works nearly the exact same way as the pie chart
+  #except when it is graphing the outputs, it is doing so with a bar chart instead of a pie chart
   output$barChart <- renderPlot({
     input$updateBtn
     name <- input$countriesMap_shape_click$id
