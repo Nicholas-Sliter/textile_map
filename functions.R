@@ -9,12 +9,60 @@ new_deb_lsd_col <- function(data,
                             s="value_stuivers",
                             d="value_penningen"){
   
-  return(data %>% mutate(deb_lsd = deb_lsd(ifelse(is.na(getElement(data,l)),0,as.numeric(getElement(data,l))),
-                                           ifelse(is.na(getElement(data,s)),0,as.numeric(getElement(data,s))),
-                                           ifelse(is.na(getElement(data,d)),0,as.numeric(getElement(data,d))),
+  # return(data %>% mutate(deb_lsd = deb_lsd(ifelse(is.na(getElement(data,l)),0,as.numeric(getElement(data,l))),
+  #                                          ifelse(is.na(getElement(data,s)),0,as.numeric(getElement(data,s))),
+  #                                          ifelse(is.na(getElement(data,d)),0,as.numeric(getElement(data,d))),
+  #                                          bases = c(20, 16))))
+  
+  return(data %>% mutate(deb_lsd = deb_lsd(clean_deb_values(data,l),
+                                           clean_deb_values(data,s),
+                                           clean_deb_values(data,d),
                                            bases = c(20, 16))))
   
+
+  
 }
+
+
+clean_deb_values <- function(data,col){
+  str_replace_all(getElement(data,col),'x','0')
+  str_replace_all(getElement(data,col),' ',"")
+    ifelse(is.na(getElement(data,col)) | is.null(getElement(data,col)) | is.na(as.numeric(getElement(data,col))),
+         0,
+         as.numeric(getElement(data,col)))
+  
+  
+  
+}
+
+
+
+# valueToNumeric_or_na_toZero <- function(data,value){
+#   #replace x with 0
+#   str_replace_all(getElement(data,value),'x','0')
+#   str_replace_all(getElement(data,value),' ',"")
+#   
+#   ifelse(is_na_or_null(value)),return(0),
+# 
+#   else {
+#     ifelse((!is.na(as.numeric(getElement(data,value))))
+#     return(as.numeric(getElement(data,value)))
+#   }
+#   else{
+#     return(0)
+#   }
+# }
+# 
+# 
+# 
+# is_na_or_null <- function(element){
+#   if (is.na(element) | is.null(element)){
+#   return(TRUE)}
+#   else{
+#     return(FALSE)
+#   }
+# }
+
 
 new_deb_dec_col<- function(data,
                            l="value_guldens",
@@ -25,7 +73,7 @@ new_deb_dec_col<- function(data,
 }
 
 
-deb_deb_from_lsd<- function(data,colname = 'deb_lsd'){
+deb_dec_from_lsd<- function(data,colname = 'deb_lsd'){
   return(data %>% mutate(deb_dec = as.numeric(deb_as_decimal(getElement(data,colname)))))
   
 }
@@ -108,7 +156,7 @@ to_numeric_naToZero <- function(colname){
 
 
 
-convert_RegionToCountryName <- function(data,colvector,type='dest',returnValue=1){
+convert_RegionToCountryName <- function(colvector,type='dest',returnValue=1){
   #takes a list of regions containing country names and returns clean country names
   #sep by ", " then take second portion of string to get country name from region
   #then need to deal with " x, southwest coast of India" while respecting things like
@@ -125,28 +173,27 @@ convert_RegionToCountryName <- function(data,colvector,type='dest',returnValue=1
     #only split if necessary
     temp <- nameList[i]
     if(str_detect(temp,", ")){
-      
-      temp <- str_split(nameList[i], ', ')[[1]][2]
-      if(str_detect(temp, 'and ')){
-        temp <- str_split(temp, 'and ')[[1]][2]}
-      if(str_detect(temp, 'of ')){
-        temp <- str_split(temp, 'of ')[[1]][2]}
-      l <- length(temp)
-      if(l>1){
-        if(str_count(tmp,"[[:upper:]]" < l)){
-          temp <- str_split(temp, " ")
-          lword <- temp[-1]
-          pword <- temp[-2]
-          if(str_detect(pword,"[[:upper:]]")){
-            pword <- paste(pword, " ", sep="")
-          }
-          else{
-            pword <- ""
-          }
-          temp <- paste(pword,lword,sep="")
+      temp <- str_split(nameList[i], ', ')[[1]][2]}
+    if(str_detect(temp, 'and ')){
+      temp <- str_split(temp, 'and ')[[1]][2]}
+    if(str_detect(temp, 'of ')){
+      temp <- str_split(temp, 'of ')[[1]][2]}
+    l <- length(str_split(temp, " "))
+    if(l>1){
+      if(str_count(temp,"[[:upper:]]" < l)){
+        temp <- str_split(temp, " ")
+        lword <- temp[-1]
+        pword <- temp[-2]
+        if(str_detect(pword,"[[:upper:]]")){
+          pword <- paste(pword, " ", sep="")
         }
+        else{
+          pword <- ""
+        }
+        temp <- paste(pword,lword,sep="")
       }
     }
+    
     vector[i] <- temp
     #getElement(data,get(new_colname))[i] <- temp
     
@@ -275,6 +322,13 @@ clean_textile_name <- function(data){
                                           "tussur"))
   return(cleaned)
 }
+
+
+
+#function to get/return orig or dest
+
+
+
 
 
 # get_quantity_base <- function(element1,element2){

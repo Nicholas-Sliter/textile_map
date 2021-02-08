@@ -50,23 +50,28 @@ VOC_deb <- VOC_deb %>% mutate(deb_lsd = deb_lsd(l = VOC_deb$value_guldens,
 
 #if NA then set to 0
 
-new_deb_lsd_col <- function(data,
-                            l="value_guldens",
-                            s="value_stuivers",
-                            d="value_penningen"){
-  return(data %>% mutate(deb_lsd = deb_lsd(getElement(data,l),
-                                           getElement(data,s),
-                                           getElement(data,d),
-                                           bases = c(20, 16))))
-  
-}
+# new_deb_lsd_col <- function(data,
+#                             l="value_guldens",
+#                             s="value_stuivers",
+#                             d="value_penningen"){
+#   return(data %>% mutate(deb_lsd = deb_lsd(getElement(data,l),
+#                                            getElement(data,s),
+#                                            getElement(data,d),
+#                                            bases = c(20, 16))))
+#   
+# }
 
 
-WIC_deb <- WIC_main %>% new_deb_lsd_col()
-WIC_deb <- WIC_deb %>% mutate(deb_dec = as.numeric(deb_as_decimal(WIC_deb$deb_lsd)))
+#create debkeepr cols
+WIC_deb <- WIC_main %>% new_deb_lsd_col() %>% deb_dec_from_lsd
 
-VOC_deb <- VOC_deb %>% new_deb_lsd_col()
-VOC_deb <- VOC_deb %>% mutate(deb_dec = as.numeric(deb_as_decimal(VOC_deb$deb_lsd)))
+VOC_deb <- VOC_main %>% new_deb_lsd_col() %>% deb_dec_from_lsd
+
+# WIC_deb <- WIC_main %>% new_deb_lsd_col()
+# WIC_deb <- WIC_deb %>% mutate(deb_dec = as.numeric(deb_as_decimal(WIC_deb$deb_lsd)))
+# 
+# VOC_deb <- VOC_deb %>% new_deb_lsd_col()
+# VOC_deb <- VOC_deb %>% mutate(deb_dec = as.numeric(deb_as_decimal(VOC_deb$deb_lsd)))
 
 for (i in 1:length(VOC_deb$textile_quantity)){
   #remove bad characters, round, change to numeric, etc, set to NA if bad
@@ -140,6 +145,19 @@ VOC_toJoin <- value_per_cols(VOC_toJoin)
 #clean the different name spellings
 WIC_toJoin <- clean_textile_name(WIC_toJoin)
 VOC_toJoin <- clean_textile_name(VOC_toJoin)
+
+
+#clean country (region) names for dest and orig
+WIC_toJoin <- WIC_toJoin %>% 
+  mutate(orig_country = convert_RegionToCountryName(orig_loc_region_modern)) %>%
+  mutate(dest_country = convert_RegionToCountryName(dest_loc_region))
+VOC_toJoin <- VOC_toJoin %>% 
+  mutate(orig_country = convert_RegionToCountryName(orig_loc_region_modern)) %>%
+  mutate(dest_country = convert_RegionToCountryName(dest_loc_region))
+
+
+#fix NA not being 0
+
 
 joined <- full_join(WIC_toJoin,VOC_toJoin,by=colnames(WIC_toJoin))
 #use quant_ells if available if not, use textile_quantity

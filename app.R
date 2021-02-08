@@ -23,14 +23,20 @@ latLongZoom <- latLongZoom.original
 joined.data.original <- read_csv("joined.csv")
 map.data.original <- readOGR("filteredCountries.GeoJSON") 
 
-joined.data.original <- joined.data.original %>%
-  mutate(dest_country = ifelse(str_detect(dest_loc_region, "Indonesia"),
-                               "Indonesia",
-                               ifelse(str_detect(dest_loc_region, "India"),
-                                      "India",
-                                      ifelse(str_detect(dest_loc_region, "Malaysia"),
-                                             "Malaysia",
-                                             dest_loc_region))))
+
+
+
+
+
+
+# joined.data.original <- joined.data.original %>%
+#   mutate(dest_country = ifelse(str_detect(dest_loc_region, "Indonesia"),
+#                                "Indonesia",
+#                                ifelse(str_detect(dest_loc_region, "India"),
+#                                       "India",
+#                                       ifelse(str_detect(dest_loc_region, "Malaysia"),
+#                                              "Malaysia",
+#                                              dest_loc_region))))
 
 joined.data.original <- joined.data.original %>%
   mutate(colorGroup = ifelse(is.na(textile_color_arch),
