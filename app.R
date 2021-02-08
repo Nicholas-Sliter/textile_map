@@ -140,13 +140,15 @@ server <- function(input, output, session) {
     area <- isolate(input$zoomTo)
     table_update <- isolate(input$table_updateBtn)
     
+    #Every time, we want to start with all of the data to filter through
     joined.data <- joined.data.original
     
+    #Use the function to filter the inputs
     joined.data <- filter_by_inputs(joined.data,input)
     
-    if(regionChoice == "Destination"){
+    if(regionChoice == "Destination"){ #Decide which to filter by
       joined.data <- isolate(filter_by_inputs(joined.data,isolate(input)))
-      if(dataSet != "Both"){
+      if(dataSet != "Both"){ #
         totalValues <- joined.data %>%
           filter(company == dataSet) %>%
           group_by(dest_country) %>%
@@ -440,6 +442,7 @@ server <- function(input, output, session) {
           
           filter(dest_country == name) %>%
           select(textile_quantity,
+                 deb_dec,
                  orig_yr,
                  all_of(modifier))
       }
