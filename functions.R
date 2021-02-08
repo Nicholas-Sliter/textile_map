@@ -220,8 +220,13 @@ get_uniqueCountryList <- function(nameList1,namelist2){
 
 
 value_per_cols <- function(data){
-  return(data %>%
-           mutate(value_per_piece = ceiling(deb_dec/as.numeric(textile_quantity))) %>%
+  # data <- data %>% mutate(quantity = as.numeric(ifelse(!is.na(data$quant_ells),
+  #                                            data$quant_ells,
+  #                                            ifelse(is.na(data$textile_quantity) | data$textile_quantity == 0,
+  #                                                   1,
+  #                                                   data$texile_quantity))))
+    return(data %>%
+           mutate(value_per_piece = ceiling(deb_dec/textile_quantity)) %>%
            mutate(textile_quality_inferred = ifelse(value_per_piece < 4, 
                                                     "Inexpensive",
                                                     ifelse(value_per_piece >= 4 & value_per_piece <= 10,
@@ -232,19 +237,37 @@ value_per_cols <- function(data){
 }
 
 
+# get_quantity <- function(col1,col2){
+#   # return(select(mutate(data,
+#   #                      quantity=as.numeric(ifelse(is.na(quant_ells) & is.na(textile_quantity),
+#   #                                                 1,
+#   #                                                 ifelse(is.na(quant_ells),
+#   #                                                        textile_quantity,
+#   #                                                        quant_ells)))),'quantity'))
+#   
+#   return(as.numeric(ifelse(is.na(col2) & is.na(col1),
+#                                                   1,
+#                                                   ifelse(is.na(col2),
+#                                                          col1,
+#                                                          col2))))
+#   
+# }
+# 
 
-get_quantity <- function(data){
-  #gets quantity from dataframe and returns a vector
-  col1 <- getElement(data,"quant_ells")
-  col2 <- getElement(data, "textile_quantity")
-  vector <- select(mutate(data,quantity=ifelse(is.na(col1) & is.na(col2),
-                                               0,
-                                               ifelse(is.na(col1),
-                                                      col2,
-                                                      col1))),'quantity')
-  
-  return(vector)
-}
+
+#if NA set to 1 unit
+# get_quantity <- function(data){
+#   #gets quantity from dataframe and returns a vector
+#   col1 <- getElement(data,"quant_ells")
+#   col2 <- getElement(data, "textile_quantity")
+#   vector <- select(mutate(data,quantity=ifelse(is.na(col1) & is.na(col2),
+#                                                1,
+#                                                ifelse(is.na(col1),
+#                                                       col2,
+#                                                       col1))),'quantity')
+#   
+#   return(vector)
+# }
 
 
 add_quantity <- function(data){

@@ -346,7 +346,8 @@ server <- function(input, output, session) {
                y = NULL,
                fill = NULL) +
           theme(axis.ticks = element_blank()) +
-          theme_bw() +
+          #theme_bw() +
+          theme_void() +
           ggtitle(label = paste(modifier, "distribution for", name, "with these filters."))
       }
       else{

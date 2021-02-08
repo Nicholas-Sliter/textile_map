@@ -16,8 +16,8 @@ WIC <- read_xlsx('WIC_2021_Total_InELLS.xlsx')
 WIC_main <- WIC
 
 #clean here  
-VOC_main$total_value <- str_remove_all(VOC_main$total_value,'\\.','')
-VOC_valueVector <- str_split(VOC_main$total_value,',')
+#VOC_main$total_value <- str_remove_all(VOC_main$total_value,'\\.')
+#VOC_valueVector <- str_split(VOC_main$total_value,',')
 
 
 #add if NA then set to 0
@@ -139,6 +139,16 @@ WIC_toJoin <- WIC_toJoin %>%
 
 
 #Create the value cols 
+WIC_toJoin <- WIC_toJoin %>% mutate(textile_quantity = ifelse(is.na(textile_quantity),
+                                                              NA,
+                                                              ifelse(textile_quantity==0,
+                                                                     1,
+                                                                     textile_quantity)))
+VOC_toJoin <- VOC_toJoin %>% mutate(textile_quantity = ifelse(is.na(textile_quantity),
+                                                              NA,
+                                                              ifelse(textile_quantity==0,
+                                                                     1,
+                                                                     textile_quantity)))
 WIC_toJoin <- value_per_cols(WIC_toJoin)
 VOC_toJoin <- value_per_cols(VOC_toJoin)
 
