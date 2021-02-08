@@ -87,6 +87,10 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                                  label = "Choose color(s) of interest",
                                  choices = levels(factor(joined.data$colorGroup)),
                                  multiple = TRUE),
+                  # selectizeInput(inputId = "colors",
+                  #                label = "Choose color(s) of interest",
+                  #                choices = unique(factor(getElement(dataTableOutput(outputId = 'update_inputs'),'colorGroup'))),
+                  #                multiple = TRUE),
                   selectizeInput(inputId = "patterns",
                                  label = "Choose pattern(s) of interest",
                                  choices = levels(factor(joined.data$textile_pattern_arch)),
@@ -130,7 +134,9 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                              leafletOutput(outputId = "countriesMap"),
                              plotOutput(outputId = "pieChart"),
                              plotOutput(outputId = "barChart")
-                    )
+                    ),
+                    tabPanel(title = "Table Explorer",
+                             dataTableOutput('update_inputs'))
                   )
                 )
 )
@@ -138,13 +144,9 @@ ui <- fluidPage(theme = shinytheme("darkly"),
 server <- function(input, output, session) {
   
   
-  output$update_inputs <- renderUI({
-    
-    
-    
-    
-  })
-  
+  output$update_inputs <- renderDataTable(filter_by_inputs(joined.data.original,input))
+                                          #searchDelay = 1)
+  #Use this to hide modifiers when a user's current selection does not contain them
   
   
   
@@ -164,7 +166,7 @@ server <- function(input, output, session) {
     area <- isolate(input$zoomTo)
     
     joined.data <- joined.data.original
-
+    
     joined.data <- filter_by_inputs(joined.data,input)
     # 
     # if(length(textileName) != 0){
