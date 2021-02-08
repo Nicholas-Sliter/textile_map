@@ -337,7 +337,7 @@ clean_textile_name <- function(data){
 
 #function to get/return orig or dest
 
-get_orig_or_dest <- function
+get_orig_or_dest <- function(){}
 
 
 
