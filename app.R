@@ -147,17 +147,17 @@ server <- function(input, output, session) {
     joined.data <- filter_by_inputs(joined.data,input)
     
     if(regionChoice == "Destination"){ #Decide which to filter by
-      joined.data <- isolate(filter_by_inputs(joined.data,isolate(input)))
-      if(dataSet != "Both"){ #
-        totalValues <- joined.data %>%
+      joined.data <- isolate(filter_by_inputs(joined.data,isolate(input))) #filter by the chosen inputs
+      if(dataSet != "Both"){ #if they are interested in a specific company
+        totalValues <- joined.data %>% #Total values to graph things later on and color the map
           filter(company == dataSet) %>%
           group_by(dest_country) %>%
           select(dest_country, textile_quantity, deb_dec) %>%
-          na.omit() %>%
+          na.omit() %>% #If it is missing these columns, it will cause issues
           summarise(total_Quant = sum(textile_quantity),
                     total_Dec = sum(deb_dec))
       }
-      else{
+      else{ #This will use data from both companies
         totalValues <- joined.data %>%
           group_by(dest_country) %>%
           select(dest_country, textile_quantity, deb_dec) %>%
@@ -166,11 +166,11 @@ server <- function(input, output, session) {
                     total_Dec = sum(deb_dec))
       }
       
-      map.data@data <- left_join(map.data.original@data,
+      map.data@data <- left_join(map.data.original@data, #Join with the map data, using the original map data each time
                                  totalValues,
                                  by = c("ADMIN" = "dest_country"))
     }
-    else{
+    else{ #Redo everything form before, except now using orig_country
       if(dataSet != "Both"){
         totalValues <- joined.data %>%
           filter(company == dataSet) %>%
@@ -470,7 +470,7 @@ server <- function(input, output, session) {
       
       if(isolate(input$dataType) == "Quantity"){
         if(nrow(bar.data) != 0){
-          if(input$facet){
+          if(isolate(input$facet)){
             bar.data %>%
               ggplot(aes(x = orig_yr, y = textile_quantity)) +
               geom_bar(stat="identity",
@@ -501,7 +501,7 @@ server <- function(input, output, session) {
         }}
       else{
         if(nrow(bar.data) != 0){
-          if(input$facet){
+          if(isolate(input$facet)){
             bar.data %>%
               ggplot(aes(x = factor(orig_yr), y = textile_quantity)) +
               geom_bar(stat="identity",
