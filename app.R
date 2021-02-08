@@ -350,8 +350,7 @@ server <- function(input, output, session) {
           labs(x = NULL,
                y = NULL,
                fill = NULL) +
-
-          theme_bw() +
+          theme_void() +
           ggtitle(label = paste(modifier, "distribution for", name, "with these filters."))
       }
       else{
