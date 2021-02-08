@@ -185,8 +185,18 @@ totalValues <- joined.data %>%
   summarise(total_Quant = sum(textile_quantity),
             total_Dec = sum(deb_dec))
 
+totalValues <- joined.data %>%
+  group_by(orig_country) %>%
+  select(orig_country, textile_quantity, deb_dec) %>%
+  na.omit() %>%
+  summarise(total_Quant = sum(textile_quantity),
+            total_Dec = sum(deb_dec))
+
 dest_country <- as.vector(totalValues[['dest_country']])
 orig_country <- as.vector(totalValues[['orig_country']])
+
+print(dest_country)
+print(orig_country)
 
 map.data <- map.data %>%
   subset(ADMIN %in% dest_country | ADMIN %in% orig_country)

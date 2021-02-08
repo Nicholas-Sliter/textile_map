@@ -23,50 +23,14 @@ latLongZoom <- latLongZoom.original
 joined.data.original <- read_csv("joined.csv")
 map.data.original <- readOGR("filteredCountries.GeoJSON")
 
-
-
-
-
-
-
-# joined.data.original <- joined.data.original %>%
-#   mutate(dest_country = ifelse(str_detect(dest_loc_region, "Indonesia"),
-#                                "Indonesia",
-#                                ifelse(str_detect(dest_loc_region, "India"),
-#                                       "India",
-#                                       ifelse(str_detect(dest_loc_region, "Malaysia"),
-#                                              "Malaysia",
-#                                              dest_loc_region))))
-
-joined.data.original <- joined.data.original %>%
-  mutate(colorGroup = ifelse(is.na(textile_color_arch),
-                             "No color indicated",
-                             ifelse(str_detect(textile_color_arch, "gold"),
-                                    "gold",
-                                    ifelse(str_detect(textile_color_arch, "red") | str_detect(textile_color_arch, "scarlet") | str_detect(textile_color_arch, "purple"),
-                                           "red",
-                                           ifelse(str_detect(textile_color_arch, "blue") | str_detect(textile_color_arch, "green"),
-                                                  "blue-green",
-                                                  ifelse(str_detect(textile_color_arch, "white"),
-                                                         "white",
-                                                         ifelse(str_detect(textile_color_arch, "black"),
-                                                                "black",
-                                                                ifelse(str_detect(textile_color_arch, "grey"),
-                                                                       "grey",
-                                                                       ifelse(str_detect(textile_color_arch, "yellow"),
-                                                                              "yellow",
-                                                                              ifelse(str_detect(textile_color_arch, "silver"),
-                                                                                     "silver",
-                                                                                     no = "Other"))))))))))
-
+#make copies of original data
 joined.data <- joined.data.original
-
 map.data <- map.data.original
 
-
+#Creating the UI
 ui <- fluidPage(theme = shinytheme("darkly"),
                 titlePanel("Interactive Textile Explorer"),
-                sidebarPanel(
+                sidebarPanel(#All inputs will go in this sidebarPanel
                   radioButtons(inputId = "dataSet",
                                label = "Choose company of interest",
                                choices = c("WIC", "VOC", "Both"),
@@ -87,8 +51,6 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                                  label = "Choose textile(s) of interest",
                                  choices = levels(factor(joined.data$textile_name)),
                                  multiple = TRUE),
-                  # uiOutput(outputId = 'inputs'),
-                  
                   selectizeInput(inputId = "colors",
                                  label = "Choose color(s) of interest",
                                  choices = levels(factor(joined.data$colorGroup)),
@@ -117,12 +79,11 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                                  label = "Choose inferred quality(s) of interest",
                                  choices = levels(factor(joined.data$textile_quality_inferred)),
                                  multiple = TRUE),
-                  #Now just try sorting by frequncy
                   actionButton(inputId = "updateBtn",
                                label = "Click to update map!"),
                   actionButton(inputId = 'table_updateBtn',
                                label = 'Click to update table!'),
-                  br(), br(),
+                  br(), br(), #The inputs for the pie chart and bar chart
                   selectInput(inputId = "pieChart",
                               label = "Choose a modifier for the pie chart:",
                               choices = c(colnames(joined.data[,c(19:26)])),
@@ -137,10 +98,10 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                                 label = "Facet by textile names")
                 ),
                 mainPanel(
-                  tabsetPanel(
+                  tabsetPanel(#All of the outputs go here (introduction, map/graphs, data tables)
                     tabPanel(title= "Introduction",
                              h2("Dutch Textile Trade from 1710 to 1715"),
-                             h5("Interact with Dutch West India Company (WIC) and East India Company (VOC) textile shipments from 1710 to 1715, with data compiled by Kehoe and Anderson. The Map Explorer allows the user to choose a company and data type of interest, while filtering by textile modifies, and displays an interactive world map with a complementary pie chart and bar chart when a specific country is selected. The Table Explorer displays the compiled and cleaned dataset.")),
+                             h5("Interact with Dutch West India Company (WIC) and East India Company (VOC) textile shipments from 1710 to 1715, with data compiled by Kehoe and Anderson. The Map Explorer allows the user to choose a company and data type of interest, while filtering by textile modifiers, and displays an interactive world map with a complementary pie chart and bar chart when a specific country is selected. The Table Explorer displays the compiled and cleaned dataset.")),
                     tabPanel(title = "Map Explorer",
                              leafletOutput(outputId = "countriesMap"),
                              plotOutput(outputId = "pieChart"),
@@ -154,63 +115,17 @@ ui <- fluidPage(theme = shinytheme("darkly"),
 
 server <- function(input, output, session) {
   
-  #inputs_table <- reactiveValues(filter_by_inputs(joined.data.original,input))
-  #output$update_inputs <- renderDataTable(filter_by_inputs(joined.data.original,input))
-  
-  # observeEvent(input$table_updateBtn, {
-  #
-  #   output$update_inputs <- renderDataTable(filter_by_inputs(joined.data.original,input))
-  # })
-  #
+  #Render the data table based on the given search
   output$update_inputs <- renderDataTable(searchDelay = 1000,{
     input$table_updateBtn
-    isolate(filter_by_inputs(joined.data.original,isolate(input)))})
-  
-  
-  #searchDelay = 1)
-  #Use this to hide modifiers when a user's current selection does not contain them
-  
-  
-  # output$inputs <- renderUI(
-  #   selectizeInput(inputId = "textileName",
-  #                  label = "Choose textile(s) of interest",
-  #                  choices = levels(factor(inputs_table$textile_name)),
-  #                  multiple = TRUE),
-  #   selectizeInput(inputId = "colors",
-  #                  label = "Choose color(s) of interest",
-  #                  choices = unique(factor(inputs_table$colorGroup)),
-  #                  multiple = TRUE),
-  #   selectizeInput(inputId = "patterns",
-  #                  label = "Choose pattern(s) of interest",
-  #                  choices = levels(factor(inputs_table$textile_pattern_arch)),
-  #                  multiple = TRUE),
-  #   selectizeInput(inputId = "process",
-  #                  label = "Choose process(es) of interest",
-  #                  choices = levels(factor(inputs_table$textile_process_arch)),
-  #                  multiple = TRUE),
-  #   selectizeInput(inputId = "fibers",
-  #                  label = "Choose fiber(s) of interest",
-  #                  choices = levels(factor(inputs_table$textile_fiber_arch)),
-  #                  multiple = TRUE),
-  #   selectizeInput(inputId = "geography",
-  #                  label = "Choose geography of interest",
-  #                  choices = levels(factor(inputs_table$textile_geography_arch)),
-  #                  multiple = TRUE),
-  #   selectizeInput(inputId = "qualities",
-  #                  label = "Choose quality(s) of interest",
-  #                  choices = levels(factor(inputs_table$textile_quality_arch)),
-  #                  multiple = TRUE),
-  #   selectizeInput(inputId = "inferredQualities",
-  #                  label = "Choose inferred quality(s) of interest",
-  #                  choices = levels(factor(inputs_table$textile_quality_inferred)),
-  #                  multiple = TRUE)
-  # )
-  
-  
-  
+    isolate(filter_by_inputs(joined.data.original,isolate(input)))}) #filters the data for what has been searched
+
+  #The map of countries to be rendered
   output$countriesMap <- renderLeaflet({
+    #We only want it to update when the updateBtn is pushed
     input$updateBtn
     
+    #reading in all of the inputs, isolating them
     dataSet <- isolate(input$dataSet)
     dataType <- isolate(input$dataType)
     regionChoice <- isolate(input$regionChoice)
@@ -228,39 +143,7 @@ server <- function(input, output, session) {
     joined.data <- joined.data.original
     
     joined.data <- filter_by_inputs(joined.data,input)
-    #
-    # if(length(textileName) != 0){
-    #   joined.data <- joined.data %>%
-    #     filter(textile_name %in% textileName)
-    # }
-    # if(length(colors) != 0){
-    #   joined.data <- joined.data %>%
-    #     filter(colorGroup %in% colors)
-    # }
-    # if(length(patterns) != 0){
-    #   joined.data <- joined.data %>%
-    #     filter(textile_pattern_arch %in% patterns)
-    # }
-    # if(length(process) != 0){
-    #   joined.data <- joined.data %>%
-    #     filter(textile_process_arch %in% process)
-    # }
-    # if(length(fibers) != 0){
-    #   joined.data <- joined.data %>%
-    #     filter(textile_fiber_arch %in% fibers)
-    # }
-    # if(length(geography) != 0){
-    #   joined.data <- joined.data %>%
-    #     filter(textile_geography_arch %in% geography)
-    # }
-    # if(length(qualities) != 0){
-    #   joined.data <- joined.data %>%
-    #     filter(textile_quality_arch %in% qualities)
-    # }
-    # if(length(inferredQualities) != 0){
-    #   joined.data <- joined.data %>%
-    #     filter(textile_quality_inferred %in% inferredQualities)
-    # }
+    
     if(regionChoice == "Destination"){
       joined.data <- isolate(filter_by_inputs(joined.data,isolate(input)))
       if(dataSet != "Both"){
