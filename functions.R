@@ -172,6 +172,7 @@ convert_RegionToCountryName <- function(colvector,type='dest',returnValue=1){
   nameList <- colvector
   #data <- data %>% mutate (countries = "")
   vector <- nameList
+  cardinals <- c('Southwest ', 'Northwest ', 'Southeast ', 'Northeast ')
   for(i in 1:length(nameList)){
     
     
@@ -197,6 +198,9 @@ convert_RegionToCountryName <- function(colvector,type='dest',returnValue=1){
         }
         temp <- paste(pword,lword,sep="")
       }
+    }
+    if(sum(str_detect(temp, cardinals))>0){
+      temp <- min(str_replace_all(temp, cardinals, ""))
     }
     
     vector[i] <- temp
