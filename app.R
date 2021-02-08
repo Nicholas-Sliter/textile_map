@@ -134,7 +134,7 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                               choices = c(colnames(joined.data[,c(19:26)])),
                               selected = "textile_name"),
                   checkboxInput(inputId = "facet",
-                                label = "Facet by textile names"),
+                                label = "Facet by textile names")
                 ),
                 mainPanel(
                   tabsetPanel(
@@ -262,7 +262,7 @@ server <- function(input, output, session) {
     #     filter(textile_quality_inferred %in% inferredQualities)
     # }
     if(regionChoice == "Destination"){
-        joined.data <- isolate(filter_by_inputs(joined.data,isolate(input)))
+      joined.data <- isolate(filter_by_inputs(joined.data,isolate(input)))
       if(dataSet != "Both"){
         totalValues <- joined.data %>%
           filter(company == dataSet) %>%
@@ -425,12 +425,14 @@ server <- function(input, output, session) {
         pie.data <- joined.data %>%
           filter(dest_country == name) %>%
           select(textile_quantity,
+                 deb_dec,
                  all_of(modifier))
       }
       else {
         pie.data <- joined.data %>%
           filter(orig_country == name) %>%
           select(textile_quantity,
+                 deb_dec,
                  all_of(modifier))
       }
       
@@ -439,7 +441,7 @@ server <- function(input, output, session) {
           na.omit()
       }
       else{
-        pie.data[2][is.na(pie.data[2])] <- "None indicated"
+        pie.data[3][is.na(pie.data[3])] <- "None indicated"
       }
       
       if(dataSet != "Both"){
@@ -447,31 +449,53 @@ server <- function(input, output, session) {
           filter(company == dataSet)
       }
       
-      if(nrow(pie.data) != 0){
-        pie.data %>%
-          ggplot(aes(x="",
-                     y = textile_quantity)) +
-          geom_bar(stat="identity",
-                   width=1,
-                   aes_string(fill=modifier))+
-          coord_polar("y", start=0) +
-          labs(x = NULL,
-               y = NULL,
-               fill = NULL) +
-          scale_fill_discrete(name = paste(modifier)) +
-          theme_void() +
-          ggtitle(label = paste(modifier, "distribution for", name, "with these filters."))
+      if(isolate(input$dataType) == "Quantity"){
+        if(nrow(pie.data) != 0){
+          pie.data %>%
+            ggplot(aes(x="",
+                       y = textile_quantity)) +
+            geom_bar(stat="identity",
+                     width=1,
+                     aes_string(fill=modifier))+
+            coord_polar("y", start=0) +
+            labs(x = NULL,
+                 y = NULL,
+                 fill = NULL) +
+            scale_fill_discrete(name = paste(modifier)) +
+            theme_void() +
+            ggtitle(label = paste(modifier, "distribution for", name, "with these filters."))
+        }
+        else{
+          ggplot() +
+            ggtitle(label = paste(name, " has no data for these filters and ", modifier, ".", sep = ""))
+        }
       }
       else{
-        ggplot() +
-          ggtitle(label = paste(name, " has no data for these filters and ", modifier, ".", sep = ""))
+        if(nrow(pie.data) != 0){
+          pie.data %>%
+            ggplot(aes(x="",
+                       y = deb_dec)) +
+            geom_bar(stat="identity",
+                     width=1,
+                     aes_string(fill=modifier))+
+            coord_polar("y", start=0) +
+            labs(x = NULL,
+                 y = NULL,
+                 fill = NULL) +
+            scale_fill_discrete(name = paste(modifier)) +
+            theme_void() +
+            ggtitle(label = paste(modifier, "monetary distribution for", name, "with these filters."))
+        }
+        else{
+          ggplot() +
+            ggtitle(label = paste(name, " has no data for these filters and ", modifier, ".", sep = ""))
+        }
       }
     }
     else{
       ggplot() +
         ggtitle(label = "Select a country with data for these textiles in order to display a pie chart here.")
     }
-    
   })
   
   output$barChart <- renderPlot({
@@ -540,6 +564,7 @@ server <- function(input, output, session) {
         bar.data <- joined.data %>%
           filter(orig_country == name) %>%
           select(textile_quantity,
+                 deb_dec,
                  orig_yr,
                  all_of(modifier))
       }
@@ -549,7 +574,7 @@ server <- function(input, output, session) {
           na.omit()
       }
       else{
-        bar.data[2][is.na(bar.data[2])] <- "None indicated"
+        bar.data[4][is.na(bar.data[4])] <- "None indicated"
       }
       
       if(dataSet != "Both"){
@@ -557,36 +582,69 @@ server <- function(input, output, session) {
           filter(company == dataSet)
       }
       
-      if(nrow(bar.data) != 0){
-        if(input$facet){
-          bar.data %>%
-            ggplot(aes(x = orig_yr, y = textile_quantity)) +
-            geom_bar(stat="identity",
-                     aes_string(fill=modifier)) +
-            labs(x = "Original Year",
-                 y = "Textile Quantity",
-                 fill = NULL) +
-            scale_fill_discrete(name = paste(modifier)) +
-            theme_bw() +
-            ggtitle(label = paste(modifier, "distribution for", name, "with these filters.")) +
-            facet_wrap(~textile_name)
-        }
+      if(isolate(input$dataType) == "Quantity"){
+        if(nrow(bar.data) != 0){
+          if(input$facet){
+            bar.data %>%
+              ggplot(aes(x = orig_yr, y = textile_quantity)) +
+              geom_bar(stat="identity",
+                       aes_string(fill=modifier)) +
+              labs(x = "Original Year",
+                   y = "Textile Quantity",
+                   fill = NULL) +
+              scale_fill_discrete(name = paste(modifier)) +
+              theme_bw() +
+              ggtitle(label = paste(modifier, "distribution for", name, "with these filters.")) +
+              facet_wrap(~textile_name)
+          }
+          else{
+            bar.data %>%
+              ggplot(aes(x = factor(orig_yr), y = textile_quantity)) +
+              geom_bar(stat="identity",
+                       aes_string(fill=modifier)) +
+              labs(x = "Original Year",
+                   y = "Textile Quantity",
+                   fill = NULL) +
+              scale_fill_discrete(name = paste(modifier)) +
+              theme_bw() +
+              ggtitle(label = paste(modifier, "distribution for", name, "with these filters."))
+          }}
         else{
-          bar.data %>%
-            ggplot(aes(x = orig_yr, y = textile_quantity)) +
-            geom_bar(stat="identity",
-                     aes_string(fill=modifier)) +
-            labs(x = "Original Year",
-                 y = "Textile Quantity",
-                 fill = NULL) +
-            scale_fill_discrete(name = paste(modifier)) +
-            theme_bw() +
-            ggtitle(label = paste(modifier, "distribution for", name, "with these filters."))
+          ggplot() +
+            ggtitle(label = paste(name, " has no data for these filters and ", modifier, ".", sep = ""))
         }}
       else{
-        ggplot() +
-          ggtitle(label = paste(name, " has no data for these filters and ", modifier, ".", sep = ""))
-      }}
+        if(nrow(bar.data) != 0){
+          if(input$facet){
+            bar.data %>%
+              ggplot(aes(x = factor(orig_yr), y = textile_quantity)) +
+              geom_bar(stat="identity",
+                       aes_string(fill=modifier)) +
+              labs(x = "Original Year",
+                   y = "Textile Quantity",
+                   fill = NULL) +
+              scale_fill_discrete(name = paste(modifier)) +
+              theme_bw() +
+              ggtitle(label = paste(modifier, "distribution for", name, "with these filters.")) +
+              facet_wrap(~textile_name)
+          }
+          else{
+            bar.data %>%
+              ggplot(aes(x = orig_yr, y = deb_dec)) +
+              geom_bar(stat="identity",
+                       aes_string(fill=modifier)) +
+              labs(x = "Original Year",
+                   y = "Textile Value (guilders)",
+                   fill = NULL) +
+              scale_fill_discrete(name = paste(modifier)) +
+              theme_bw() +
+              ggtitle(label = paste(modifier, "monetary distribution for", name, "with these filters."))
+          }}
+        else{
+          ggplot() +
+            ggtitle(label = paste(name, " has no data for these filters and ", modifier, ".", sep = ""))
+        }}
+      }
     else{
       ggplot() +
         ggtitle(label = "Select a country with data for these textiles in order to display a bar chart here.")
