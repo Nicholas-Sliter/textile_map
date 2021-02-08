@@ -358,10 +358,138 @@ clean_textile_name <- function(data){
 
 
 
+
+
+sort_inputs <- function(){
+  
+  
+}
+
+
+# private_filter_by <- function(data, col, data_col){
+#   if(length(col) != 0){
+#     data <- data %>% 
+#       filter(data_col %in% col)
+#   }
+#   return(data)
+#   
+# }
+
+
+
+filter_by_inputs <- function(data,input){
+  private_filter_by <- function(data, col, data_col){
+    if(length(col) != 0){
+      data <- data %>% 
+        filter(data_col %in% col)
+    }
+    return(data)
+    
+  }
+  
+  data <- private_filter_by(data,input$textileName,data$textile_name)
+  data <- private_filter_by(data,input$colors,data$colorGroup)
+  data <- private_filter_by(data,input$patterns,data$textile_pattern_arch)
+  data <- private_filter_by(data,input$process,data$textile_process_arch)
+  data <- private_filter_by(data,input$fibers,data$textile_fiber_arch)
+  data <- private_filter_by(data,input$geography,data$textile_geography_arch)
+  data <- private_filter_by(data,input$qualities,data$textile_quality_arch)
+  data <- private_filter_by(data,input$inferredQualities,data$textile_quality_inferred)
+  
+  return(data)
+  
+  # 
+  # if(length(input$textileName) != 0){
+  #   joined.data <- joined.data %>% 
+  #     filter(textile_name %in% input$textileName)
+  # }
+  # if(length(input$colors) != 0){
+  #   joined.data <- joined.data %>% 
+  #     filter(colorGroup %in% input$colors)
+  # }
+  # if(length(input$patterns) != 0){
+  #   joined.data <- joined.data %>% 
+  #     filter(textile_pattern_arch %in% input$patterns)
+  # }
+  # if(length(input$process) != 0){
+  #   joined.data <- joined.data %>% 
+  #     filter(textile_process_arch %in% input$process)
+  # }
+  # if(length(input$fibers) != 0){
+  #   joined.data <- joined.data %>% 
+  #     filter(textile_fiber_arch %in% input$fibers)
+  # }
+  # if(length(input$geography) != 0){
+  #   joined.data <- joined.data %>% 
+  #     filter(textile_geography_arch %in% input$geography)
+  # }
+  # if(length(input$qualities) != 0){
+  #   joined.data <- joined.data %>% 
+  #     filter(textile_quality_arch %in% input$qualities)
+  # }
+  # if(length(input$inferredQualities) != 0){
+  #   joined.data <- joined.data %>% 
+  #     filter(textile_quality_inferred %in% input$inferredQualities)
+  # }
+  
+  
+  
+}
+
+
+
+
+
+
+
 #function to get/return orig or dest
 
-get_orig_or_dest <- function(){}
-
+# get_orig_or_dest <- function(input,output="function"){
+#   #uses button input to determine outputting dest or orig results, and output to determine
+#   #whether to output a string or a function (for ggplot)
+#   
+#   
+#   
+#   switch(output){
+#     
+#     
+#     
+#     
+#     
+#   }
+#   
+#   
+#   
+#   if (output=='function'){
+#     if (input=="orig"){
+#       out <- geom_
+#       
+#     }
+#     else{
+#       
+#       
+#     }
+#     
+#   }
+#   else if (output=='string'){
+#     if (input=="orig"){
+#       
+#       
+#     }
+#     else{
+#       
+#       
+#     }
+#   }
+#   else{
+#     #defualt edge case (return NULL)
+#    out <-  NULL
+#   }
+#   
+#   return(out)
+#   
+#   }
+# 
 
 
 # get_quantity_base <- function(element1,element2){

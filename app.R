@@ -137,6 +137,17 @@ ui <- fluidPage(theme = shinytheme("darkly"),
 
 server <- function(input, output, session) {
   
+  
+  output$update_inputs <- renderUI({
+    
+    
+    
+    
+  })
+  
+  
+  
+  
   output$countriesMap <- renderLeaflet({
     input$updateBtn
     
@@ -153,40 +164,41 @@ server <- function(input, output, session) {
     area <- isolate(input$zoomTo)
     
     joined.data <- joined.data.original
-    
-    
-    if(length(textileName) != 0){
-      joined.data <- joined.data %>% 
-        filter(textile_name %in% textileName)
-    }
-    if(length(colors) != 0){
-      joined.data <- joined.data %>% 
-        filter(colorGroup %in% colors)
-    }
-    if(length(patterns) != 0){
-      joined.data <- joined.data %>% 
-        filter(textile_pattern_arch %in% patterns)
-    }
-    if(length(process) != 0){
-      joined.data <- joined.data %>% 
-        filter(textile_process_arch %in% process)
-    }
-    if(length(fibers) != 0){
-      joined.data <- joined.data %>% 
-        filter(textile_fiber_arch %in% fibers)
-    }
-    if(length(geography) != 0){
-      joined.data <- joined.data %>% 
-        filter(textile_geography_arch %in% geography)
-    }
-    if(length(qualities) != 0){
-      joined.data <- joined.data %>% 
-        filter(textile_quality_arch %in% qualities)
-    }
-    if(length(inferredQualities) != 0){
-      joined.data <- joined.data %>% 
-        filter(textile_quality_inferred %in% inferredQualities)
-    }
+
+    joined.data <- filter_by_inputs(joined.data,input)
+    # 
+    # if(length(textileName) != 0){
+    #   joined.data <- joined.data %>% 
+    #     filter(textile_name %in% textileName)
+    # }
+    # if(length(colors) != 0){
+    #   joined.data <- joined.data %>% 
+    #     filter(colorGroup %in% colors)
+    # }
+    # if(length(patterns) != 0){
+    #   joined.data <- joined.data %>% 
+    #     filter(textile_pattern_arch %in% patterns)
+    # }
+    # if(length(process) != 0){
+    #   joined.data <- joined.data %>% 
+    #     filter(textile_process_arch %in% process)
+    # }
+    # if(length(fibers) != 0){
+    #   joined.data <- joined.data %>% 
+    #     filter(textile_fiber_arch %in% fibers)
+    # }
+    # if(length(geography) != 0){
+    #   joined.data <- joined.data %>% 
+    #     filter(textile_geography_arch %in% geography)
+    # }
+    # if(length(qualities) != 0){
+    #   joined.data <- joined.data %>% 
+    #     filter(textile_quality_arch %in% qualities)
+    # }
+    # if(length(inferredQualities) != 0){
+    #   joined.data <- joined.data %>% 
+    #     filter(textile_quality_inferred %in% inferredQualities)
+    # }
     
     if(dataSet != "Both"){
       totalValues <- joined.data %>%
