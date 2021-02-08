@@ -195,9 +195,3 @@ map.data %>%
   addLegend(pal = country.colors(),
             values = ~textile_quantity,
             title = "Textile Imports by Region")
-
-latLongZoom <- data.frame("Area" = c("World", "Europe", "Africa", 
-                                     "Middle East", "Pacfic Islands", "Asia"),
-                          "Lat" = c(35),
-                          "Long" = c(53),
-                          "Magnify" = c(2))

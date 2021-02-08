@@ -137,6 +137,10 @@ WIC_toJoin <- WIC_toJoin %>%
 WIC_toJoin <- value_per_cols(WIC_toJoin)
 VOC_toJoin <- value_per_cols(VOC_toJoin)
 
+#clean the different name spellings
+WIC_toJoin <- clean_textile_name(WIC_toJoin)
+VOC_toJoin <- clean_textile_name(VOC_toJoin)
+
 joined <- full_join(WIC_toJoin,VOC_toJoin,by=colnames(WIC_toJoin))
 #use quant_ells if available if not, use textile_quantity
 
@@ -148,6 +152,5 @@ write.csv(VOC_toJoin,'VOC_clean.csv')
 # DOnt remove . , but round to nearest whole
 #replace x with 0, replace strings to NA, replace entire string with NA if / is present?
 #split weird fractions before fraction
-
 
 
