@@ -133,7 +133,12 @@ get_graphType <- function(data,x,y,args=c(main=c(),aes=c())){
 }
 
 auto_bin <- function(data) {
-  maxValue <- max(data)
+  if(NROW(data) == 0){
+    maxValue <- 0
+  }
+  else{
+    maxValue <- max(data)
+  }
   if(maxValue < 50){
     maxValue <- 50
   }

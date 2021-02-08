@@ -12,10 +12,10 @@ library(leaflet)
 source('functions.R')
 
 latLongZoom.original <- data.frame("Area" = c("World", "Europe", "Africa", 
-                                     "Middle East", "Pacfic Islands", "Asia"),
-                          "Lat" = c(30, 49.8, -6, 27, 0, 32),
-                          "Long" = c(53, 15.47, 30, 72.5, 116, 115),
-                          "Magnify" = c(2, 4.25, 2.5, 4, 4, 3.25))
+                                              "Middle East", "Pacfic Islands", "Asia"),
+                                   "Lat" = c(30, 49.8, -6, 27, 0, 32),
+                                   "Long" = c(53, 15.47, 30, 72.5, 116, 115),
+                                   "Magnify" = c(2, 4.25, 2.5, 4, 4, 3.25))
 
 latLongZoom <- latLongZoom.original
 
@@ -113,11 +113,18 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                                  multiple = TRUE),
                   actionButton(inputId = "updateBtn",
                                label = "Click to update map!"),
+                  radioButtons(inputId = "pieChart",
+                               label = "Choose a modifier for the pie chart:",
+                               choices = c(colnames(joined.data[,c(19:26)])),
+                               selected = "textile_name"),
+                  checkboxInput(inputId = "omitNAs",
+                                label = "Omit NAs in pie chart"),
                 ),
                 mainPanel(
                   tabsetPanel(
                     tabPanel(title = "Map Explorer",
-                             leafletOutput(outputId = "countriesMap")
+                             leafletOutput(outputId = "countriesMap"),
+                             plotOutput(outputId = "pieChart")
                     )
                   )
                 )
@@ -222,7 +229,8 @@ server <- function(input, output, session) {
                     opacity = 1,
                     weight = 1,
                     label = ~ADMIN,
-                    popup = ~paste("Total Quantity:", format(ifelse(is.na(total_Quant), 0, total_Quant), big.mark = ",", scientific = FALSE), sep = " ")) %>%
+                    popup = ~paste("Total Quantity:", format(ifelse(is.na(total_Quant), 0, total_Quant), big.mark = ",", scientific = FALSE), sep = " "),
+                    layerId = ~ADMIN) %>%
         setView(lat = viewLat, lng = viewLong, zoom = viewZoom) %>%
         addLegend(pal = country.colors,
                   values = map.data@data$ADMIN,
@@ -244,12 +252,112 @@ server <- function(input, output, session) {
                     color = "black",
                     opacity = 1,
                     label = ~ADMIN,
+                    layerId = ~ADMIN,
                     popup = ~paste("Total Value:", format(ifelse(is.na(total_Dec), 0, total_Dec), big.mark = ",", scientific = FALSE), "guilders", sep = " ")) %>%
         setView(lat = viewLat, lng = viewLong, zoom = viewZoom) %>%
         addLegend(pal = country.colors,
                   values = map.data@data$ADMIN,
                   title = "Value of Textiles Shipped")
     }
+  })
+  
+  output$pieChart <- renderPlot({
+    input$updateBtn
+    name <- input$countriesMap_shape_click$id
+    
+    #name <- "Netherlands"
+    
+    if(length(name) != 0){
+      modifier <- isolate(input$pieChart)
+      modifierObj <- paste("`", modifier, "`", sep = "")
+      dataSet <- isolate(input$dataSet)
+      textileName <- isolate(input$textileName)
+      colors <- isolate(input$colors)
+      patterns <- isolate(input$patterns)
+      process <- isolate(input$process)
+      fibers <- isolate(input$fibers)
+      geography <- isolate(input$geography)
+      qualities <- isolate(input$qualities)
+      inferredQualities <- isolate(input$inferredQualities)
+      
+      joined.data <- joined.data.original
+      
+      if(length(textileName) != 0){
+        joined.data <- joined.data %>% 
+          filter(textile_name %in% textileName)
+      }
+      if(length(colors) != 0){
+        joined.data <- joined.data %>% 
+          filter(colorGroup %in% colors)
+      }
+      if(length(patterns) != 0){
+        joined.data <- joined.data %>% 
+          filter(textile_pattern_arch %in% patterns)
+      }
+      if(length(process) != 0){
+        joined.data <- joined.data %>% 
+          filter(textile_process_arch %in% process)
+      }
+      if(length(fibers) != 0){
+        joined.data <- joined.data %>% 
+          filter(textile_fiber_arch %in% fibers)
+      }
+      if(length(geography) != 0){
+        joined.data <- joined.data %>% 
+          filter(textile_geography_arch %in% geography)
+      }
+      if(length(qualities) != 0){
+        joined.data <- joined.data %>% 
+          filter(textile_quality_arch %in% qualities)
+      }
+      if(length(inferredQualities) != 0){
+        joined.data <- joined.data %>% 
+          filter(textile_quality_inferred %in% inferredQualities)
+      }
+      
+      pie.data <- joined.data %>%
+        filter(dest_country == name) %>%
+        select(textile_quantity,
+               all_of(modifier))
+      
+      if(input$omitNAs){
+        pie.data <- pie.data %>%
+          na.omit()
+      }
+      else{
+        pie.data[2][is.na(pie.data[2])] <- "None indicated"
+      }
+      
+      if(dataSet != "Both"){
+        pie.data <- pie.data %>%
+          filter(company == dataSet)
+      }
+      
+      if(nrow(pie.data) != 0){
+        pie.data %>%
+          ggplot(aes(x="",
+                     y = textile_quantity)) + 
+          geom_bar(stat="identity", 
+                   width=1,
+                   aes_string(fill=modifier))+ 
+          coord_polar("y", start=0) +
+          labs(x = NULL,
+               y = NULL,
+               fill = NULL) +
+          theme(axis.ticks = element_blank()) +
+          theme_bw() +
+          ggtitle(label = paste(modifier, "distribution for", name, "with these filters."))
+      }
+      else{
+        ggplot() +
+          ggtitle(label = "Selected country has no data for these filters and this modifier.")
+      }
+    }
+    else{
+      ggplot() +
+        ggtitle(label = "Select a country with data for these textiles in order to display a pie chart here.")
+    }
+    
   })
 }
 
