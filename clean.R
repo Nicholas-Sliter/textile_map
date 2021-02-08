@@ -138,7 +138,7 @@ WIC_toJoin <- WIC_toJoin %>%
   mutate(ID = paste(company, row_number(), sep = "_"))
 
 
-#Create the value cols 
+#Create the value cols(cleaned)
 WIC_toJoin <- WIC_toJoin %>% mutate(textile_quantity = ifelse(is.na(textile_quantity),
                                                               NA,
                                                               ifelse(textile_quantity==0,
@@ -149,6 +149,8 @@ VOC_toJoin <- VOC_toJoin %>% mutate(textile_quantity = ifelse(is.na(textile_quan
                                                               ifelse(textile_quantity==0,
                                                                      1,
                                                                      textile_quantity)))
+
+#add value per col
 WIC_toJoin <- value_per_cols(WIC_toJoin)
 VOC_toJoin <- value_per_cols(VOC_toJoin)
 
@@ -156,6 +158,10 @@ VOC_toJoin <- value_per_cols(VOC_toJoin)
 WIC_toJoin <- clean_textile_name(WIC_toJoin)
 VOC_toJoin <- clean_textile_name(VOC_toJoin)
 
+
+#add color groups
+WIC_toJoin <- getColorGroups(WIC_toJoin)
+VOC_toJoin <- getColorGroups(VOC_toJoin)
 
 #clean country (region) names for dest and orig
 WIC_toJoin <- WIC_toJoin %>% 

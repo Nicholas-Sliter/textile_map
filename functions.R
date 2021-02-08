@@ -24,6 +24,7 @@ new_deb_lsd_col <- function(data,
 }
 
 
+#clean deb values before creating deb col
 clean_deb_values <- function(data,col){
   str_replace_all(getElement(data,col),'x','0')
   str_replace_all(getElement(data,col),' ',"")
@@ -63,7 +64,7 @@ clean_deb_values <- function(data,col){
 #   }
 # }
 
-
+#create deb dec col
 new_deb_dec_col<- function(data,
                            l="value_guldens",
                            s="value_stuivers",
@@ -72,13 +73,12 @@ new_deb_dec_col<- function(data,
   
 }
 
-
+#create deb dec from lsd
 deb_dec_from_lsd<- function(data,colname = 'deb_lsd'){
   return(data %>% mutate(deb_dec = as.numeric(deb_as_decimal(getElement(data,colname)))))
   
 }
 
-#return the *type* (if numeric or not) of a vector
 #return TRUE if numeric, FALSE if not numeric or factored
 detect_varType <- function(data,colname){
   vector <- getElement(data,colname)
@@ -97,7 +97,7 @@ detect_varType <- function(data,colname){
 }
 
 
-
+#get type of graph to use from var types
 get_graphType <- function(data,x,y,args=c(main=c(),aes=c())){
   x_type <- detect_varType(data,x)
   y_type <- detect_varType(data,y)
@@ -133,6 +133,7 @@ get_graphType <- function(data,x,y,args=c(main=c(),aes=c())){
   
 }
 
+#do binning to create color choices based on data
 auto_bin <- function(data) {
   if(NROW(data) == 0){
     maxValue <- 0
@@ -149,6 +150,7 @@ auto_bin <- function(data) {
 }
 
 
+#set to numeric, NA -> 0 ####NOT FUCTIONING####
 to_numeric_naToZero <- function(colname){
   
   
@@ -212,13 +214,8 @@ convert_RegionToCountryName <- function(colvector,type='dest',returnValue=1){
 }
 
 
-get_uniqueCountryList <- function(nameList1,namelist2){
-  return(unique())
-  
-}
 
-
-
+#get values per peice and classify as inexpessive, mid-range, or expenssive
 value_per_cols <- function(data){
   # data <- data %>% mutate(quantity = as.numeric(ifelse(!is.na(data$quant_ells),
   #                                            data$quant_ells,
@@ -270,21 +267,21 @@ value_per_cols <- function(data){
 # }
 
 
-add_quantity <- function(data){
-  #adds quantity to dataframe
-  col1 <- getElement(data,"quant_ells")
-  col2 <- getElement(data, "textile_quantity")
-  data <- mutate(data,quantity=ifelse(is.na(col1) & is.na(col2),
-                                      0,
-                                      ifelse(is.na(col1),
-                                             col2,
-                                             col1)))
-  
-  return(data)
-}
+# add_quantity <- function(data){
+#   #adds quantity to dataframe
+#   col1 <- getElement(data,"quant_ells")
+#   col2 <- getElement(data, "textile_quantity")
+#   data <- mutate(data,quantity=ifelse(is.na(col1) & is.na(col2),
+#                                       0,
+#                                       ifelse(is.na(col1),
+#                                              col2,
+#                                              col1)))
+#   
+#   return(data)
+# }
 
 
-
+#cleans textile name
 clean_textile_name <- function(data){
   cleaned <- data %>%
     mutate(textile_name = str_replace_all(data$textile_name,
@@ -339,7 +336,7 @@ clean_textile_name <- function(data){
                                           "rok", 
                                           "rocken")) %>%
     mutate(textile_name = str_replace_all(data$textile_name,
-                                          "salempuris", 
+                                          "salempuris|Salempuris|salempouris", 
                                           "salempores")) %>%
     mutate(textile_name = str_replace_all(data$textile_name,
                                           "serassen", 
@@ -351,14 +348,42 @@ clean_textile_name <- function(data){
                                           "tansjeebs", 
                                           "tanjeebs")) %>%
     mutate(textile_name = str_replace_all(data$textile_name,
-                                          "tesser|tessergaren", 
+                                          "tessergaren|tesser", 
                                           "tussur"))
   return(cleaned)
 }
 
 
+getColorGroups <- function(data){
+  
+  data <- data %>% mutate(colorGroup = ifelse(is.na(textile_color_arch),
+                             "No color indicated",
+                             ifelse(str_detect(textile_color_arch, "gold"),
+                                    "gold",
+                                    ifelse(str_detect(textile_color_arch, "red") | str_detect(textile_color_arch, "scarlet") | str_detect(textile_color_arch, "purple"),
+                                           "red",
+                                           ifelse(str_detect(textile_color_arch, "blue") | str_detect(textile_color_arch, "green"),
+                                                  "blue-green",
+                                                  ifelse(str_detect(textile_color_arch, "white"),
+                                                         "white",
+                                                         ifelse(str_detect(textile_color_arch, "black"),
+                                                                "black",
+                                                                ifelse(str_detect(textile_color_arch, "grey"),
+                                                                       "grey",
+                                                                       ifelse(str_detect(textile_color_arch, "yellow"),
+                                                                              "yellow",
+                                                                              ifelse(str_detect(textile_color_arch, "silver"),
+                                                                                     "silver",
+                                                                                     no = "Other"))))))))))
+  
+  return(data)
+}
 
 
+
+
+
+#unfinished
 
 sort_inputs <- function(){
   
