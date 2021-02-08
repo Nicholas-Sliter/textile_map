@@ -88,7 +88,7 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                                  choices = levels(factor(joined.data$textile_name)),
                                  multiple = TRUE),
                   # uiOutput(outputId = 'inputs'),
-
+                  
                   selectizeInput(inputId = "colors",
                                  label = "Choose color(s) of interest",
                                  choices = levels(factor(joined.data$colorGroup)),
@@ -117,28 +117,31 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                                  label = "Choose inferred quality(s) of interest",
                                  choices = levels(factor(joined.data$textile_quality_inferred)),
                                  multiple = TRUE),
-#Now just try sorting by frequncy
+                  #Now just try sorting by frequncy
                   actionButton(inputId = "updateBtn",
                                label = "Click to update map!"),
+                  actionButton(inputId = 'table_updateBtn',
+                               label = 'Click to update table!'),
                   br(), br(),
                   selectInput(inputId = "pieChart",
-                               label = "Choose a modifier for the pie chart:",
-                               choices = c(colnames(joined.data[,c(19:26)])),
-                               selected = "textile_name"),
+                              label = "Choose a modifier for the pie chart:",
+                              choices = c(colnames(joined.data[,c(19:26)])),
+                              selected = "textile_name"),
                   checkboxInput(inputId = "omitNAs",
                                 label = "Omit NAs in pie chart"),
                   selectInput(inputId = "barChart",
-                               label = "Choose a modifier for the bar chart:",
-                               choices = c(colnames(joined.data[,c(19:26)])),
-                               selected = "textile_name"),
+                              label = "Choose a modifier for the bar chart:",
+                              choices = c(colnames(joined.data[,c(19:26)])),
+                              selected = "textile_name"),
                   checkboxInput(inputId = "facet",
-                                label = "Facet by textile names")
-
+                                label = "Facet by textile names"),
+                  checkboxInput(inputId = "omitNAs",
+                                label = "Omit NAs in pie chart"),
                 ),
                 mainPanel(
                   tabsetPanel(
                     tabPanel(title= "Introduction",
-                              h3()),
+                             h3()),
                     tabPanel(title = "Map Explorer",
                              leafletOutput(outputId = "countriesMap"),
                              plotOutput(outputId = "pieChart"),
@@ -151,10 +154,10 @@ ui <- fluidPage(theme = shinytheme("darkly"),
 )
 
 server <- function(input, output, session) {
-
+  
   #inputs_table <- reactiveValues(filter_by_inputs(joined.data.original,input))
   #output$update_inputs <- renderDataTable(filter_by_inputs(joined.data.original,input))
-
+  
   # observeEvent(input$table_updateBtn, {
   #
   #   output$update_inputs <- renderDataTable(filter_by_inputs(joined.data.original,input))
@@ -163,12 +166,12 @@ server <- function(input, output, session) {
   output$update_inputs <- renderDataTable(searchDelay = 1000,{
     input$table_updateBtn
     isolate(filter_by_inputs(joined.data.original,isolate(input)))})
-
-
+  
+  
   #searchDelay = 1)
   #Use this to hide modifiers when a user's current selection does not contain them
-
-
+  
+  
   # output$inputs <- renderUI(
   #   selectizeInput(inputId = "textileName",
   #                  label = "Choose textile(s) of interest",
@@ -203,12 +206,12 @@ server <- function(input, output, session) {
   #                  choices = levels(factor(inputs_table$textile_quality_inferred)),
   #                  multiple = TRUE)
   # )
-
-
-
+  
+  
+  
   output$countriesMap <- renderLeaflet({
     input$updateBtn
-
+    
     dataSet <- isolate(input$dataSet)
     dataType <- isolate(input$dataType)
     regionChoice <- isolate(input$regionChoice)
@@ -222,9 +225,9 @@ server <- function(input, output, session) {
     inferredQualities <- isolate(input$inferredQualities)
     area <- isolate(input$zoomTo)
     table_update <- isolate(input$table_updateBtn)
-
+    
     joined.data <- joined.data.original
-
+    
     joined.data <- filter_by_inputs(joined.data,input)
     #
     # if(length(textileName) != 0){
@@ -260,27 +263,28 @@ server <- function(input, output, session) {
     #     filter(textile_quality_inferred %in% inferredQualities)
     # }
     if(regionChoice == "Destination"){
-    if(dataSet != "Both"){
-      totalValues <- joined.data %>%
-        filter(company == dataSet) %>%
-        group_by(dest_country) %>%
-        select(dest_country, textile_quantity, deb_dec) %>%
-        na.omit() %>%
-        summarise(total_Quant = sum(textile_quantity),
-                  total_Dec = sum(deb_dec))
-    }
-    else{
-      totalValues <- joined.data %>%
-        group_by(dest_country) %>%
-        select(dest_country, textile_quantity, deb_dec) %>%
-        na.omit() %>%
-        summarise(total_Quant = sum(textile_quantity),
-                  total_Dec = sum(deb_dec))
-    }
-
-    map.data@data <- left_join(map.data.original@data,
-                               totalValues,
-                               by = c("ADMIN" = "dest_country"))
+        joined.data <- isolate(filter_by_inputs(joined.data,isolate(input)))
+      if(dataSet != "Both"){
+        totalValues <- joined.data %>%
+          filter(company == dataSet) %>%
+          group_by(dest_country) %>%
+          select(dest_country, textile_quantity, deb_dec) %>%
+          na.omit() %>%
+          summarise(total_Quant = sum(textile_quantity),
+                    total_Dec = sum(deb_dec))
+      }
+      else{
+        totalValues <- joined.data %>%
+          group_by(dest_country) %>%
+          select(dest_country, textile_quantity, deb_dec) %>%
+          na.omit() %>%
+          summarise(total_Quant = sum(textile_quantity),
+                    total_Dec = sum(deb_dec))
+      }
+      
+      map.data@data <- left_join(map.data.original@data,
+                                 totalValues,
+                                 by = c("ADMIN" = "dest_country"))
     }
     else{
       if(dataSet != "Both"){
@@ -300,27 +304,27 @@ server <- function(input, output, session) {
           summarise(total_Quant = sum(textile_quantity),
                     total_Dec = sum(deb_dec))
       }
-
+      
       map.data@data <- left_join(map.data.original@data,
                                  totalValues,
                                  by = c("ADMIN" = "orig_country"))
     }
-
+    
     latLongZoom <- latLongZoom.original %>%
       filter(Area == area)
-
+    
     viewLat <- latLongZoom[,"Lat"]
     viewLong <- latLongZoom[,"Long"]
     viewZoom <- latLongZoom[,"Magnify"]
-
+    
     if(dataType == "Quantity"){
       bins <- totalValues$total_Quant %>%
         auto_bin()
-
+      
       country.colors <- colorBin(palette = "YlOrRd",
                                  domain = totalValues$total_Quant,
                                  bins = bins)
-
+      
       map.data %>%
         leaflet() %>%
         addTiles() %>%
@@ -340,11 +344,11 @@ server <- function(input, output, session) {
     else if(dataType == "Value"){
       bins <- totalValues$total_Dec %>%
         auto_bin()
-
+      
       country.colors <- colorBin(palette = "YlOrRd",
                                  domain = totalValues$total_Quant,
                                  bins = bins)
-
+      
       map.data %>%
         leaflet() %>%
         addTiles() %>%
@@ -362,13 +366,13 @@ server <- function(input, output, session) {
                   title = "Value of Textiles Shipped")
     }
   })
-
+  
   output$pieChart <- renderPlot({
     input$updateBtn
     name <- input$countriesMap_shape_click$id
-
+    
     #name <- "Netherlands"
-
+    
     if(length(name) != 0){
       modifier <- isolate(input$pieChart)
       modifierObj <- paste("`", modifier, "`", sep = "")
@@ -382,9 +386,9 @@ server <- function(input, output, session) {
       geography <- isolate(input$geography)
       qualities <- isolate(input$qualities)
       inferredQualities <- isolate(input$inferredQualities)
-
+      
       joined.data <- joined.data.original
-
+      
       if(length(textileName) != 0){
         joined.data <- joined.data %>%
           filter(textile_name %in% textileName)
@@ -417,12 +421,12 @@ server <- function(input, output, session) {
         joined.data <- joined.data %>%
           filter(textile_quality_inferred %in% inferredQualities)
       }
-
+      
       if(regionChoice == "Destination"){
-      pie.data <- joined.data %>%
-        filter(dest_country == name) %>%
-        select(textile_quantity,
-               all_of(modifier))
+        pie.data <- joined.data %>%
+          filter(dest_country == name) %>%
+          select(textile_quantity,
+                 all_of(modifier))
       }
       else {
         pie.data <- joined.data %>%
@@ -430,7 +434,7 @@ server <- function(input, output, session) {
           select(textile_quantity,
                  all_of(modifier))
       }
-
+      
       if(input$omitNAs){
         pie.data <- pie.data %>%
           na.omit()
@@ -438,12 +442,12 @@ server <- function(input, output, session) {
       else{
         pie.data[2][is.na(pie.data[2])] <- "None indicated"
       }
-
+      
       if(dataSet != "Both"){
         pie.data <- pie.data %>%
           filter(company == dataSet)
       }
-
+      
       if(nrow(pie.data) != 0){
         pie.data %>%
           ggplot(aes(x="",
@@ -468,13 +472,13 @@ server <- function(input, output, session) {
       ggplot() +
         ggtitle(label = "Select a country with data for these textiles in order to display a pie chart here.")
     }
-
+    
   })
-
+  
   output$barChart <- renderPlot({
     input$updateBtn
     name <- input$countriesMap_shape_click$id
-
+    
     if(length(name) != 0){
       modifier <- isolate(input$barChart)
       modifierObj <- paste("`", modifier, "`", sep = "")
@@ -489,9 +493,9 @@ server <- function(input, output, session) {
       qualities <- isolate(input$qualities)
       inferredQualities <- isolate(input$inferredQualities)
       orig_yr <- isolate(input$orig_yr)
-
+      
       joined.data <- joined.data.original
-
+      
       if(length(textileName) != 0){
         joined.data <- joined.data %>%
           filter(textile_name %in% textileName)
@@ -525,22 +529,22 @@ server <- function(input, output, session) {
           filter(textile_quality_inferred %in% inferredQualities)
       }
       if(regionChoice == "Destination"){
-
+        
         bar.data <- joined.data %>%
-
-        filter(dest_country == name) %>%
-        select(textile_quantity,
-               orig_yr,
-               all_of(modifier))
-        }
-      else{
-        bar.data <- joined.data %>%
-        filter(orig_country == name) %>%
+          
+          filter(dest_country == name) %>%
           select(textile_quantity,
                  orig_yr,
                  all_of(modifier))
       }
-
+      else{
+        bar.data <- joined.data %>%
+          filter(orig_country == name) %>%
+          select(textile_quantity,
+                 orig_yr,
+                 all_of(modifier))
+      }
+      
       if(input$omitNAs){
         bar.data <- bar.data %>%
           na.omit()
@@ -548,12 +552,12 @@ server <- function(input, output, session) {
       else{
         bar.data[2][is.na(bar.data[2])] <- "None indicated"
       }
-
+      
       if(dataSet != "Both"){
         bar.data <- bar.data %>%
           filter(company == dataSet)
       }
-
+      
       if(nrow(bar.data) != 0){
         if(input$facet){
           bar.data %>%
@@ -570,16 +574,16 @@ server <- function(input, output, session) {
         }
         else{
           bar.data %>%
-          ggplot(aes(x = orig_yr, y = textile_quantity)) +
-          geom_bar(stat="identity",
-                   aes_string(fill=modifier)) +
-          labs(x = "Original Year",
-               y = "Textile Quantity",
-               fill = NULL) +
-          scale_fill_discrete(name = paste(modifier)) +
-          theme_bw() +
-          ggtitle(label = paste(modifier, "distribution for", name, "with these filters."))
-      }}
+            ggplot(aes(x = orig_yr, y = textile_quantity)) +
+            geom_bar(stat="identity",
+                     aes_string(fill=modifier)) +
+            labs(x = "Original Year",
+                 y = "Textile Quantity",
+                 fill = NULL) +
+            scale_fill_discrete(name = paste(modifier)) +
+            theme_bw() +
+            ggtitle(label = paste(modifier, "distribution for", name, "with these filters."))
+        }}
       else{
         ggplot() +
           ggtitle(label = paste(name, " has no data for these filters and ", modifier, ".", sep = ""))
@@ -588,7 +592,7 @@ server <- function(input, output, session) {
       ggplot() +
         ggtitle(label = "Select a country with data for these textiles in order to display a bar chart here.")
     }
-
+    
   })
 }
 
