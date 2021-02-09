@@ -412,6 +412,53 @@ return_function_onCondition <- function(functionToReturn, condition=TRUE, onFals
 }
 
 
+return_stringByDataType <- function(dataType){
+ if(dataType == 'Value'){
+   return('Value')
+ }
+  else if (dataType == 'Quantity'){
+    
+    return('Quantity')
+  }
+  else{
+    return(NULL)
+  }
+  
+}
+
+
+return_colByDataType <- function(dataType){
+  return(switch(dataType,'Value'=total_Deb,'Quantity'=total_Quant))
+  
+}
+
+
+return_popupByDataType <- function(dataType){
+  if(dataType == 'Value'){
+    popup = ~paste("Total Value:", format(ifelse(is.na(total_Dec), 0, total_Dec), big.mark = ",", scientific = FALSE), "guilders", sep = " ")
+
+  }
+  else if (dataType == 'Quantity'){
+    popup = ~paste("Total Quantity:", format(ifelse(is.na(total_Quant), 0, total_Quant), big.mark = ",", scientific = FALSE), sep = " ")
+    
+  }
+
+return(popup)
+}
+
+
+#total_Quant, total_Deb
+
+get_binByDataType <- function(data,dataType){
+  col <- return_colByDataType
+  bins <- data$col %>%
+           auto_bin()
+
+  return(country.colors <- colorBin(palette = "YlOrRd",
+                           domain = data$col,
+                           bins = bins))
+}
+
 
 #filter inputs
 filter_by_inputs <- function(data,input){
