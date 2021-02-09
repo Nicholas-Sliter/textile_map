@@ -116,6 +116,9 @@ ui <- fluidPage(theme = shinytheme("darkly"),
 server <- function(input, output, session) {
   
   #Render the data table based on the given search
+  #let's modify this to allow hiding of inputs
+  
+  
   output$update_inputs <- renderDataTable(searchDelay = 1000,{
     input$table_updateBtn
     isolate(filter_by_inputs(joined.data.original,isolate(input)))}) #filters the data for what has been searched
