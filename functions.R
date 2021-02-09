@@ -427,9 +427,26 @@ return_stringByDataType <- function(dataType){
 }
 
 
-return_colByDataType <- function(dataType){
-  return(switch(dataType,'Value'=total_Deb,'Quantity'=total_Quant))
+
+get_col <- function(data,colname){
+  return(getElement(data,colname))
   
+}
+
+return_colByDataType <- function(data,dataType){
+  return(switch(dataType,'Value'=get_col(data,'total_Deb'),
+                'Quantity'=get_col(data,'total_Quant')))
+  
+}
+
+return_titleByDataType <- function(dataType){
+  if(dataType == 'Value'){
+    title = "Value of Textiles Shipped"
+    }
+  else if (dataType == 'Quantity'){
+    title = "Quantities of Textiles Shipped"
+    }
+  return(title)
 }
 
 
