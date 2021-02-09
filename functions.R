@@ -401,6 +401,17 @@ sort_inputs <- function(){
 #   
 # }
 
+#return a function if a condition is TRUE, else return onFalse function
+return_function_onCondition <- function(functionToReturn, condition=TRUE, onFalse = geom_blank()){
+  
+  if(condition){
+    return(functionToReturn)
+  }
+  return(onFalse)
+  
+}
+
+
 
 #filter inputs
 filter_by_inputs <- function(data,input){
