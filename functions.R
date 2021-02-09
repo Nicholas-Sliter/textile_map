@@ -414,7 +414,7 @@ return_function_onCondition <- function(functionToReturn, condition=TRUE, onFals
 
 
 #filter inputs
-filter_by_inputs <- function(data,input){
+filter_by_inputs <- function(data,input,exclude = "None"){
   private_filter_by <- function(data, col, data_col){
     if(length(col) != 0){
       data <- data %>% 
@@ -423,15 +423,40 @@ filter_by_inputs <- function(data,input){
     return(data)
     
   }
+  if(exclude != "textileName"){
+    data <- private_filter_by(data,isolate(input$textileName),data$textile_name)
+  }
+  if(exclude != "colors"){
+    data <- private_filter_by(data,isolate(input$colors),data$colorGroup)
+  }
+  if(exclude != "patterns"){
+    data <- private_filter_by(data,isolate(input$patterns),data$textile_pattern_arch)
+  }
+  if(exclude != "process"){
+    data <- private_filter_by(data,isolate(input$process),data$textile_process_arch)
+  }
+  if(exclude != "fibers"){
+    data <- private_filter_by(data,isolate(input$fibers),data$textile_fiber_arch)
+  }
+  if(exclude != "geography"){
+    data <- private_filter_by(data,isolate(input$geography),data$textile_geography_arch)
+  }
+  if(exclude != "qualities"){
+    data <- private_filter_by(data,isolate(input$qualities),data$textile_quality_arch)
+  }
+  if(exclude != "inferredQualities"){
+    data <- private_filter_by(data,isolate(input$inferredQualities),data$textile_quality_inferred)
+  }    
   
-  data <- private_filter_by(data,isolate(input$textileName),data$textile_name)
-  data <- private_filter_by(data,isolate(input$colors),data$colorGroup)
-  data <- private_filter_by(data,isolate(input$patterns),data$textile_pattern_arch)
-  data <- private_filter_by(data,isolate(input$process),data$textile_process_arch)
-  data <- private_filter_by(data,isolate(input$fibers),data$textile_fiber_arch)
-  data <- private_filter_by(data,isolate(input$geography),data$textile_geography_arch)
-  data <- private_filter_by(data,isolate(input$qualities),data$textile_quality_arch)
-  data <- private_filter_by(data,isolate(input$inferredQualities),data$textile_quality_inferred)
+  # data <- private_filter_by(data,isolate(input$textileName),data$textile_name)
+  # data <- private_filter_by(data,isolate(input$colors),data$colorGroup)
+  # data <- private_filter_by(data,isolate(input$patterns),data$textile_pattern_arch)
+  # data <- private_filter_by(data,isolate(input$process),data$textile_process_arch)
+  # data <- private_filter_by(data,isolate(input$fibers),data$textile_fiber_arch)
+  # data <- private_filter_by(data,isolate(input$geography),data$textile_geography_arch)
+  # data <- private_filter_by(data,isolate(input$qualities),data$textile_quality_arch)
+  # data <- private_filter_by(data,isolate(input$inferredQualities),data$textile_quality_inferred)
+  
   
   return(data)
   
@@ -607,3 +632,69 @@ filter_by_inputs <- function(data,input){
 #   )            
 #   )
 # 
+
+
+evalInputs <- function(data, inputs){
+  filtered.data <- data %>%
+    filter_by_inputs(inputs)
+  if(length(levels(factor(data$textile_fiber_arch))) == 0){
+    return("false")
+  }
+  else{
+    return("true")
+  }
+}
+
+updateAllSelectizeInputs <- function(session, input, data, exclude){
+  
+  filtered.data <- filter_by_inputs(data,input,exclude)
+  
+  if(exclude != "textileName"){
+    updateSelectizeInput(session, "textileName",
+                         label = "Choose textile(s) of interest",
+                         choices = sort(levels(factor(filtered.data$textile_name))),
+                         selected = isolate(input$textileName))  
+  }
+  if(exclude != "colors"){
+    updateSelectizeInput(session, "colors",
+                         label = "Choose color(s) of interest",
+                         choices = sort(levels(factor(filtered.data$colorGroup))),
+                         selected = isolate(input$colors))  
+    }
+  if(exclude != "patterns"){
+    updateSelectizeInput(session, "patterns",
+                         label = "Choose pattern(s) of interest",
+                         choices = sort(levels(factor(filtered.data$textile_pattern_arch))),
+                         selected = isolate(input$patterns))    
+    }
+  if(exclude != "process"){
+    updateSelectizeInput(session, "process",
+                         label = "Choose process(es) of interest",
+                         choices = sort(levels(factor(filtered.data$textile_process_arch))),
+                         selected = isolate(input$process))
+    }
+  if(exclude != "fibers"){
+    updateSelectizeInput(session, "fibers",
+                         label = "Choose fiber(s) of interest",
+                         choices = sort(levels(factor(filtered.data$textile_fiber_arch))),
+                         selected = isolate(input$fibers))
+    }
+  if(exclude != "geography"){
+    updateSelectizeInput(session, "geography",
+                         label = "Choose geography(s) of interest",
+                         choices = sort(levels(factor(filtered.data$textile_geography_arch))),
+                         selected = isolate(input$geography))
+    }
+  if(exclude != "qualities"){
+    updateSelectizeInput(session, "qualities",
+                         label = "Choose quality(s) of interest",
+                         choices = sort(levels(factor(filtered.data$textile_quality_arch))),
+                         selected = isolate(input$quality))
+    }
+  if(exclude != "inferredQualities"){
+    updateSelectizeInput(session, "inferredQualities",
+                         label = "Choose inferred qualities(s) of interest",
+                         choices = sort(levels(factor(filtered.data$textile_quality_inferred))),
+                         selected = isolate(input$inferredQualities))
+    } 
+}

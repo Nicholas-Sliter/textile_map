@@ -51,34 +51,55 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                                  label = "Choose textile(s) of interest",
                                  choices = levels(factor(joined.data$textile_name)),
                                  multiple = TRUE),
-                  selectizeInput(inputId = "colors",
-                                 label = "Choose color(s) of interest",
-                                 choices = levels(factor(joined.data$colorGroup)),
-                                 multiple = TRUE),
-                  selectizeInput(inputId = "patterns",
-                                 label = "Choose pattern(s) of interest",
-                                 choices = levels(factor(joined.data$textile_pattern_arch)),
-                                 multiple = TRUE),
-                  selectizeInput(inputId = "process",
-                                 label = "Choose process(es) of interest",
-                                 choices = levels(factor(joined.data$textile_process_arch)),
-                                 multiple = TRUE),
-                  selectizeInput(inputId = "fibers",
-                                 label = "Choose fiber(s) of interest",
-                                 choices = levels(factor(joined.data$textile_fiber_arch)),
-                                 multiple = TRUE),
-                  selectizeInput(inputId = "geography",
-                                 label = "Choose geography of interest",
-                                 choices = levels(factor(joined.data$textile_geography_arch)),
-                                 multiple = TRUE),
-                  selectizeInput(inputId = "qualities",
-                                 label = "Choose quality(s) of interest",
-                                 choices = levels(factor(joined.data$textile_quality_arch)),
-                                 multiple = TRUE),
-                  selectizeInput(inputId = "inferredQualities",
-                                 label = "Choose inferred quality(s) of interest",
-                                 choices = levels(factor(joined.data$textile_quality_inferred)),
-                                 multiple = TRUE),
+                  conditionalPanel(
+                    condition = "true",
+                    selectizeInput(inputId = "colors",
+                                   label = "Choose color(s) of interest",
+                                   choices = levels(factor(joined.data$colorGroup)),
+                                   multiple = TRUE)
+                  ),
+                  conditionalPanel(
+                    condition = "true",
+                    selectizeInput(inputId = "patterns",
+                                   label = "Choose pattern(s) of interest",
+                                   choices = levels(factor(joined.data$textile_pattern_arch)),
+                                   multiple = TRUE)
+                  ),
+                  conditionalPanel(
+                    condition = "true",
+                    selectizeInput(inputId = "process",
+                                   label = "Choose process(es) of interest",
+                                   choices = levels(factor(joined.data$textile_process_arch)),
+                                   multiple = TRUE)
+                  ),
+                  conditionalPanel(
+                    condition = "true",
+                    selectizeInput(inputId = "fibers",
+                                   label = "Choose fiber(s) of interest",
+                                   choices = levels(factor(joined.data$textile_fiber_arch)),
+                                   multiple = TRUE),
+                  ),
+                  conditionalPanel(
+                    condition = "true",
+                    selectizeInput(inputId = "geography",
+                                   label = "Choose geography of interest",
+                                   choices = levels(factor(joined.data$textile_geography_arch)),
+                                   multiple = TRUE)
+                  ),
+                  conditionalPanel(
+                    condition = "true",
+                    selectizeInput(inputId = "qualities",
+                                   label = "Choose quality(s) of interest",
+                                   choices = levels(factor(joined.data$textile_quality_arch)),
+                                   multiple = TRUE)
+                  ),
+                  conditionalPanel(
+                    condition = "true",
+                    selectizeInput(inputId = "inferredQualities",
+                                   label = "Choose inferred quality(s) of interest",
+                                   choices = levels(factor(joined.data$textile_quality_inferred)),
+                                   multiple = TRUE)
+                  ),
                   actionButton(inputId = "updateBtn",
                                label = "Click to update map!"),
                   br(), br(),
@@ -121,11 +142,86 @@ server <- function(input, output, session) {
   #Render the data table based on the given search
   #let's modify this to allow hiding of inputs
   
+  #simplify the code somehow with a loop or something?
+  #
+  
+  observe({
+    if(length(input$textileName) == 0){
+      exclude <- "None"
+    }
+    else{
+      exclude <- "textileName"
+    }
+    updateAllSelectizeInputs(session, input, joined.data.original, exclude)
+  })
+  observe({
+    if(length(input$colors) == 0){
+      exclude <- "None"
+    }
+    else{
+      exclude <- "colors"
+    }
+    updateAllSelectizeInputs(session, input, joined.data.original, exclude)
+  })
+  observe({
+    if(length(input$patterns) == 0){
+      exclude <- "None"
+    }
+    else{
+      exclude <- "patterns"
+    }
+    updateAllSelectizeInputs(session, input, joined.data.original, exclude)  
+  })
+  observe({
+    if(length(input$process) == 0){
+      exclude <- "None"
+    }
+    else{
+      exclude <- "process"
+    }
+    updateAllSelectizeInputs(session, input, joined.data.original, exclude) 
+  })
+  observe({
+    if(length(input$fibers) == 0){
+      exclude <- "None"
+    }
+    else{
+      exclude <- "fibers"
+    }
+    updateAllSelectizeInputs(session, input, joined.data.original, exclude)
+  })
+  observe({
+    if(length(input$geography) == 0){
+      exclude <- "None"
+    }
+    else{
+      exclude <- "geography"
+    }
+    updateAllSelectizeInputs(session, input, joined.data.original, exclude) 
+  })
+  observe({
+    if(length(input$qualities) == 0){
+      exclude <- "None"
+    }
+    else{
+      exclude <- "qualities"
+    }
+    updateAllSelectizeInputs(session, input, joined.data.original, exclude) 
+  })
+  observe({
+    if(length(input$inferredQualities) == 0){
+      exclude <- "None"
+    }
+    else{
+      exclude <- "inferredQualities"
+    }
+    updateAllSelectizeInputs(session, input, joined.data.original, exclude)
+  })
   
   output$update_inputs <- renderDataTable(searchDelay = 1000,{
     input$table_updateBtn
     isolate(filter_by_inputs(joined.data.original,isolate(input)))}) #filters the data for what has been searched
-
+  
   #The map of countries to be rendered
   output$countriesMap <- renderLeaflet({
     #We only want it to update when the updateBtn is pushed
@@ -550,7 +646,7 @@ server <- function(input, output, session) {
           ggplot() +
             ggtitle(label = paste(name, " has no data for these filters and ", modifier, ".", sep = ""))
         }}
-      }
+    }
     else{
       ggplot() +
         ggtitle(label = "Select a country with data for these textiles in order to display a bar chart here.")
