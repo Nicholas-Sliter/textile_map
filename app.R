@@ -51,33 +51,13 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                                  label = "Choose textile(s) of interest",
                                  choices = levels(factor(joined.data$textile_name)),
                                  multiple = TRUE),
-                  selectizeInput(inputId = "colors",
-                                 label = "Choose color(s) of interest",
-                                 choices = levels(factor(joined.data$colorGroup)),
-                                 multiple = TRUE),
-                  selectizeInput(inputId = "patterns",
-                                 label = "Choose pattern(s) of interest",
-                                 choices = levels(factor(joined.data$textile_pattern_arch)),
-                                 multiple = TRUE),
-                  selectizeInput(inputId = "process",
-                                 label = "Choose process(es) of interest",
-                                 choices = levels(factor(joined.data$textile_process_arch)),
-                                 multiple = TRUE),
-                  selectizeInput(inputId = "fibers",
-                                 label = "Choose fiber(s) of interest",
-                                 choices = levels(factor(joined.data$textile_fiber_arch)),
-                                 multiple = TRUE),
-                  selectizeInput(inputId = "geography",
-                                 label = "Choose geography of interest",
-                                 choices = levels(factor(joined.data$textile_geography_arch)),
-                                 multiple = TRUE),
-                  selectizeInput(inputId = "qualities",
-                                 label = "Choose quality(s) of interest",
-                                 choices = levels(factor(joined.data$textile_quality_arch)),
-                                 multiple = TRUE),
-                  selectizeInput(inputId = "inferredQualities",
-                                 label = "Choose inferred quality(s) of interest",
-                                 choices = levels(factor(joined.data$textile_quality_inferred)),
+                  selectInput(inputId = "textModifier",
+                              label = "Choose a textile modifier",
+                              choices = c(colnames(joined.data[,c(21:26, 30)])),
+                              selected = "colorGroup"),
+                  selectizeInput(inputId = "modLevels",
+                                 label = "Choose a level",
+                                 choices = levels(factor(joined.data[[30]])),
                                  multiple = TRUE),
                   actionButton(inputId = "updateBtn",
                                label = "Click to update map!"),
@@ -118,14 +98,27 @@ ui <- fluidPage(theme = shinytheme("darkly"),
 
 server <- function(input, output, session) {
   
+  filtervector <- reactive({
+    
+    unique(as.vector(joined.data[[input$textModifier]]))
+    
+  })
+  
+  observeEvent(input$textModifier, { 
+    
+    choices <- levels(factor(filtervector()))
+    updateSelectizeInput(inputId = "modLevels",
+                         label = "Choose a level",
+                         choices = choices)
+  })
+  
+  
   #Render the data table based on the given search
   #let's modify this to allow hiding of inputs
-  
-  
   output$update_inputs <- renderDataTable(searchDelay = 1000,{
     input$table_updateBtn
     isolate(filter_by_inputs(joined.data.original,isolate(input)))}) #filters the data for what has been searched
-
+  
   #The map of countries to be rendered
   output$countriesMap <- renderLeaflet({
     #We only want it to update when the updateBtn is pushed
@@ -550,7 +543,7 @@ server <- function(input, output, session) {
           ggplot() +
             ggtitle(label = paste(name, " has no data for these filters and ", modifier, ".", sep = ""))
         }}
-      }
+    }
     else{
       ggplot() +
         ggtitle(label = "Select a country with data for these textiles in order to display a bar chart here.")
