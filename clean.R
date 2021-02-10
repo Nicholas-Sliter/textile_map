@@ -154,10 +154,14 @@ VOC_toJoin <- VOC_toJoin %>% mutate(textile_quantity = ifelse(is.na(textile_quan
 WIC_toJoin <- value_per_cols(WIC_toJoin)
 VOC_toJoin <- value_per_cols(VOC_toJoin)
 
-#clean the different name spellings
+#clean the different name spellings and set to lowercase
+WIC_toJoin <- WIC_toJoin %>% mutate(textile_name = str_to_lower(textile_name))
+VOC_toJoin <- VOC_toJoin %>% mutate(textile_name = str_to_lower(textile_name))
 WIC_toJoin <- clean_textile_name(WIC_toJoin)
 VOC_toJoin <- clean_textile_name(VOC_toJoin)
 
+WIC_toJoin <- WIC_toJoin %>% mutate(textile_name = str_to_title(textile_name))
+VOC_toJoin <- VOC_toJoin %>% mutate(textile_name = str_to_title(textile_name))
 
 #add color groups
 WIC_toJoin <- getColorGroups(WIC_toJoin)
