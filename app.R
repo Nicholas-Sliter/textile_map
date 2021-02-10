@@ -27,6 +27,16 @@ map.data.original <- readOGR("filteredCountries.GeoJSON")
 joined.data <- joined.data.original
 map.data <- map.data.original
 
+#Creating a modifier choice vector
+modVec <- c("Textile Name" = "textile_name",
+            "Color" = "colorGroup",
+            "Pattern" = "textile_pattern_arch",
+            "Process" = "textile_process_arch",
+            "Fiber Type" = "textile_fiber_arch",
+            "Value Range" = "textile_quality_inferred",
+            "Geography" = "textile_geography_arch",
+            "Quality" = "textile_quality_arch")
+
 #Creating the UI
 ui <- fluidPage(theme = shinytheme("darkly"),
                 titlePanel("Interactive Textile Explorer"),
@@ -68,6 +78,10 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                                  label = "Choose fiber(s) of interest",
                                  choices = levels(factor(joined.data$textile_fiber_arch)),
                                  multiple = TRUE),
+                  selectizeInput(inputId = "inferredQualities",
+                                 label = "Choose value range(s) of interest",
+                                 choices = levels(factor(joined.data$textile_quality_inferred)),
+                                 multiple = TRUE),
                   selectizeInput(inputId = "geography",
                                  label = "Choose geography of interest",
                                  choices = levels(factor(joined.data$textile_geography_arch)),
@@ -75,10 +89,6 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                   selectizeInput(inputId = "qualities",
                                  label = "Choose quality(s) of interest",
                                  choices = levels(factor(joined.data$textile_quality_arch)),
-                                 multiple = TRUE),
-                  selectizeInput(inputId = "inferredQualities",
-                                 label = "Choose inferred quality(s) of interest",
-                                 choices = levels(factor(joined.data$textile_quality_inferred)),
                                  multiple = TRUE),
                   actionButton(inputId = "updateBtn",
                                label = "Click to update map!"),
@@ -88,13 +98,13 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                   br(), br(), #The inputs for the pie chart and bar chart
                   selectInput(inputId = "pieChart",
                               label = "Choose a modifier for the pie chart:",
-                              choices = c(colnames(joined.data[,c(19:26)])),
+                              choices = modVec,
                               selected = "textile_name"),
                   checkboxInput(inputId = "omitNAs",
                                 label = "Omit NAs in charts"),
                   selectInput(inputId = "barChart",
                               label = "Choose a modifier for the bar chart:",
-                              choices = c(colnames(joined.data[,c(19:26)])),
+                              choices = modVec,
                               selected = "textile_name"),
                   checkboxInput(inputId = "facet",
                                 label = "Facet by modifier"),
@@ -271,13 +281,13 @@ server <- function(input, output, session) {
             labs(x = NULL,
                  y = NULL,
                  fill = NULL) +
-            scale_fill_discrete(name = paste(modifier)) +
+            scale_fill_discrete(name = paste(names(modVec)[modVec == modifier])) +
             theme_void() +
-            ggtitle(label = paste(modifier, "distribution for", name, "with these filters."))
+            ggtitle(label = paste(names(modVec)[modVec == modifier], "distribution for", name, "with these filters."))
         }
         else{ #No rows were found
           ggplot() +
-            ggtitle(label = paste(name, " has no data for these filters and ", modifier, ".", sep = ""))
+            ggtitle(label = paste(name, " has no data for these filters and ", names(modVec)[modVec == modifier], ".", sep = ""))
         }
       }
       else{ #This will do total value the same way, except graphing deb_dec
@@ -292,13 +302,13 @@ server <- function(input, output, session) {
             labs(x = NULL,
                  y = NULL,
                  fill = NULL) +
-            scale_fill_discrete(name = paste(modifier)) +
+            scale_fill_discrete(name = paste(names(modVec)[modVec == modifier])) +
             theme_void() +
-            ggtitle(label = paste(modifier, "monetary distribution for", name, "with these filters."))
+            ggtitle(label = paste(names(modVec)[modVec == modifier], "monetary distribution for", name, "with these filters."))
         }
         else{
           ggplot() +
-            ggtitle(label = paste(name, " has no data for these filters and ", modifier, ".", sep = ""))
+            ggtitle(label = paste(name, " has no data for these filters and ", names(modVec)[modVec == modifier], ".", sep = ""))
         }
       }
     }
@@ -317,7 +327,7 @@ server <- function(input, output, session) {
     
     if(length(name) != 0){
       modifier <- isolate(input$barChart)
-      modifierObj <- paste("`", modifier, "`", sep = "")
+      modifierObj <- paste("`", names(modVec)[modVec == modifier], "`", sep = "")
       dataSet <- isolate(input$dataSet)
       regionChoice <- isolate(input$regionChoice)
       textileName <- isolate(input$textileName)
@@ -378,9 +388,9 @@ server <- function(input, output, session) {
               labs(x = "Original Year",
                    y = "Textile Quantity",
                    fill = NULL) +
-              scale_fill_discrete(name = paste(modifier)) +
+              scale_fill_discrete(name = paste(names(modVec)[modVec == modifier])) +
               theme_bw() +
-              ggtitle(label = paste(modifier, "distribution for", name, "with these filters.")) +
+              ggtitle(label = paste(names(modVec)[modVec == modifier], "distribution for", name, "with these filters.")) +
               facet_wrap(~get(modifier))
           }
           else{
@@ -391,13 +401,13 @@ server <- function(input, output, session) {
               labs(x = "Original Year",
                    y = "Textile Quantity",
                    fill = NULL) +
-              scale_fill_discrete(name = paste(modifier)) +
+              scale_fill_discrete(name = paste(names(modVec)[modVec == modifier])) +
               theme_bw() +
-              ggtitle(label = paste(modifier, "distribution for", name, "with these filters."))
+              ggtitle(label = paste(names(modVec)[modVec == modifier], "distribution for", name, "with these filters."))
           }}
         else{
           ggplot() +
-            ggtitle(label = paste(name, " has no data for these filters and ", modifier, ".", sep = ""))
+            ggtitle(label = paste(name, " has no data for these filters and ", names(modVec)[modVec == modifier], ".", sep = ""))
         }}
       else{
         if(nrow(bar.data) != 0){
@@ -409,9 +419,9 @@ server <- function(input, output, session) {
               labs(x = "Original Year",
                    y = "Textile Quantity",
                    fill = NULL) +
-              scale_fill_discrete(name = paste(modifier)) +
+              scale_fill_discrete(name = paste(names(modVec)[modVec == modifier])) +
               theme_bw() +
-              ggtitle(label = paste(modifier, "distribution for", name, "with these filters.")) +
+              ggtitle(label = paste(names(modVec)[modVec == modifier], "distribution for", name, "with these filters.")) +
               facet_wrap(~get(modifier))
           }
           else{
@@ -422,13 +432,13 @@ server <- function(input, output, session) {
               labs(x = "Original Year",
                    y = "Textile Value (guilders)",
                    fill = NULL) +
-              scale_fill_discrete(name = paste(modifier)) +
+              scale_fill_discrete(name = paste(names(modVec)[modVec == modifier])) +
               theme_bw() +
-              ggtitle(label = paste(modifier, "monetary distribution for", name, "with these filters."))
+              ggtitle(label = paste(names(modVec)[modVec == modifier], "monetary distribution for", name, "with these filters."))
           }}
         else{
           ggplot() +
-            ggtitle(label = paste(name, " has no data for these filters and ", modifier, ".", sep = ""))
+            ggtitle(label = paste(name, " has no data for these filters and ", names(modVec)[modVec == modifier], ".", sep = ""))
         }}
     }
     else{
