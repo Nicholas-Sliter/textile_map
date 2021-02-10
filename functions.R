@@ -491,6 +491,20 @@ get_binByDataType <- function(data,dataType){
 }
 
 
+return_yrColname <- function(region){
+  if(region == "Destination"){
+    return("dest_yr")
+  }
+  else if(region == "Origin"){
+    return("orig_yr")
+  }
+  else{
+    return(NULL) 
+  }
+  
+  
+}
+
 
 #filter inputs
 filter_by_inputs <- function(data,input){
@@ -511,7 +525,9 @@ filter_by_inputs <- function(data,input){
   data <- private_filter_by(data,isolate(input$geography),data$textile_geography_arch)
   data <- private_filter_by(data,isolate(input$qualities),data$textile_quality_arch)
   data <- private_filter_by(data,isolate(input$inferredQualities),data$textile_quality_inferred)
-  
+  data <- private_filter_by(data,isolate(input$year),data[[return_yrColname(isolate(input$regionChoice))]])
+
+  #add year but have function to switch between orig and dest yr
   return(data)
   
   # 
