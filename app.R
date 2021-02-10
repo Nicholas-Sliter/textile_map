@@ -30,6 +30,17 @@ map.data <- map.data.original
 
 modVecLevels <- c(21:26, 30)
 
+#make_ui <- function(x, var) {
+  
+#    levs <- levels(x)
+#    selectizeInput(var, var, choices = levs, selected = levs, multiple = TRUE)
+
+#}
+
+#filter_var <- function(x, val) {
+#    x %in% val
+#}
+
 #Creating the UI
 ui <- fluidPage(theme = shinytheme("darkly"),
                 titlePanel("Interactive Textile Explorer"),
@@ -54,6 +65,8 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                                  label = "Choose textile(s) of interest",
                                  choices = levels(factor(joined.data$textile_name)),
                                  multiple = TRUE),
+                 # map(names(joined.data[,modVecLevels]),
+                 #     ~ make_ui(joined.data[[.x]], .x)),
                   selectizeInput(inputId = "textModifier",
                               label = "Choose a textile modifier",
                               choices = c(colnames(joined.data[,modVecLevels])),
@@ -105,6 +118,12 @@ ui <- fluidPage(theme = shinytheme("darkly"),
 
 server <- function(input, output, session) {
   
+ # selected <- reactive({
+ #   each_var <- map(names(joined.data[,modVecLevels]),
+  #                  ~ filter_var(joined[[.x]], input[[.x]]))
+ #   reduce(each_var, ~ .x & .y)
+ # })
+  
   vector1 <- reactive ({
     joined.data <- joined.data %>%
       select(all_of(input$textModifier))
@@ -117,14 +136,12 @@ server <- function(input, output, session) {
   })
   
   observeEvent (input$textModifier, {
-    output$test <- renderText(paste(vector1(), modLevels()))
+    output$test <- renderText(paste(vector1()))
     
     level_names <- reactive(paste0("levels", seq_len(vector1())))
     
-    
-    
     output$levels <- renderUI({
-      map(level_names(), ~ selectizeInput(.x, NULL, choices = isolate(modLevels()[vector1()]),
+      map(level_names(), ~ selectizeInput(.x, NULL, choices = modLevels()[vector1()],
                                           multiple = TRUE))
     })
     
