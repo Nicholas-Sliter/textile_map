@@ -131,39 +131,7 @@ server <- function(input, output, session) {
     input$table_updateBtn
     isolate(filter_by_inputs(joined.data.original,isolate(input)))}) #filters the data for what has been searched
   
-  
-  # output$filtered_inputs <- renderUI({
-  #   
-  #   filtered <- filter_by_inputs(joined.data.original,input)
-  #   
-  #   mainPanel(selectizeInput(inputId = "colors",
-  #                  label = "Choose color(s) of interest",
-  #                  choices = levels(factor(filtered$colorGroup)),
-  #                  multiple = TRUE),
-  #   selectizeInput(inputId = "patterns",
-  #                  label = "Choose pattern(s) of interest",
-  #                  choices = levels(factor(filtered$textile_pattern_arch)),
-  #                  multiple = TRUE),
-  #   selectizeInput(inputId = "process",
-  #                  label = "Choose process(es) of interest",
-  #                  choices = levels(factor(filtered$textile_process_arch)),
-  #                  multiple = TRUE),
-  #   selectizeInput(inputId = "fibers",
-  #                  label = "Choose fiber(s) of interest",
-  #                  choices = levels(factor(filtered$textile_fiber_arch)),
-  #                  multiple = TRUE),
-  #   selectizeInput(inputId = "geography",
-  #                  label = "Choose geography of interest",
-  #                  choices = levels(factor(filtered$textile_geography_arch)),
-  #                  multiple = TRUE),
-  #   selectizeInput(inputId = "qualities",
-  #                  label = "Choose quality(s) of interest",
-  #                  choices = levels(factor(filtered$textile_quality_arch)),
-  #                  multiple = TRUE))
-  # 
-  # 
-  # })
-  
+
   #The map of countries to be rendered
   output$countriesMap <- renderLeaflet({
     #We only want it to update when the updateBtn is pushed
@@ -191,26 +159,6 @@ server <- function(input, output, session) {
     #Use the function to filter the inputs
     joined.data <- isolate(filter_by_inputs(joined.data,isolate(input)))
     
-    
-    #region_col <- ifelse(regionChoice=='Destination','dest_country','orig_country')
-    
-    #get_regionChoice(regionChoice)
-    # if(dataSet != "Both"){ #if they are interested in a specific company
-    #   totalValues <- isolate(joined.data %>% #Total values to graph things later on and color the map
-    #     filter(company == dataSet) %>% filter_totalValue())
-    # }
-    # else{ #This will use data from both companies
-    #   totalValues <- isolate(filter_totalValue(joined.data))
-    # }
-    # 
-    # map.data@data <- left_join(map.data.original@data, #Join with the map data, using the original map data each time
-    #                            totalValues,
-    #                            by = c("ADMIN" = get_regionChoice(regionChoice)))
-    # 
-    
-    
-    #ifelse(regionChoice=='Destination','dest_country','orig_country')
-    
     choice <- get_regionChoice(regionChoice)
     totalValues <- filter_totalValue(joined.data,regionChoice,dataSet)
     
@@ -226,87 +174,9 @@ server <- function(input, output, session) {
     viewLong <- latLongZoom[,"Long"]
     viewZoom <- latLongZoom[,"Magnify"]
 
-    # if(dataType == "Quantity"){ #This will show the total quantity of textiles
-    #   bins <- totalValues$total_Quant %>%
-    #     auto_bin() #Custom function for determining the bins we will use
-    #
-    #   country.colors <- colorBin(palette = "YlOrRd",
-    #                              domain = totalValues$total_Quant,
-    #                              bins = bins)
-    #   #Mapping the data
-    #   map.data %>%
-    #     leaflet() %>%
-    #     addTiles() %>%
-    #     addPolygons(fillColor = ~country.colors(total_Quant), #We only use polygons for countries we may have actually used
-    #                 fillOpacity = .7,
-    #                 color = "black",
-    #                 opacity = 1,
-    #                 weight = 1,
-    #                 label = ~ADMIN,
-    #                 popup = ~paste("Total Quantity:", format(ifelse(is.na(total_Quant), 0, total_Quant), big.mark = ",", scientific = FALSE), sep = " "),
-    #                 layerId = ~ADMIN) %>%
-    #     setView(lat = viewLat, lng = viewLong, zoom = viewZoom) %>%
-    #     addLegend(pal = country.colors,
-    #               values = map.data@data$ADMIN,
-    #               title = "Quantities of Textiles Shipped")
-    # }
-    #
-    
-    
+    #create the actual map
     create_leaflet_map(map.data,totalValues,dataType,c(viewLat,viewLong,viewZoom))
     
-    
-    # 
-    # if(dataType == "Quantity"){ #This will show the total quantity of textiles
-    #   create_leaflet_map(map.data,totalValues,dataType,c(viewLat,viewLong,viewZoom))
-    #   
-    #   # country.colors <- get_binByDataType(totalValues,dataType)
-    #   #
-    #   #
-    #   # #Mapping the data
-    #   # map.data %>%
-    #   #   leaflet() %>%
-    #   #   addTiles() %>%
-    #   #   addPolygons(fillColor = ~country.colors(return_colByDataType(map.data@data,dataType)), #We only use polygons for countries we may have actually used
-    #   #               fillOpacity = .7,
-    #   #               color = "black",
-    #   #               opacity = 1,
-    #   #               weight = 1,
-    #   #               label = ~ADMIN,
-    #   #               popup = ~return_popupByDataType(map.data@data,dataType),
-    #   #               layerId = ~ADMIN) %>%
-    #   #   setView(lat = viewLat, lng = viewLong, zoom = viewZoom) %>%
-    #   #   addLegend(pal = country.colors,
-    #   #             values = map.data@data$ADMIN,
-    #   #             title = return_titleByDataType(dataType))
-    # }
-    # 
-    # 
-    # 
-    # else if(dataType == "Value"){ #Redo everything the same except for total value
-    #   bins <- totalValues$total_Dec %>%
-    #     auto_bin()
-    #   
-    #   country.colors <- colorBin(palette = "YlOrRd",
-    #                              domain = totalValues$total_Quant,
-    #                              bins = bins)
-    #   
-    #   map.data %>%
-    #     leaflet() %>%
-    #     addTiles() %>%
-    #     addPolygons(fillColor = ~country.colors(total_Dec),
-    #                 fillOpacity = .7,
-    #                 color = "black",
-    #                 opacity = 1,
-    #                 weight = 1,
-    #                 label = ~ADMIN,
-    #                 layerId = ~ADMIN,
-    #                 popup = ~paste("Total Value:", format(ifelse(is.na(total_Dec), 0, total_Dec), big.mark = ",", scientific = FALSE), "guilders", sep = " ")) %>%
-    #     setView(lat = viewLat, lng = viewLong, zoom = viewZoom) %>%
-    #     addLegend(pal = country.colors,
-    #               values = map.data@data$ADMIN,
-    #               title = "Value of Textiles Shipped")
-    # }
   })
   
   #Used to render the plot for pie chart
