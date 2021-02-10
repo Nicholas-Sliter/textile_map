@@ -110,10 +110,11 @@ server <- function(input, output, session) {
       select(all_of(input$textModifier))
      ncol(joined.data)
   })
+  
   modLevels <- reactive({
     joined.data <- joined.data %>%
       select(all_of(input$textModifier))
-    joined.data[,input$textModifier]
+    unique(levels(factor(joined.data[,input$textModifier])))
   })
   
   observeEvent (input$textModifier, {
@@ -122,7 +123,7 @@ server <- function(input, output, session) {
     level_names <- reactive(paste0("levels", seq_len(vector1())))
     
     output$levels <- renderUI({
-      map(level_names(), ~ selectizeInput(.x, NULL, choices = levels(factor(modLevels())),
+      map(level_names(), ~ selectizeInput(.x, NULL, choices = seq_len(modLevels()),
                                           multiple = TRUE))
     })
     
