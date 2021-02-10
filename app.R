@@ -38,7 +38,7 @@ modVec <- c("Textile Name" = "textile_name",
             "Quality" = "textile_quality_arch")
 
 #Creating the UI
-ui <- fluidPage(theme = shinytheme("darkly"),
+ui <- fluidPage(theme = shinytheme("sandstone"),
                 titlePanel("Interactive Textile Explorer"),
                 sidebarPanel(#All inputs will go in this sidebarPanel
                   radioButtons(inputId = "dataSet",
