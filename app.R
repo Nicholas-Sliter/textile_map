@@ -42,6 +42,7 @@ modVecLevels <- c(21:26, 30)
 #}
 
 
+
 #Creating the UI
 ui <- fluidPage(theme = shinytheme("darkly"),
                 titlePanel("Interactive Textile Explorer"),
@@ -66,8 +67,8 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                                  label = "Choose textile(s) of interest",
                                  choices = levels(factor(joined.data$textile_name)),
                                  multiple = TRUE),
-                 # map(names(joined.data[,modVecLevels]),
-                 #     ~ make_ui(joined.data[[.x]], .x)),
+                  #map(names(joined.data[,modVecLevels]),
+                   #   ~ make_ui(joined.data[[.x]], .x)),
                   selectizeInput(inputId = "textModifier",
                               label = "Choose a textile modifier",
                               choices = c(colnames(joined.data[,modVecLevels])),
@@ -124,17 +125,21 @@ server <- function(input, output, session) {
   #                  ~ filter_var(joined[[.x]], input[[.x]]))
  #   reduce(each_var, ~ .x & .y)
  # })
+ 
+ 
   
   vector1 <- reactive ({
     joined.data <- joined.data %>%
       select(all_of(input$textModifier))
-     ncol(joined.data)
+    ncol(joined.data)
   })
   
   modLevels <- reactive({
     joined.data <- joined.data %>%
       select(all_of(input$textModifier))
   })
+  
+  
   
   observeEvent (input$textModifier, {
     output$test <- renderText(paste(vector1()))
@@ -143,18 +148,38 @@ server <- function(input, output, session) {
     
     cols <- reactive(modLevels()[vector1()])
     
-    output$levels <- renderUI({
+    make_ui <- function(x, var) {
       
-      map(level_names(), ~ selectizeInput(.x, NULL, choices = cols(),
-                                          multiple = TRUE))
+      # levs <- levels(x, var)
+      #selectizeInput(var, var, choices = levs, selected = levs, multiple = TRUE)
+      selectizeInput(var, NULL, choices = x,
+                     multiple = TRUE)
+    }
+    
+    make_ui_re <- reactive({
       
+      
+      make_ui(cols(), modLevels())
       
     })
     
+    output$levels <- renderUI({
+      
+     # map(level_names(), ~ selectizeInput(.x, NULL, choices = cols(),
+      #                                    multiple = TRUE))
     
+    map(level_names(), ~ make_ui_re())  
+    
+    })
+  
   })
-  
-  
+    
+   # filter_var <- function(x, val) {
+   #   x %in% val
+   # }
+    
+      
+   
 
   
 #  observe(input$textModifier <= 1, { filtervector <- reactive({
