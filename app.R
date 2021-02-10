@@ -27,6 +27,8 @@ map.data.original <- readOGR("filteredCountries.GeoJSON")
 joined.data <- joined.data.original
 map.data <- map.data.original
 
+modVecLevels <- c(21:26, 30)
+
 #Creating the UI
 ui <- fluidPage(theme = shinytheme("darkly"),
                 titlePanel("Interactive Textile Explorer"),
@@ -51,14 +53,16 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                                  label = "Choose textile(s) of interest",
                                  choices = levels(factor(joined.data$textile_name)),
                                  multiple = TRUE),
-                  selectInput(inputId = "textModifier",
+                  selectizeInput(inputId = "textModifier",
                               label = "Choose a textile modifier",
-                              choices = c(colnames(joined.data[,c(21:26, 30)])),
-                              selected = "colorGroup"),
-                  selectizeInput(inputId = "modLevels",
-                                 label = "Choose a level",
-                                 choices = levels(factor(joined.data[[30]])),
-                                 multiple = TRUE),
+                              choices = c(colnames(joined.data[,modVecLevels])),
+                              selected = "colorGroup",
+                              multiple = TRUE),
+                  uiOutput("levels"),
+                 # selectizeInput(inputId = "modLevels",
+                 #                label = "Choose a level",
+                 #                choices = levels(factor(joined.data[[30]])),
+                  #               multiple = TRUE),
                   actionButton(inputId = "updateBtn",
                                label = "Click to update map!"),
                   br(), br(),
@@ -82,6 +86,8 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                 ),
                 mainPanel(
                   tabsetPanel(#All of the outputs go here (introduction, map/graphs, data tables)
+                    tabPanel(title = "Test",
+                             plotOutput("plot")),
                     tabPanel(title= "Introduction",
                              h2("Dutch Textile Trade from 1710 to 1715"),
                              h5("Interact with Dutch West India Company (WIC) and East India Company (VOC) textile shipments from 1710 to 1715, with data compiled by Kehoe and Anderson. The Map Explorer allows the user to choose a company and data type of interest, while filtering by textile modifiers, and displays an interactive world map with a complementary pie chart and bar chart when a specific country is selected. The Table Explorer displays the compiled and cleaned dataset.")),
@@ -98,19 +104,38 @@ ui <- fluidPage(theme = shinytheme("darkly"),
 
 server <- function(input, output, session) {
   
-  filtervector <- reactive({
-    
-    unique(as.vector(joined.data[[input$textModifier]]))
-    
+  level_names <- reactive(paste0("levels", seq_len(input$textModifier)))
+  
+  output$levels <- renderUI({
+    map(level_names(), ~ textInput(.x, NULL, value = isolate(input[[.x]])) %||% "")
   })
   
-  observeEvent(input$textModifier, { 
+  output$plot <- renderPlot({
+    levels <- map_chr(level_names(), ~ default_val(input[[.x]], NA))
     
-    choices <- levels(factor(filtervector()))
-    updateSelectizeInput(inputId = "modLevels",
-                         label = "Choose a level",
-                         choices = choices)
-  })
+    barplot(
+      rep(1, length(cols)), 
+      col = levels,
+      space = 0, 
+      axes = FALSE
+    )
+  }, res = 96)
+
+  
+#  observe(input$textModifier <= 1, { filtervector <- reactive({
+    
+ #   unique(as.vector(joined.data[[input$textModifier]]))
+    
+ # })
+  
+ # observeEvent(input$textModifier, { 
+    
+ #   choices <- levels(factor(filtervector()))
+ #   updateSelectizeInput(inputId = "modLevels",
+  #                       label = "Choose a level",
+  #                       choices = choices)
+#  })
+ # })
   
   
   #Render the data table based on the given search
