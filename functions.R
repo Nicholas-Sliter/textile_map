@@ -517,6 +517,9 @@ filter_by_inputs <- function(data,input){
     
   }
   
+  if(isolate(input$dataSet) != "Both"){
+    data <- private_filter_by(data,isolate(input$dataSet),data$company)
+  }
   data <- private_filter_by(data,isolate(input$textileName),data$textile_name)
   data <- private_filter_by(data,isolate(input$colors),data$colorGroup)
   data <- private_filter_by(data,isolate(input$patterns),data$textile_pattern_arch)
@@ -597,9 +600,9 @@ create_leaflet_map <- function(mapdata,valuedata,dataType,lat_long=c(lat,long,zo
 filter_totalValue <- function(data,region,dataSet){
   
   choice <- get_regionChoice(region)
-  if(dataSet != "Both"){
-    data <- data %>% filter(company == dataSet)
-  }
+  # if(dataSet != "Both"){
+  #   data <- data %>% filter(company == dataSet)
+  # }
   
   data <- data %>% #Total values to graph things later on and color the map
     group_by_at(choice)  %>% 
