@@ -127,52 +127,91 @@ server <- function(input, output, session) {
  # })
  
  
-  
-  vector1 <- reactive ({
-    joined.data <- joined.data %>%
-      select(all_of(input$textModifier))
-    ncol(joined.data)
-  })
-  
-  modLevels <- reactive({
-    joined.data <- joined.data %>%
-      select(all_of(input$textModifier))
-  })
-  
-  
-  
-  observeEvent (input$textModifier, {
-    output$test <- renderText(paste(vector1()))
     
-    level_names <- reactive(paste0("levels", seq_len(vector1())))
     
-    cols <- reactive(modLevels()[vector1()])
     
-    make_ui <- function(x, var) {
-      
-      # levs <- levels(x, var)
-      #selectizeInput(var, var, choices = levs, selected = levs, multiple = TRUE)
-      selectizeInput(var, NULL, choices = x,
-                     multiple = TRUE)
-    }
+    #level_names <- reactive(paste0("levels", seq_len(vector1())))
     
-    make_ui_re <- reactive({
-      
-      
-      make_ui(cols(), modLevels())
-      
-    })
+   # cols <- reactive(modLevels()[vector1()])
+    
+  observeEvent(input$textModifier, {
     
     output$levels <- renderUI({
       
-     # map(level_names(), ~ selectizeInput(.x, NULL, choices = cols(),
-      #                                    multiple = TRUE))
+      vector1 <- reactive ({
+        joined.data <- joined.data %>%
+          select(all_of(input$textModifier))
+        ncol(joined.data)
+      })
+      
+      modLevels <- reactive({
+        joined.data <- joined.data %>%
+          select(all_of(input$textModifier))
+      })
+      numinputs <- lapply(1:7, function(i){
+        selectizeInput(inputId = paste0("txt", i),
+                       label = paste0("Choose levels ", i),
+                       choices = modLevels()[i],
+                       multiple = TRUE)
+        
+      })
+      shinyjs::show(numinputs)
+    }) 
     
-    map(level_names(), ~ make_ui_re())  
-    
-    })
-  
   })
+  
+  
+  
+  observeEvent(input$textModifier, handlerExpr = {
+    
+    
+    
+      joined.data <- joined.data %>%
+        select(modVecLevels)
+     num <-  ncol(joined.data)
+    
+   # modLevels2 <- reactive({
+   #   joined.data <- joined.data %>%
+    #    select(modVecLevels)
+   # })
+    
+    #level_names <- reactive(paste0("levels", seq_len(vector1())))
+    
+    #cols <- reactive(modLevels()[vector1()])
+    
+    n <- seq_len(num)
+    lapply(seq(7), function(i) {
+      if(i %in% n) {
+        shinyjs::show(id = paste0("txt", i))
+      } else{
+        shinyjs::hide(id = paste0("txt", i))
+      }
+    })
+  })
+  
+ 
+  
+ 
+  
+  
+  #observeEvent (input$textModifier, {
+  #  output$test <- renderText(paste(vector1()))
+    
+  #  level_names <- reactive(paste0("levels", seq_len(vector1())))
+    
+  #  cols <- reactive(modLevels()[vector1()])
+    
+    
+   # output$levels <- renderUI({
+      
+    
+   # map(level_names(), ~ selectizeInput(.x, NULL, choices = isolate(cols()),
+    #                                   multiple = TRUE))
+  
+    
+   # })
+  
+ # })
     
    # filter_var <- function(x, val) {
    #   x %in% val
