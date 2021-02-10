@@ -1,6 +1,7 @@
 #functions.r
 library(tidyverse)
 library(debkeepr)
+library(leaflet)
 
 
 #Create a new col deb_lsd in data containing the total value in guilders, stuivers, and penningen
@@ -19,7 +20,7 @@ new_deb_lsd_col <- function(data,
                                            clean_deb_values(data,d),
                                            bases = c(20, 16))))
   
-
+  
   
 }
 
@@ -28,7 +29,7 @@ new_deb_lsd_col <- function(data,
 clean_deb_values <- function(data,col){
   str_replace_all(getElement(data,col),'x','0')
   str_replace_all(getElement(data,col),' ',"")
-    ifelse(is.na(getElement(data,col)) | is.null(getElement(data,col)) | is.na(as.numeric(getElement(data,col))),
+  ifelse(is.na(getElement(data,col)) | is.null(getElement(data,col)) | is.na(as.numeric(getElement(data,col))),
          0,
          as.numeric(getElement(data,col)))
   
@@ -222,7 +223,7 @@ value_per_cols <- function(data){
   #                                            ifelse(is.na(data$textile_quantity) | data$textile_quantity == 0,
   #                                                   1,
   #                                                   data$texile_quantity))))
-    return(data %>%
+  return(data %>%
            mutate(value_per_piece = ceiling(deb_dec/textile_quantity)) %>%
            mutate(textile_quality_inferred = ifelse(value_per_piece < 4, 
                                                     "Inexpensive",
@@ -358,24 +359,24 @@ clean_textile_name <- function(data){
 getColorGroups <- function(data){
   
   data <- data %>% mutate(colorGroup = ifelse(is.na(textile_color_arch),
-                             "No color indicated",
-                             ifelse(str_detect(textile_color_arch, "gold"),
-                                    "gold",
-                                    ifelse(str_detect(textile_color_arch, "red") | str_detect(textile_color_arch, "scarlet") | str_detect(textile_color_arch, "purple"),
-                                           "red",
-                                           ifelse(str_detect(textile_color_arch, "blue") | str_detect(textile_color_arch, "green"),
-                                                  "blue-green",
-                                                  ifelse(str_detect(textile_color_arch, "white"),
-                                                         "white",
-                                                         ifelse(str_detect(textile_color_arch, "black"),
-                                                                "black",
-                                                                ifelse(str_detect(textile_color_arch, "grey"),
-                                                                       "grey",
-                                                                       ifelse(str_detect(textile_color_arch, "yellow"),
-                                                                              "yellow",
-                                                                              ifelse(str_detect(textile_color_arch, "silver"),
-                                                                                     "silver",
-                                                                                     no = "Other"))))))))))
+                                              "No color indicated",
+                                              ifelse(str_detect(textile_color_arch, "gold"),
+                                                     "gold",
+                                                     ifelse(str_detect(textile_color_arch, "red") | str_detect(textile_color_arch, "scarlet") | str_detect(textile_color_arch, "purple"),
+                                                            "red",
+                                                            ifelse(str_detect(textile_color_arch, "blue") | str_detect(textile_color_arch, "green"),
+                                                                   "blue-green",
+                                                                   ifelse(str_detect(textile_color_arch, "white"),
+                                                                          "white",
+                                                                          ifelse(str_detect(textile_color_arch, "black"),
+                                                                                 "black",
+                                                                                 ifelse(str_detect(textile_color_arch, "grey"),
+                                                                                        "grey",
+                                                                                        ifelse(str_detect(textile_color_arch, "yellow"),
+                                                                                               "yellow",
+                                                                                               ifelse(str_detect(textile_color_arch, "silver"),
+                                                                                                      "silver",
+                                                                                                      no = "Other"))))))))))
   
   return(data)
 }
@@ -412,10 +413,16 @@ return_function_onCondition <- function(functionToReturn, condition=TRUE, onFals
 }
 
 
+
+
+
+
+
+
 return_stringByDataType <- function(dataType){
- if(dataType == 'Value'){
-   return('Value')
- }
+  if(dataType == 'Value'){
+    return('Value')
+  }
   else if (dataType == 'Quantity'){
     
     return('Quantity')
@@ -429,52 +436,60 @@ return_stringByDataType <- function(dataType){
 
 
 get_col <- function(data,colname){
-  return(getElement(data,colname))
+  if(typeof(colname) == typeof('')){
+    x <- data[[colname]]
+  }
+  else{
+    x <- data[[deparse(substitute(colname))]]
+  }
+  return(x)
   
 }
 
 return_colByDataType <- function(data,dataType){
-  return(switch(dataType,'Value'=get_col(data,'total_Deb'),
-                'Quantity'=get_col(data,'total_Quant')))
+  return(switch(dataType,'Value'= get_col(data,'total_Deb'),
+                'Quantity'= get_col(data,'total_Quant')))
   
 }
 
 return_titleByDataType <- function(dataType){
   if(dataType == 'Value'){
     title = "Value of Textiles Shipped"
-    }
+  }
   else if (dataType == 'Quantity'){
     title = "Quantities of Textiles Shipped"
-    }
+  }
   return(title)
 }
 
 
-return_popupByDataType <- function(dataType){
+return_popupByDataType <- function(data,dataType){
+  col <- return_colByDataType(data,dataType)
   if(dataType == 'Value'){
-    popup = ~paste("Total Value:", format(ifelse(is.na(total_Dec), 0, total_Dec), big.mark = ",", scientific = FALSE), "guilders", sep = " ")
-
-  }
-  else if (dataType == 'Quantity'){
-    popup = ~paste("Total Quantity:", format(ifelse(is.na(total_Quant), 0, total_Quant), big.mark = ",", scientific = FALSE), sep = " ")
+    popup = paste("Total Value:", format(ifelse(is.na(col), 0, col), big.mark = ",", scientific = FALSE), "guilders", sep = " ")
     
   }
-
-return(popup)
+  else if (dataType == 'Quantity'){
+    popup = paste("Total Quantity:", format(ifelse(is.na(col), 0, col), big.mark = ",", scientific = FALSE), sep = " ")
+    
+  }
+  
+  return(popup)
 }
 
 
 #total_Quant, total_Deb
 
 get_binByDataType <- function(data,dataType){
-  col <- return_colByDataType
-  bins <- data$col %>%
-           auto_bin()
-
+  col <- return_colByDataType(data,dataType)
+  bins <- col %>%
+    auto_bin()
+  
   return(country.colors <- colorBin(palette = "YlOrRd",
-                           domain = data$col,
-                           bins = bins))
+                                    domain = col,
+                                    bins = bins))
 }
+
 
 
 #filter inputs
@@ -539,7 +554,78 @@ filter_by_inputs <- function(data,input){
 
 
 
+create_leaflet_map <- function(mapdata,valuedata,dataType,lat_long=c(lat,long,zoom)){
+  country.colors <- get_binByDataType(valuedata,dataType)
+  #Mapping the data
+  mapdata %>%
+    leaflet() %>%
+    addTiles() %>%
+    addPolygons(fillColor = ~country.colors(return_colByDataType(mapdata@data,dataType)), #We only use polygons for countries we may have actually used
+                fillOpacity = .7,
+                color = "black",
+                opacity = 1,
+                weight = 1,
+                label = ~ADMIN,
+                popup = ~return_popupByDataType(mapdata@data,dataType),
+                layerId = ~ADMIN) %>%
+    setView(lat = lat_long[1], lng = lat_long[2], zoom = lat_long[3]) %>%
+    addLegend(pal = country.colors,
+              values = mapdata@data$ADMIN,
+              title = return_titleByDataType(dataType))
+  
+  
+}
 
+#problem here with group by dest_country
+
+filter_totalValue <- function(data,region,dataSet){
+  
+  choice <- get_regionChoice(region)
+  if(dataSet != "Both"){
+    data <- data %>% filter(company == dataSet)
+  }
+  
+  data <- data %>% #Total values to graph things later on and color the map
+    group_by_at(choice)  %>% 
+    select(choice, 'textile_quantity', 'deb_dec') %>%
+    na.omit() %>%
+    summarise(total_Quant = sum(textile_quantity),
+              total_Dec = sum(deb_dec))
+
+  return(data) 
+}
+
+get_regionCol <- function(data,region){
+  # if(region == "Destination"){
+  #   return(get_col(data,'dest_country'))
+  # }
+  # else if(region == "Origin"){
+  #   return(get_col(data,'orig_country'))
+  # }
+  # else{
+  #   return(NULL) 
+  # }
+  
+  
+  return(get_col(data,get_regionChoice(region)))
+  
+  
+}
+
+
+
+get_regionChoice <- function(region){
+  if(region == "Destination"){
+    return("dest_country")
+  }
+  else if(region == "Origin"){
+    return("orig_country")
+  }
+  else{
+    return(NULL) 
+  }
+  
+}
 
 
 
