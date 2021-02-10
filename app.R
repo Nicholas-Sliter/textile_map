@@ -7,6 +7,7 @@ library(tidyverse)
 library(stringr)
 library(debkeepr)
 library(leaflet)
+library(purrr)
 
 #source to function file
 source('functions.R')
@@ -87,7 +88,7 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                 mainPanel(
                   tabsetPanel(#All of the outputs go here (introduction, map/graphs, data tables)
                     tabPanel(title = "Test",
-                             plotOutput("plot")),
+                             textOutput("test")),
                     tabPanel(title= "Introduction",
                              h2("Dutch Textile Trade from 1710 to 1715"),
                              h5("Interact with Dutch West India Company (WIC) and East India Company (VOC) textile shipments from 1710 to 1715, with data compiled by Kehoe and Anderson. The Map Explorer allows the user to choose a company and data type of interest, while filtering by textile modifiers, and displays an interactive world map with a complementary pie chart and bar chart when a specific country is selected. The Table Explorer displays the compiled and cleaned dataset.")),
@@ -104,22 +105,24 @@ ui <- fluidPage(theme = shinytheme("darkly"),
 
 server <- function(input, output, session) {
   
-  level_names <- reactive(paste0("levels", seq_len(input$textModifier)))
-  
-  output$levels <- renderUI({
-    map(level_names(), ~ textInput(.x, NULL, value = isolate(input[[.x]])) %||% "")
+  vector1 <- reactive ({
+    joined.data <- joined.data %>%
+      select(all_of(input$textModifier))
+     ncol(joined.data)
   })
   
-  output$plot <- renderPlot({
-    levels <- map_chr(level_names(), ~ default_val(input[[.x]], NA))
+  observeEvent (input$textModifier, {
+    output$test <- renderText(paste(vector1()))
     
-    barplot(
-      rep(1, length(cols)), 
-      col = levels,
-      space = 0, 
-      axes = FALSE
-    )
-  }, res = 96)
+    level_names <- reactive(paste0("levels", seq_len(vector1())))
+    
+    output$levels <- renderUI({
+      map(level_names(), ~ textInput(.x, NULL, value = isolate(vector1() %||% "")))
+    })
+    
+  })
+  
+  
 
   
 #  observe(input$textModifier <= 1, { filtervector <- reactive({
