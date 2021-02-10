@@ -112,7 +112,9 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                              plotOutput(outputId = "barChart")
                     ),
                     tabPanel(title = "Table Explorer",
-                             dataTableOutput('update_inputs'))
+                             dataTableOutput('update_inputs'),
+                             downloadButton("downloadData", "Download") #download button
+                    )
                   )
                 )
 )
@@ -127,10 +129,20 @@ server <- function(input, output, session) {
   #let's modify this to allow hiding of inputs as well
   
   
+  #creates table
   output$update_inputs <- renderDataTable(searchDelay = 1000,{
     input$table_updateBtn
     isolate(filter_by_inputs(joined.data.original,isolate(input)))}) #filters the data for what has been searched
   
+  # Downloadable .xls of table dataset
+  output$downloadData <- downloadHandler(
+    filename = function() {
+      paste(input$table_updateBtn, ".xls", sep = "")
+    },
+    content = function(file) {
+      write_excel_csv(isolate(filter_by_inputs(joined.data.original,isolate(input))), file)
+    }
+  )
 
   #The map of countries to be rendered
   output$countriesMap <- renderLeaflet({
