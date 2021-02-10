@@ -122,7 +122,9 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                              plotOutput(outputId = "barChart")
                     ),
                     tabPanel(title = "Table Explorer",
-                             dataTableOutput('update_inputs'))
+                             dataTableOutput('update_inputs'),
+                             downloadButton("downloadData", "Download") #download button
+                    )
                   )
                 )
 )
@@ -137,10 +139,20 @@ server <- function(input, output, session) {
   #let's modify this to allow hiding of inputs as well
   
   
+  #creates table
   output$update_inputs <- renderDataTable(searchDelay = 1000,{
     input$table_updateBtn
     isolate(filter_by_inputs(joined.data.original,isolate(input)))}) #filters the data for what has been searched
   
+  # Downloadable .xls of table dataset
+  output$downloadData <- downloadHandler(
+    filename = function() {
+      paste(input$table_updateBtn, ".xls", sep = "")
+    },
+    content = function(file) {
+      write_excel_csv(isolate(filter_by_inputs(joined.data.original,isolate(input))), file)
+    }
+  )
 
   #The map of countries to be rendered
   output$countriesMap <- renderLeaflet({
@@ -215,24 +227,33 @@ server <- function(input, output, session) {
       
       #Filter all the inputs
       joined.data <- isolate(filter_by_inputs(joined.data,isolate(input)))
+      choice <- get_regionChoice(regionChoice) #get dest or orig
       
       #We care specifically about the destination here
-      if(regionChoice == "Destination"){ #Only dest_country
-        pie.data <- joined.data %>%
-          filter(dest_country == name) %>%
-          select(textile_quantity,
-                 deb_dec,
-                 all_of(modifier),
-                 company)
-      }
-      else { #Only orig_country
-        pie.data <- joined.data %>%
-          filter(orig_country == name) %>%
-          select(textile_quantity,
-                 deb_dec,
-                 all_of(modifier),
-                 company)
-      }
+      pie.data <- joined.data %>%
+        filter(joined.data[choice] == name) %>%
+        select(textile_quantity,
+               deb_dec,
+               all_of(modifier),
+               company)
+      
+      
+      #   if(regionChoice == "Destination"){ #Only dest_country
+      #   pie.data <- joined.data %>%
+      #     filter(dest_country == name) %>%
+      #     select(textile_quantity,
+      #            deb_dec,
+      #            all_of(modifier),
+      #            company)
+      # }
+      # else { #Only orig_country
+      #   pie.data <- joined.data %>%
+      #     filter(orig_country == name) %>%
+      #     select(textile_quantity,
+      #            deb_dec,
+      #            all_of(modifier),
+      #            company)
+      # }
       
       #Omit na of the selected columns to avoid errors
       if(input$omitNAs){
@@ -321,38 +342,8 @@ server <- function(input, output, session) {
       
       joined.data <- joined.data.original
       
-      if(length(textileName) != 0){
-        joined.data <- joined.data %>%
-          filter(textile_name %in% textileName)
-      }
-      if(length(colors) != 0){
-        joined.data <- joined.data %>%
-          filter(colorGroup %in% colors)
-      }
-      if(length(patterns) != 0){
-        joined.data <- joined.data %>%
-          filter(textile_pattern_arch %in% patterns)
-      }
-      if(length(process) != 0){
-        joined.data <- joined.data %>%
-          filter(textile_process_arch %in% process)
-      }
-      if(length(fibers) != 0){
-        joined.data <- joined.data %>%
-          filter(textile_fiber_arch %in% fibers)
-      }
-      if(length(geography) != 0){
-        joined.data <- joined.data %>%
-          filter(textile_geography_arch %in% geography)
-      }
-      if(length(qualities) != 0){
-        joined.data <- joined.data %>%
-          filter(textile_quality_arch %in% qualities)
-      }
-      if(length(inferredQualities) != 0){
-        joined.data <- joined.data %>%
-          filter(textile_quality_inferred %in% inferredQualities)
-      }
+      joined.data <- isolate(filter_by_inputs(joined.data,isolate(input)))
+      
       if(regionChoice == "Destination"){
         
         bar.data <- joined.data %>%
