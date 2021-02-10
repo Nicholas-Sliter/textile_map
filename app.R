@@ -41,6 +41,7 @@ modVecLevels <- c(21:26, 30)
 #    x %in% val
 #}
 
+
 #Creating the UI
 ui <- fluidPage(theme = shinytheme("darkly"),
                 titlePanel("Interactive Textile Explorer"),
@@ -140,10 +141,16 @@ server <- function(input, output, session) {
     
     level_names <- reactive(paste0("levels", seq_len(vector1())))
     
+    cols <- reactive(modLevels()[vector1()])
+    
     output$levels <- renderUI({
-      map(level_names(), ~ selectizeInput(.x, NULL, choices = modLevels()[vector1()],
+      
+      map(level_names(), ~ selectizeInput(.x, NULL, choices = cols(),
                                           multiple = TRUE))
+      
+      
     })
+    
     
   })
   
