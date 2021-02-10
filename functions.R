@@ -447,7 +447,8 @@ get_col <- function(data,colname){
 }
 
 return_colByDataType <- function(data,dataType){
-  return(switch(dataType,'Value'= get_col(data,'total_Deb'),
+  return(switch(dataType,
+                'Value'= get_col(data,'total_Dec'),
                 'Quantity'= get_col(data,'total_Quant')))
   
 }

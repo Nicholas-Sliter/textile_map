@@ -386,7 +386,7 @@ server <- function(input, output, session) {
         if(nrow(bar.data) != 0){
           if(isolate(input$facet)){
             bar.data %>%
-              ggplot(aes(x = orig_yr, y = textile_quantity)) +
+              ggplot(aes(x = factor(orig_yr), y = textile_quantity)) +
               geom_bar(stat="identity",
                        aes_string(fill=modifier)) +
               labs(x = "Original Year",
@@ -430,7 +430,7 @@ server <- function(input, output, session) {
           }
           else{
             bar.data %>%
-              ggplot(aes(x = orig_yr, y = deb_dec)) +
+              ggplot(aes(x = factor(orig_yr), y = deb_dec)) +
               geom_bar(stat="identity",
                        aes_string(fill=modifier)) +
               labs(x = "Original Year",
