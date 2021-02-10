@@ -283,6 +283,7 @@ value_per_cols <- function(data){
 
 #cleans textile name
 clean_textile_name <- function(data){
+  data <- VOC_toJoin
   cleaned <- data %>%
     mutate(textile_name = str_replace_all(data$textile_name,
                                           "adaties", 

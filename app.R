@@ -149,17 +149,17 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                     ),
                     tabPanel(title = "Table Explorer",
                              dataTableOutput('update_inputs')),
-                    tabPanel(title = "Secondary Source Definitions",
-                             h2("Investigate textiles using the filters on the left:"),
-                             selectizeInput(inputId = "textileDefOptions",
-                                            label = "Choose textile to learn about",
-                                            choices = levels(factor(joined.data$textile_name)),
-                                            options = list(onInitialize = I('function() { this.setValue(""); }'))),
-                             actionButton(inputId = "defBtn",
-                                          label = "Click to learn about this textile!"),
-                             br(), br(),
-                             textOutput(outputId = "secDefOutput")
-                    )
+                    # tabPanel(title = "Secondary Source Definitions",
+                    #          h2("Investigate textiles using the filters on the left:"),
+                    #          selectizeInput(inputId = "textileDefOptions",
+                    #                         label = "Choose textile to learn about",
+                    #                         choices = levels(factor(joined.data$textile_name)),
+                    #                         options = list(onInitialize = I('function() { this.setValue(""); }'))),
+                    #          actionButton(inputId = "defBtn",
+                    #                       label = "Click to learn about this textile!"),
+                    #          br(), br(),
+                    #          textOutput(outputId = "secDefOutput")
+                    # )
                   )
                 )
 )
@@ -169,26 +169,26 @@ server <- function(input, output, session) {
   #Render the data table based on the given search
   #let's modify this to allow hiding of inputs
   
-  output$secDefOutput <- renderText({
-    input$defBtn
-    textile <- isolate(input$textileDefOptions)
-    
-    if((textile == "")){
-      "Select a textile to learn more about!"
-    }
-    else{
-      secDefs <- secDefs.original
-      secDefs <- secDefs %>%
-        filter(`textile_type` == textile)
-      
-      if(NROW(secDefs) == 0){
-        "Unfortunately, there are currently no secondary definitions available for this textile"
-      }
-      else{
-        secDefs$definition[1]
-      }
-    }
-  })
+  # output$secDefOutput <- renderText({
+  #   input$defBtn
+  #   textile <- isolate(input$textileDefOptions)
+  #   
+  #   if((textile == "")){
+  #     "Select a textile to learn more about!"
+  #   }
+  #   else{
+  #     secDefs <- secDefs.original
+  #     secDefs <- secDefs %>%
+  #       filter(`textile_type` == textile)
+  #     
+  #     if(NROW(secDefs) == 0){
+  #       "Unfortunately, there are currently no secondary definitions available for this textile"
+  #     }
+  #     else{
+  #       secDefs$definition[1]
+  #     }
+  #   }
+  # })
   
   observe({
     if(length(input$textileName) == 0){

@@ -189,45 +189,45 @@ write.csv(VOC_toJoin,'VOC_clean.csv')
 #replace x with 0, replace strings to NA, replace entire string with NA if / is present?
 #split weird fractions before fraction
 
-secDefs <- read_xlsx("OurTranslations.xlsx") %>%
-  select(textile_type,
-         spelling_variations) %>%
-  na.omit()
-
-
-
-joined <- read_csv("joined.csv")
-
-for (i in 1:NROW(secDefs)) {
-  for(j in 1:NROW(joined)){
-    if(str_detect(pattern = tolower(joined$textile_name[j]), 
-                  string = tolower(secDefs$textile_type[i]))){
-      joined$textile_name[j] <- secDefs$textile_type[i]
-    }
-  }
-}
-
-joined <- joined %>%
-  mutate(standardName = NA)
-
-for(i in 1:NROW(secDefs)){
-  print(secDefs$spelling_variations[i])
-  variations <- secDefs$spelling_variations[i]
-  standard <- secDefs$textile_type[i]
-  joined.standardName <- joined %>%
-    mutate(standardName = ifelse(is.na(standardName),
-                                 ifelse(str_detect(tolower(variations),
-                                                   tolower("adaties")),
-                                        standard,
-                                        NA),
-                                 standardName))
-}
-
-#secDefs$spelling_variations[i]
-
-joined.defs <- joined %>%
-  left_join(secDefs,
-            by = c("textile_name" = "textile_type"))
+# secDefs <- read_xlsx("OurTranslations.xlsx") %>%
+#   select(textile_type,
+#          spelling_variations) %>%
+#   na.omit()
+# 
+# 
+# 
+# joined <- read_csv("joined.csv")
+# 
+# for (i in 1:NROW(secDefs)) {
+#   for(j in 1:NROW(joined)){
+#     if(str_detect(pattern = tolower(joined$textile_name[j]), 
+#                   string = tolower(secDefs$textile_type[i]))){
+#       joined$textile_name[j] <- secDefs$textile_type[i]
+#     }
+#   }
+# }
+# 
+# joined <- joined %>%
+#   mutate(standardName = NA)
+# 
+# for(i in 1:NROW(secDefs)){
+#   print(secDefs$spelling_variations[i])
+#   variations <- secDefs$spelling_variations[i]
+#   standard <- secDefs$textile_type[i]
+#   joined.standardName <- joined %>%
+#     mutate(standardName = ifelse(is.na(standardName) | standardName != "standard",
+#                                  ifelse(str_detect(tolower(variations),
+#                                                    tolower("adaties")),
+#                                         "standard",
+#                                         i),
+#                                  standardName))
+# }
+# 
+# #secDefs$spelling_variations[i]
+# 
+# joined.defs <- joined %>%
+#   left_join(secDefs,
+#             by = c("textile_name" = "textile_type"))
 
 
 
