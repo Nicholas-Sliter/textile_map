@@ -148,7 +148,7 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                              plotOutput(outputId = "barChart")
                     ),
                     tabPanel(title = "Table Explorer",
-                             dataTableOutput('update_inputs')),
+                             dataTableOutput('update_inputs')) #,
                     # tabPanel(title = "Secondary Source Definitions",
                     #          h2("Investigate textiles using the filters on the left:"),
                     #          selectizeInput(inputId = "textileDefOptions",
@@ -259,6 +259,24 @@ server <- function(input, output, session) {
     }
     else{
       exclude <- "inferredQualities"
+    }
+    updateAllSelectizeInputs(session, input, joined.data.original, exclude)
+  })
+  observe({
+    if(length(input$origYr) == 0){
+      exclude <- "None"
+    }
+    else{
+      exclude <- "origYr"
+    }
+    updateAllSelectizeInputs(session, input, joined.data.original, exclude)
+  })
+  observe({
+    if(length(input$destYr) == 0){
+      exclude <- "None"
+    }
+    else{
+      exclude <- "destYr"
     }
     updateAllSelectizeInputs(session, input, joined.data.original, exclude)
   })
