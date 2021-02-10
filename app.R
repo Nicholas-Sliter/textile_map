@@ -82,6 +82,7 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                                  multiple = TRUE),
                   actionButton(inputId = "updateBtn",
                                label = "Click to update map!"),
+                  br(), br(),
                   actionButton(inputId = 'table_updateBtn',
                                label = 'Click to update table!'),
                   br(), br(), #The inputs for the pie chart and bar chart
@@ -96,7 +97,9 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                               choices = c(colnames(joined.data[,c(19:26)])),
                               selected = "textile_name"),
                   checkboxInput(inputId = "facet",
-                                label = "Facet by modifier")
+                                label = "Facet by modifier"),
+                  actionButton(inputId = 'graph_updateBtn',
+                               label = 'Click to update graphs!')
                 ),
                 mainPanel(
                   tabsetPanel(#All of the outputs go here (introduction, map/graphs, data tables)
@@ -180,6 +183,7 @@ server <- function(input, output, session) {
     inferredQualities <- isolate(input$inferredQualities)
     area <- isolate(input$zoomTo)
     table_update <- isolate(input$table_updateBtn)
+    graph_update <- isolate(input$graph_updateBtn)
     
     #Every time, we want to start with all of the data to filter through
     joined.data <- joined.data.original
@@ -308,6 +312,7 @@ server <- function(input, output, session) {
   #Used to render the plot for pie chart
   output$pieChart <- renderPlot({
     input$updateBtn
+    input$graph_updateBtn
     name <- input$countriesMap_shape_click$id
     
     #only want to do this if they clicked on a country
@@ -416,6 +421,7 @@ server <- function(input, output, session) {
   #except when it is graphing the outputs, it is doing so with a bar chart instead of a pie chart
   output$barChart <- renderPlot({
     input$updateBtn
+    input$graph_updateBtn
     name <- input$countriesMap_shape_click$id
     
     if(length(name) != 0){
