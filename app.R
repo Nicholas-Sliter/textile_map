@@ -19,6 +19,8 @@ latLongZoom.original <- data.frame("Area" = c("World", "Europe", "Africa",
 
 latLongZoom <- latLongZoom.original
 
+secDefs.original <- read_xlsx("OurTranslations.xlsx")
+
 #Read in the data
 joined.data.original <- read_csv("joined.csv")
 map.data.original <- readOGR("filteredCountries.GeoJSON")
@@ -100,6 +102,20 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                                    choices = levels(factor(joined.data$textile_quality_inferred)),
                                    multiple = TRUE)
                   ),
+                  conditionalPanel(
+                    condition = "true",
+                    selectizeInput(inputId = "origYr",
+                                   label = "Choose origin year(s) of interest",
+                                   choices = levels(factor(joined.data$orig_yr)),
+                                   multiple = TRUE)
+                  ),
+                  conditionalPanel(
+                    condition = "true",
+                    selectizeInput(inputId = "destYr",
+                                   label = "Choose destination year(s) of interest",
+                                   choices = levels(factor(joined.data$dest_yr)),
+                                   multiple = TRUE)
+                  ),
                   actionButton(inputId = "updateBtn",
                                label = "Click to update map!"),
                   br(), br(),
@@ -132,7 +148,18 @@ ui <- fluidPage(theme = shinytheme("darkly"),
                              plotOutput(outputId = "barChart")
                     ),
                     tabPanel(title = "Table Explorer",
-                             dataTableOutput('update_inputs'))
+                             dataTableOutput('update_inputs')),
+                    tabPanel(title = "Secondary Source Definitions",
+                             h2("Investigate textiles using the filters on the left:"),
+                             selectizeInput(inputId = "textileDefOptions",
+                                            label = "Choose textile to learn about",
+                                            choices = levels(factor(joined.data$textile_name)),
+                                            options = list(onInitialize = I('function() { this.setValue(""); }'))),
+                             actionButton(inputId = "defBtn",
+                                          label = "Click to learn about this textile!"),
+                             br(), br(),
+                             textOutput(outputId = "secDefOutput")
+                    )
                   )
                 )
 )
@@ -142,8 +169,26 @@ server <- function(input, output, session) {
   #Render the data table based on the given search
   #let's modify this to allow hiding of inputs
   
-  #simplify the code somehow with a loop or something?
-  #
+  output$secDefOutput <- renderText({
+    input$defBtn
+    textile <- isolate(input$textileDefOptions)
+    
+    if((textile == "")){
+      "Select a textile to learn more about!"
+    }
+    else{
+      secDefs <- secDefs.original
+      secDefs <- secDefs %>%
+        filter(`textile_type` == textile)
+      
+      if(NROW(secDefs) == 0){
+        "Unfortunately, there are currently no secondary definitions available for this textile"
+      }
+      else{
+        secDefs$definition[1]
+      }
+    }
+  })
   
   observe({
     if(length(input$textileName) == 0){

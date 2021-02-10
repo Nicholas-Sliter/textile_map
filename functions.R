@@ -215,7 +215,7 @@ convert_RegionToCountryName <- function(colvector,type='dest',returnValue=1){
 
 
 
-#get values per peice and classify as inexpessive, mid-range, or expenssive
+#get values per piece and classify as inexpessive, mid-range, or expenssive
 value_per_cols <- function(data){
   # data <- data %>% mutate(quantity = as.numeric(ifelse(!is.na(data$quant_ells),
   #                                            data$quant_ells,
@@ -447,6 +447,12 @@ filter_by_inputs <- function(data,input,exclude = "None"){
   if(exclude != "inferredQualities"){
     data <- private_filter_by(data,isolate(input$inferredQualities),data$textile_quality_inferred)
   }    
+  if(exclude != "origYr"){
+    data <- private_filter_by(data,isolate(input$origYr),data$orig_yr)
+  } 
+  if(exclude != "destYr"){
+    data <- private_filter_by(data,isolate(input$destYr),data$dest_yr)
+  } 
   
   # data <- private_filter_by(data,isolate(input$textileName),data$textile_name)
   # data <- private_filter_by(data,isolate(input$colors),data$colorGroup)
@@ -696,5 +702,12 @@ updateAllSelectizeInputs <- function(session, input, data, exclude){
                          label = "Choose inferred qualities(s) of interest",
                          choices = sort(levels(factor(filtered.data$textile_quality_inferred))),
                          selected = isolate(input$inferredQualities))
-    } 
-}
+  } 
+  
+  no.exclusion <- filter_by_inputs(data,input,exclude="None")
+  updateSelectizeInput(session, "textileDefOptions",
+                       label = "Choose textile to learn about",
+                       choices = sort(levels(factor(no.exclusion$textile_name))),
+                       selected = isolate(input$textileDefOptions))
+} 
+
