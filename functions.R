@@ -653,71 +653,71 @@ evalInputs <- function(data, inputs){
 
 updateAllSelectizeInputs <- function(session, input, data, exclude){
   print(exclude)
-  
-  filtered.data <- filter_by_inputs_update(data,input,exclude="textileName")
+  filtered.data <- filter_by_inputs_update2(data,input,exclude="None")
+  #filtered.data <- filter_by_inputs_update(data,input,exclude="textileName")
   if(exclude != "textileName"){
     updateSelectizeInput(session, "textileName",
                          label = "Choose textile(s) of interest",
                          choices = sort(levels(factor(filtered.data$textile_name))),
                          selected = isolate(input$textileName))  
   }
-  filtered.data <- filter_by_inputs_update(data,input,exclude="colors")
+  #filtered.data <- filter_by_inputs_update(data,input,exclude="colors")
   if(exclude != "colors"){
     updateSelectizeInput(session, "colors",
                          label = "Choose color(s) of interest",
                          choices = sort(levels(factor(filtered.data$colorGroup))),
                          selected = isolate(input$colors))  
   }
-  filtered.data <- filter_by_inputs_update(data,input,exclude="patterns")
+  #filtered.data <- filter_by_inputs_update(data,input,exclude="patterns")
   if(exclude != "patterns"){
     updateSelectizeInput(session, "patterns",
                          label = "Choose pattern(s) of interest",
                          choices = sort(levels(factor(filtered.data$textile_pattern_arch))),
                          selected = isolate(input$patterns))    
   }
-  filtered.data <- filter_by_inputs_update(data,input,exclude="process")
+  #filtered.data <- filter_by_inputs_update(data,input,exclude="process")
   if(exclude != "process"){
     updateSelectizeInput(session, "process",
                          label = "Choose process(es) of interest",
                          choices = sort(levels(factor(filtered.data$textile_process_arch))),
                          selected = isolate(input$process))
   }
-  filtered.data <- filter_by_inputs_update(data,input,exclude="fibers")
+  #filtered.data <- filter_by_inputs_update(data,input,exclude="fibers")
   if(exclude != "fibers"){
     updateSelectizeInput(session, "fibers",
                          label = "Choose fiber(s) of interest",
                          choices = sort(levels(factor(filtered.data$textile_fiber_arch))),
                          selected = isolate(input$fibers))
   }
-  filtered.data <- filter_by_inputs_update(data,input,exclude="geography")
+  #filtered.data <- filter_by_inputs_update(data,input,exclude="geography")
   if(exclude != "geography"){
     updateSelectizeInput(session, "geography",
                          label = "Choose geography(s) of interest",
                          choices = sort(levels(factor(filtered.data$textile_geography_arch))),
                          selected = isolate(input$geography))
   }
-  filtered.data <- filter_by_inputs_update(data,input,exclude="qualities")
+  #filtered.data <- filter_by_inputs_update(data,input,exclude="qualities")
   if(exclude != "qualities"){
     updateSelectizeInput(session, "qualities",
                          label = "Choose quality(s) of interest",
                          choices = sort(levels(factor(filtered.data$textile_quality_arch))),
                          selected = isolate(input$quality))
   }
-  filtered.data <- filter_by_inputs_update(data,input,exclude="inferredQualities")
+  #filtered.data <- filter_by_inputs_update(data,input,exclude="inferredQualities")
   if(exclude != "inferredQualities"){
     updateSelectizeInput(session, "inferredQualities",
                          label = "Choose inferred qualities(s) of interest",
                          choices = sort(levels(factor(filtered.data$textile_quality_inferred))),
                          selected = isolate(input$inferredQualities))
   }
-  filtered.data <- filter_by_inputs_update(data,input,exclude="origYr")
+  #filtered.data <- filter_by_inputs_update(data,input,exclude="origYr")
   if(exclude != "origYr"){
     updateSelectizeInput(session, "origYr",
                          label = "Choose origin year(s) of interest",
                          choices = sort(levels(factor(filtered.data$orig_yr))),
                          selected = isolate(input$origYr))
   }
-  filtered.data <- filter_by_inputs_update(data,input,exclude="destYr")
+  #filtered.data <- filter_by_inputs_update(data,input,exclude="destYr")
   if(exclude != "destYr"){
     updateSelectizeInput(session, "destYr",
                          label = "Choose destination year(s) of interest",
@@ -726,7 +726,77 @@ updateAllSelectizeInputs <- function(session, input, data, exclude){
   }
 } 
 
-filter_by_inputs_update <- function(data, input, exclude){
+filter_by_inputs_update <- function(data, input, exclude = "None"){
+  
+  excludeName <- FALSE
+  excludeColors <- FALSE
+  excludePatterns <- FALSE
+  excludeProcess <- FALSE
+  excludeFibers <- FALSE
+  excludeGeography <- FALSE
+  excludeQualities <- FALSE
+  excludeInferredQualities <- FALSE
+  excludeOrigYr <- FALSE
+  excludeDestYr <- FALSE
+  
+  if(exclude == "textileName" | length(isolate(input$textileName)) == 0){
+    excludeName <- TRUE
+  }
+  if(exclude == "colors" | length(isolate(input$colors)) == 0){
+    excludeColors <- TRUE
+  }
+  if(exclude == "patterns" | length(isolate(input$patterns)) == 0){
+    excludePatterns <- TRUE
+  }
+  if(exclude == "process" | length(isolate(input$process)) == 0){
+    excludeProcess <- TRUE
+  }
+  if(exclude == "fibers" | length(isolate(input$fibers)) == 0){
+    excludeFibers <- TRUE
+  }
+  if(exclude == "geography" | length(isolate(input$geography)) == 0){
+    excludeGeography <- TRUE
+  }
+  if(exclude == "qualities" | length(isolate(input$qualities)) == 0){
+    excludeQualities <- TRUE
+  }
+  if(exclude == "inferredQualities" | length(isolate(input$inferredQualities)) == 0){
+    excludeInferredQualities <- TRUE
+  }
+  if(exclude == "origYr" | length(isolate(input$origYr)) == 0){
+    excludeOrigYr <- TRUE
+  }
+  if(exclude == "destYr" | length(isolate(input$destYr)) == 0){
+    excludeDestYr <- TRUE
+  }
+  
+  excludeNone <- (length(isolate(input$textileName)) + length(isolate(input$colors)) +
+                    length(isolate(input$patterns)) + length(isolate(input$patterns)) + length(isolate(input$process)) +
+                    length(isolate(input$fibers)) + length(isolate(input$geography)) + length(isolate(input$geography)) +
+                    length(isolate(input$qualities)) + length(isolate(input$inferredQualities)) + length(isolate(input$origYr)) +
+                    length(isolate(input$destYr))) == 0
+  
+  if(!excludeNone){
+    data <- data %>%
+    filter(
+      (excludeName | textile_name %in% isolate(input$textileName)) &
+        (excludeColors | colorGroup %in% isolate(input$colors)) &
+        (excludePatterns | textile_pattern_arch %in% isolate(input$patterns)) &
+        (excludeProcess | textile_process_arch %in% isolate(input$process)) &
+        (excludeFibers | textile_fiber_arch %in% isolate(input$fibers)) &
+        (excludeGeography | textile_geography_arch %in% isolate(input$geography)) &
+        (excludeQualities | textile_quality_arch %in% isolate(input$qualities)) &
+        (excludeInferredQualities | textile_quality_inferred %in% isolate(input$inferredQualities)) &
+        (excludeOrigYr | orig_yr %in% isolate(input$origYr)) &
+        (excludeDestYr | dest_yr %in% isolate(input$origYr))
+      )
+  }
+  
+  return(data)
+  
+}
+
+filter_by_inputs_update2 <- function(data, input, exclude = "None"){
   
   excludeName <- FALSE
   excludeColors <- FALSE
@@ -770,37 +840,6 @@ filter_by_inputs_update <- function(data, input, exclude){
   #   excludeDestYr <- TRUE
   # }
   
-  # if(exclude == "textileName" | length(isolate(input$textileName)) == 0){
-  #   excludeName <- TRUE
-  # }
-  # if(exclude == "colors" | length(isolate(input$colors)) == 0){
-  #   excludeColors <- TRUE
-  # }
-  # if(exclude == "patterns" | length(isolate(input$patterns)) == 0){
-  #   excludePatterns <- TRUE
-  # }
-  # if(exclude == "process" | length(isolate(input$process)) == 0){
-  #   excludeProcess <- TRUE
-  # }
-  # if(exclude == "fibers" | length(isolate(input$fibers)) == 0){
-  #   excludeFibers <- TRUE
-  # }
-  # if(exclude == "geography" | length(isolate(input$geography)) == 0){
-  #   excludeGeography <- TRUE
-  # }
-  # if(exclude == "qualities" | length(isolate(input$qualities)) == 0){
-  #   excludeQualities <- TRUE
-  # }
-  # if(exclude == "inferredQualities" | length(isolate(input$inferredQualities)) == 0){
-  #   excludeInferredQualities <- TRUE
-  # }
-  # if(exclude == "origYr" | length(isolate(input$origYr)) == 0){
-  #   excludeOrigYr <- TRUE
-  # }
-  # if(exclude == "destYr" | length(isolate(input$destYr)) == 0){
-  #   excludeDestYr <- TRUE
-  # }
-  
   if(exclude == "textileName" | length(isolate(input$textileName)) == 0){
     excludeName <- TRUE
   }
@@ -840,28 +879,17 @@ filter_by_inputs_update <- function(data, input, exclude){
   
   if(!excludeNone){
     data <- data %>%
-      # filter(
-      #   (!excludeName & textile_name %in% isolate(input$textileName)) |
-      #     (!excludeColors & colorGroup %in% isolate(input$colors)) |
-      #     (!excludePatterns & textile_pattern_arch %in% isolate(input$patterns)) |
-      #     (!excludeProcess & textile_process_arch %in% isolate(input$process)) |
-      #     (!excludeFibers & textile_fiber_arch %in% isolate(input$fibers)) |
-      #     (!excludeGeography & textile_geography_arch %in% isolate(input$geography)) |
-      #     (!excludeQualities & textile_quality_arch %in% isolate(input$qualities)) |
-      #     (!excludeInferredQualities & textile_quality_inferred %in% isolate(input$inferredQualities)) |
-      #     (!excludeOrigYr & orig_yr %in% isolate(input$origYr)) |
-      #     (!excludeDestYr & dest_yr %in% isolate(input$origYr))
-    filter(
-      (excludeName | textile_name %in% isolate(input$textileName)) &
-        (excludeColors | colorGroup %in% isolate(input$colors)) &
-        (excludePatterns | textile_pattern_arch %in% isolate(input$patterns)) &
-        (excludeProcess | textile_process_arch %in% isolate(input$process)) &
-        (excludeFibers | textile_fiber_arch %in% isolate(input$fibers)) &
-        (excludeGeography | textile_geography_arch %in% isolate(input$geography)) &
-        (excludeQualities | textile_quality_arch %in% isolate(input$qualities)) &
-        (excludeInferredQualities | textile_quality_inferred %in% isolate(input$inferredQualities)) &
-        (excludeOrigYr | orig_yr %in% isolate(input$origYr)) &
-        (excludeDestYr | dest_yr %in% isolate(input$origYr))
+      filter(
+        (!excludeName & textile_name %in% isolate(input$textileName)) |
+          (!excludeColors & colorGroup %in% isolate(input$colors)) |
+          (!excludePatterns & textile_pattern_arch %in% isolate(input$patterns)) |
+          (!excludeProcess & textile_process_arch %in% isolate(input$process)) |
+          (!excludeFibers & textile_fiber_arch %in% isolate(input$fibers)) |
+          (!excludeGeography & textile_geography_arch %in% isolate(input$geography)) |
+          (!excludeQualities & textile_quality_arch %in% isolate(input$qualities)) |
+          (!excludeInferredQualities & textile_quality_inferred %in% isolate(input$inferredQualities)) |
+          (!excludeOrigYr & orig_yr %in% isolate(input$origYr)) |
+          (!excludeDestYr & dest_yr %in% isolate(input$origYr))
       )
   }
   
