@@ -653,7 +653,7 @@ evalInputs <- function(data, inputs){
 
 updateAllSelectizeInputs <- function(session, input, data, exclude){
   print(exclude)
-  filtered.data <- filter_by_inputs_update2(data,input,exclude="None")
+  filtered.data <- filter_by_inputs_update(data,input,exclude="None")
   #filtered.data <- filter_by_inputs_update(data,input,exclude="textileName")
   if(exclude != "textileName"){
     updateSelectizeInput(session, "textileName",
