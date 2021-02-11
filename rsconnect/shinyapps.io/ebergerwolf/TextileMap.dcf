@@ -5,9 +5,9 @@ account: ebergerwolf
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 3619545
-bundleId: 4208367
+bundleId: 4210918
 url: https://ebergerwolf.shinyapps.io/TextileMap/
-when: 1613013647.89512
+when: 1613062668.50413
 asMultiple: FALSE
 asStatic: FALSE
 ignoredFiles: countries.geojson|joinedNEW.csv|VOC_cleanNEW.csv|WIC_cleanNEW.csv

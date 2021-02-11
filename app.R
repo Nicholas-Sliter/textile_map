@@ -27,6 +27,9 @@ map.data.original <- readOGR("filteredCountries.GeoJSON")
 
 #make copies of original data
 joined.data <- joined.data.original
+#Fix Facet Wrapping Issue (deal with this after presentation)
+#joined.data$textile_quality_inferred <- factor(joined.data$textile_quality_inferred,
+ #                                              levels = c("Inexpensive", "Mid-Range", "Expensive"))
 map.data <- map.data.original
 
 #Creating a modifier choice vector
@@ -463,17 +466,17 @@ server <- function(input, output, session) {
         if(nrow(bar.data) != 0){
           if(isolate(input$facet)){
             bar.data %>%
-              ggplot(aes(x = factor(orig_yr), y = textile_quantity)) +
+              ggplot(aes(x = factor(orig_yr), y = deb_dec)) +
               geom_bar(stat="identity",
                        aes_string(fill=modifier)) +
               labs(x = paste(regionChoice, "Year"),
-                   y = "Textile Quantity",
+                   y = "Textile Value (guilders)",
                    fill = NULL) +
               scale_fill_viridis(discrete = TRUE,
                                  name = paste(names(modVec)[modVec == modifier]),
                                  option = "magma") +
               theme_bw() +
-              ggtitle(label = paste(names(modVec)[modVec == modifier], "distribution for", name, "with these filters.")) +
+              ggtitle(label = paste(names(modVec)[modVec == modifier], "monetary distribution for", name, "with these filters.")) +
               facet_wrap(~get(modifier))
           }
           else{
