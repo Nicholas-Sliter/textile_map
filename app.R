@@ -124,7 +124,7 @@ server <- function(input, output, session) {
   
   
   
- # observeEvent(input$textModifier, {
+  observeEvent(input$textModifier, {
     
     textModifier <- isolate(input$textModifier)
     
@@ -149,7 +149,7 @@ server <- function(input, output, session) {
         })
         )
     })
- # })
+  })
   
   
   
