@@ -424,7 +424,7 @@ server <- function(input, output, session) {
               ggplot(aes(x = factor(orig_yr), y = textile_quantity)) +
               geom_bar(stat="identity",
                        aes_string(fill=modifier)) +
-              labs(x = "Original Year",
+              labs(x = paste(regionChoice, "Year"),
                    y = "Textile Quantity",
                    fill = NULL) +
               scale_fill_discrete(name = paste(names(modVec)[modVec == modifier])) +
@@ -437,8 +437,8 @@ server <- function(input, output, session) {
               ggplot(aes(x = factor(orig_yr), y = textile_quantity)) +
               geom_bar(stat="identity",
                        aes_string(fill=modifier)) +
-              labs(x = "Original Year",
-                   y = "Textile Quantity",
+              labs(x = paste(regionChoice, "Year"),
+                   y = "Textile Value (guilders)",
                    fill = NULL) +
               scale_fill_discrete(name = paste(names(modVec)[modVec == modifier])) +
               theme_bw() +
@@ -455,7 +455,7 @@ server <- function(input, output, session) {
               ggplot(aes(x = factor(orig_yr), y = textile_quantity)) +
               geom_bar(stat="identity",
                        aes_string(fill=modifier)) +
-              labs(x = "Original Year",
+              labs(x = paste(regionChoice, "Year"),
                    y = "Textile Quantity",
                    fill = NULL) +
               scale_fill_discrete(name = paste(names(modVec)[modVec == modifier])) +
