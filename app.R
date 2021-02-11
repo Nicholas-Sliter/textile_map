@@ -433,7 +433,7 @@ server <- function(input, output, session) {
               ggplot(aes(x = orig_yr, y = deb_dec)) +
               geom_bar(stat="identity",
                        aes_string(fill=modifier)) +
-              labs(x = "Original Year",
+              labs(x = paste(regionChoice, "Year"),
                    y = "Textile Value (guilders)",
                    fill = NULL) +
               scale_fill_discrete(name = paste(names(modVec)[modVec == modifier])) +

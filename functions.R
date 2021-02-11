@@ -447,7 +447,7 @@ get_col <- function(data,colname){
 }
 
 return_colByDataType <- function(data,dataType){
-  return(switch(dataType,'Value'= get_col(data,'total_Deb'),
+  return(switch(dataType,'Value'= get_col(data,'total_Dec'),
                 'Quantity'= get_col(data,'total_Quant')))
   
 }
@@ -505,6 +505,21 @@ return_yrColname <- function(region){
   
 }
 
+return_yrString <- function(region){
+  if(region == "Destination"){
+    return("dest_yr")
+  }
+  else if(region == "Origin"){
+    return("orig_yr")
+  }
+  else{
+    return(NULL) 
+  }
+  
+  
+}
+
+
 
 #filter inputs
 filter_by_inputs <- function(data,input){
@@ -530,43 +545,7 @@ filter_by_inputs <- function(data,input){
   data <- private_filter_by(data,isolate(input$inferredQualities),data$textile_quality_inferred)
   data <- private_filter_by(data,isolate(input$year),data[[return_yrColname(isolate(input$regionChoice))]])
 
-  #add year but have function to switch between orig and dest yr
   return(data)
-  
-  # 
-  # if(length(input$textileName) != 0){
-  #   joined.data <- joined.data %>% 
-  #     filter(textile_name %in% input$textileName)
-  # }
-  # if(length(input$colors) != 0){
-  #   joined.data <- joined.data %>% 
-  #     filter(colorGroup %in% input$colors)
-  # }
-  # if(length(input$patterns) != 0){
-  #   joined.data <- joined.data %>% 
-  #     filter(textile_pattern_arch %in% input$patterns)
-  # }
-  # if(length(input$process) != 0){
-  #   joined.data <- joined.data %>% 
-  #     filter(textile_process_arch %in% input$process)
-  # }
-  # if(length(input$fibers) != 0){
-  #   joined.data <- joined.data %>% 
-  #     filter(textile_fiber_arch %in% input$fibers)
-  # }
-  # if(length(input$geography) != 0){
-  #   joined.data <- joined.data %>% 
-  #     filter(textile_geography_arch %in% input$geography)
-  # }
-  # if(length(input$qualities) != 0){
-  #   joined.data <- joined.data %>% 
-  #     filter(textile_quality_arch %in% input$qualities)
-  # }
-  # if(length(input$inferredQualities) != 0){
-  #   joined.data <- joined.data %>% 
-  #     filter(textile_quality_inferred %in% input$inferredQualities)
-  # }
-  
   
   
 }
