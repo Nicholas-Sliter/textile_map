@@ -1,0 +1,13 @@
+name: TextileMap
+title: TextileMap
+username:
+account: ebergerwolf
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3619545
+bundleId: 4208367
+url: https://ebergerwolf.shinyapps.io/TextileMap/
+when: 1613013647.89512
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: countries.geojson|joinedNEW.csv|VOC_cleanNEW.csv|WIC_cleanNEW.csv
