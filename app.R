@@ -7,6 +7,8 @@ library(tidyverse)
 library(stringr)
 library(debkeepr)
 library(leaflet)
+library(viridis)
+
 
 #source to function file
 source('functions.R')
@@ -36,6 +38,7 @@ modVec <- c("Textile Name" = "textile_name",
             "Value Range" = "textile_quality_inferred",
             "Geography" = "textile_geography_arch",
             "Quality" = "textile_quality_arch")
+
 
 #Creating the UI
 ui <- fluidPage(theme = shinytheme("sandstone"),
@@ -320,7 +323,9 @@ server <- function(input, output, session) {
             labs(x = NULL,
                  y = NULL,
                  fill = NULL) +
-            scale_fill_discrete(name = paste(names(modVec)[modVec == modifier])) +
+            scale_fill_viridis(discrete = TRUE,
+                               name = paste(names(modVec)[modVec == modifier]),
+                              option = "magma") +
             theme_void() +
             ggtitle(label = paste(names(modVec)[modVec == modifier], "distribution for", name, "with these filters."))
         }
@@ -341,7 +346,9 @@ server <- function(input, output, session) {
             labs(x = NULL,
                  y = NULL,
                  fill = NULL) +
-            scale_fill_discrete(name = paste(names(modVec)[modVec == modifier])) +
+            scale_fill_viridis(discrete = TRUE,
+                               name = paste(names(modVec)[modVec == modifier]),
+                               option = "magma") +
             theme_void() +
             ggtitle(label = paste(names(modVec)[modVec == modifier], "monetary distribution for", name, "with these filters."))
         }
@@ -427,7 +434,9 @@ server <- function(input, output, session) {
               labs(x = paste(regionChoice, "Year"),
                    y = "Textile Quantity",
                    fill = NULL) +
-              scale_fill_discrete(name = paste(names(modVec)[modVec == modifier])) +
+              scale_fill_viridis(discrete = TRUE,
+                                 name = paste(names(modVec)[modVec == modifier]),
+                                 option = "magma") +
               theme_bw() +
               ggtitle(label = paste(names(modVec)[modVec == modifier], "distribution for", name, "with these filters.")) +
               facet_wrap(~get(modifier))
@@ -440,7 +449,9 @@ server <- function(input, output, session) {
               labs(x = paste(regionChoice, "Year"),
                    y = "Textile Value (guilders)",
                    fill = NULL) +
-              scale_fill_discrete(name = paste(names(modVec)[modVec == modifier])) +
+              scale_fill_viridis(discrete = TRUE,
+                                 name = paste(names(modVec)[modVec == modifier]),
+                                 option = "magma") +
               theme_bw() +
               ggtitle(label = paste(names(modVec)[modVec == modifier], "distribution for", name, "with these filters."))
           }}
@@ -458,7 +469,9 @@ server <- function(input, output, session) {
               labs(x = paste(regionChoice, "Year"),
                    y = "Textile Quantity",
                    fill = NULL) +
-              scale_fill_discrete(name = paste(names(modVec)[modVec == modifier])) +
+              scale_fill_viridis(discrete = TRUE,
+                                 name = paste(names(modVec)[modVec == modifier]),
+                                 option = "magma") +
               theme_bw() +
               ggtitle(label = paste(names(modVec)[modVec == modifier], "distribution for", name, "with these filters.")) +
               facet_wrap(~get(modifier))
@@ -471,7 +484,9 @@ server <- function(input, output, session) {
               labs(x = paste(regionChoice, "Year"),
                    y = "Textile Value (guilders)",
                    fill = NULL) +
-              scale_fill_discrete(name = paste(names(modVec)[modVec == modifier])) +
+              scale_fill_viridis(discrete = TRUE,
+                                 name = paste(names(modVec)[modVec == modifier]),
+                                 option = "magma") +
               theme_bw() +
               ggtitle(label = paste(names(modVec)[modVec == modifier], "monetary distribution for", name, "with these filters."))
           }}
