@@ -1,4 +1,6 @@
 #Project initial
+
+#load required packages
 library(shiny)
 library(shinythemes)
 library(readxl)
@@ -13,6 +15,7 @@ library(viridis)
 #source to function file
 source('functions.R')
 
+#zoom into area of map
 latLongZoom.original <- data.frame("Area" = c("World", "Europe", "Africa",
                                               "Middle East", "Pacfic Islands", "Asia"),
                                    "Lat" = c(30, 49.8, -6, 27, 0, 32),
@@ -46,7 +49,7 @@ modVec <- c("Textile Name" = "textile_name",
 #Creating the UI
 ui <- fluidPage(theme = shinytheme("sandstone"),
                 titlePanel("Interactive Textile Explorer"),
-                sidebarPanel(#All inputs will go in this sidebarPanel
+                sidebarPanel(#All user inputs will go in this sidebarPanel
                   h4("Explore different facets of the data by selecting inputs below:"),
                   radioButtons(inputId = "dataSet",
                                label = "Choose company of interest",
@@ -112,18 +115,18 @@ ui <- fluidPage(theme = shinytheme("sandstone"),
                               choices = modVec,
                               selected = "textile_name"),
                   checkboxInput(inputId = "omitNAs",
-                                label = "Omit NAs in charts"),
+                                label = "Omit NAs in charts"), #for pie chart
                   selectInput(inputId = "barChart",
                               label = "Choose a modifier for the bar chart:",
                               choices = modVec,
                               selected = "textile_name"),
                   checkboxInput(inputId = "facet",
-                                label = "Facet by modifier"),
+                                label = "Facet by modifier"), #for bar chart
                   actionButton(inputId = 'graph_updateBtn',
                                label = 'Click to update graphs!')
                 ),
                 mainPanel(
-                  tabsetPanel(#All of the outputs go here (introduction, map/graphs, data tables, sources)
+                  tabsetPanel(#All of the outputs go here in seperate tabs (introduction, map/graphs, data tables, sources)
                     tabPanel(title= "Introduction",
                              h2("Dutch Textile Trade from 1710 to 1715", align = "center"),
                              img(src = "HARC_textiles.png", height = 350, width = 550, style="display: block; margin-left: auto; margin-right: auto;"),
@@ -141,14 +144,14 @@ ui <- fluidPage(theme = shinytheme("sandstone"),
                     ),
                     tabPanel(title = "Table Explorer",
                              dataTableOutput('update_inputs'),
-                             downloadButton("downloadData", "Download Table") #download button
+                             downloadButton("downloadData", "Download Table") #download button for user selected data
                     ),
                     tabPanel(title = "Suggested Reading",
                              h3("Data Sources (compiled by Marsely Kehoe and Carrie Anderson):"),
                              h5("Nationaal Archief, West India Company Archive, nrs. 1290-1296."),
                              h5("Huygens ING. Bookkeep-General Batavia/Boekhouder-Generaal Batavia."),
                              a("https://bgb.huygens.knaw.nl"),
-                             h3("Suggested Reading:"),
+                             h3("Suggested Reading:"), #list compiled by Prof. Anderson
                              h5("Alpern, Stanley B. “What Africans Got for Their Slaves: A Master List of European Goods,” History in Africa, 22 (1995): 5-43."),
                              h5("Bruijn, J. R., F. S. Gaastra, and I. Schöffer, with assistance from A. C. J. Vermeulen. Dutch-Asiatic Shipping in the 17th and 18th Centuries. The Hague: Martinus Nijhoff, 1987. Hexham, Henry. Het groot woorden-boeck: gestelt in 't Nederduytsch, end in 't Englisch. Rotterdam: Amount Leers, 1648."),
                              h5("Chaudhuri, K. N. The Trading World of Asia and the East India Company, 1660-1760. Cambridge: Cambridge University Press, 1978)."),
@@ -175,14 +178,6 @@ ui <- fluidPage(theme = shinytheme("sandstone"),
 )
 
 server <- function(input, output, session) {
-  
-  #can we filter by origin or dest yr?
-  #and maybe we can put bubbles on the graph at lat/long for orig and dest, highlight the orig or dest 
-  #button when the other is clicked
-  
-  #Render the data table based on the given search
-  #let's modify this to allow hiding of inputs as well
-  
   
   #creates table
   output$update_inputs <- renderDataTable(searchDelay = 1000,{
@@ -322,7 +317,7 @@ server <- function(input, output, session) {
             geom_bar(stat="identity",
                      width=1,
                      aes_string(fill=modifier))+
-            coord_polar("y", start=0) + #This line in particular changes the bar chart to a pie chart
+            coord_polar("y", start=0) + #This line in particular changes the bar chart to a pie chart by wrapping the bar around a coordinate plane
             labs(x = NULL,
                  y = NULL,
                  fill = NULL) +
@@ -330,7 +325,7 @@ server <- function(input, output, session) {
                                name = paste(names(modVec)[modVec == modifier]),
                               option = "magma") +
             theme_void() +
-            ggtitle(label = paste(names(modVec)[modVec == modifier], "distribution for", name, "with these filters."))
+            ggtitle(label = paste(names(modVec)[modVec == modifier], "distribution for", name, "with these filters.")) #title changes to reflect user inputs
         }
         else{ #No rows were found
           ggplot() +
