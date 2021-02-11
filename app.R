@@ -144,7 +144,7 @@ server <- function(input, output, session) {
           numinputs <- lapply(seq(length.out = req(as.numeric(vector1()))), function(i){
           selectizeInput(inputId = paste0("mod", i),
                          label = paste0(colnames(modLevels()[i])),
-                         choices = isolate(modLevels()[i]),
+                         choices = isolate(unique(modLevels()[i])),
                          multiple = TRUE)
         })
         )
