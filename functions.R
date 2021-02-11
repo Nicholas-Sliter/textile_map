@@ -9,19 +9,19 @@ new_deb_lsd_col <- function(data,
                             l="value_guldens",
                             s="value_stuivers",
                             d="value_penningen"){
-  
+
   # return(data %>% mutate(deb_lsd = deb_lsd(ifelse(is.na(getElement(data,l)),0,as.numeric(getElement(data,l))),
   #                                          ifelse(is.na(getElement(data,s)),0,as.numeric(getElement(data,s))),
   #                                          ifelse(is.na(getElement(data,d)),0,as.numeric(getElement(data,d))),
   #                                          bases = c(20, 16))))
-  
+
   return(data %>% mutate(deb_lsd = deb_lsd(clean_deb_values(data,l),
                                            clean_deb_values(data,s),
                                            clean_deb_values(data,d),
                                            bases = c(20, 16))))
-  
-  
-  
+
+
+
 }
 
 
@@ -32,9 +32,9 @@ clean_deb_values <- function(data,col){
   ifelse(is.na(getElement(data,col)) | is.null(getElement(data,col)) | is.na(as.numeric(getElement(data,col))),
          0,
          as.numeric(getElement(data,col)))
-  
-  
-  
+
+
+
 }
 
 
@@ -43,9 +43,9 @@ clean_deb_values <- function(data,col){
 #   #replace x with 0
 #   str_replace_all(getElement(data,value),'x','0')
 #   str_replace_all(getElement(data,value),' ',"")
-#   
+#
 #   ifelse(is_na_or_null(value)),return(0),
-# 
+#
 #   else {
 #     ifelse((!is.na(as.numeric(getElement(data,value))))
 #     return(as.numeric(getElement(data,value)))
@@ -54,9 +54,9 @@ clean_deb_values <- function(data,col){
 #     return(0)
 #   }
 # }
-# 
-# 
-# 
+#
+#
+#
 # is_na_or_null <- function(element){
 #   if (is.na(element) | is.null(element)){
 #   return(TRUE)}
@@ -71,13 +71,13 @@ new_deb_dec_col<- function(data,
                            s="value_stuivers",
                            d="value_penningen"){
   return(data %>% mutate(deb_dec = as.numeric(deb_as_decimal(new_deb_lsd_col(data,l,s,d)))))
-  
+
 }
 
 #create deb dec from lsd
 deb_dec_from_lsd<- function(data,colname = 'deb_lsd'){
   return(data %>% mutate(deb_dec = as.numeric(deb_as_decimal(getElement(data,colname)))))
-  
+
 }
 
 #return TRUE if numeric, FALSE if not numeric or factored
@@ -90,10 +90,10 @@ detect_varType <- function(data,colname){
     return(FALSE)
   }
   else if (is.numeric(vector)){
-    return(TRUE) 
+    return(TRUE)
   }
   else{
-    return(FALSE) 
+    return(FALSE)
   }
 }
 
@@ -102,15 +102,15 @@ detect_varType <- function(data,colname){
 get_graphType <- function(data,x,y,args=c(main=c(),aes=c())){
   x_type <- detect_varType(data,x)
   y_type <- detect_varType(data,y)
-  
-  
+
+
   #X and Y are both cont.
   if (x_type & y_type){
     #scatterplot
     return(
       geom_point()
     )
-    
+
   }
   #X XOR Y are cont.
   else if(xor(x_type,y_type)){
@@ -127,11 +127,11 @@ get_graphType <- function(data,x,y,args=c(main=c(),aes=c())){
       #args[1],aes(args[2])
     )
   }
-  
-  
+
+
   #to do args, get length of vector
-  
-  
+
+
 }
 
 #do binning to create color choices based on data
@@ -145,22 +145,22 @@ auto_bin <- function(data) {
   if(maxValue < 50){
     maxValue <- 50
   }
-  
-  return(c(0, ceiling(maxValue / 50), ceiling(maxValue / 25), 
+
+  return(c(0, ceiling(maxValue / 50), ceiling(maxValue / 25),
            ceiling(maxValue / 5), ceiling(maxValue * 2 / 5), ceiling(maxValue)))
 }
 
 
 #set to numeric, NA -> 0 ####NOT FUCTIONING####
 to_numeric_naToZero <- function(colname){
-  
-  
+
+
   return(colname <- colname %>%
            apply(margin=2,
                  FUN=(if(is.na(as.numeric(colname))){return(0)}
                       else{return(as.numeric(colname))}))
   )
-  
+
 }
 
 
@@ -170,16 +170,16 @@ convert_RegionToCountryName <- function(colvector,type='dest',returnValue=1){
   #sep by ", " then take second portion of string to get country name from region
   #then need to deal with " x, southwest coast of India" while respecting things like
   # "Sri Lanka"
-  
-  
+
+
   #two types: dest and orig
   nameList <- colvector
   #data <- data %>% mutate (countries = "")
   vector <- nameList
   cardinals <- c('Southwest ', 'Northwest ', 'Southeast ', 'Northeast ')
   for(i in 1:length(nameList)){
-    
-    
+
+
     #only split if necessary
     temp <- nameList[i]
     if(str_detect(temp,", ")){
@@ -206,10 +206,10 @@ convert_RegionToCountryName <- function(colvector,type='dest',returnValue=1){
     if(sum(str_detect(temp, cardinals))>0){
       temp <- min(str_replace_all(temp, cardinals, ""))
     }
-    
+
     vector[i] <- temp
     #getElement(data,get(new_colname))[i] <- temp
-    
+
   }
   return(vector)
 }
@@ -225,7 +225,7 @@ value_per_cols <- function(data){
   #                                                   data$texile_quantity))))
   return(data %>%
            mutate(value_per_piece = ceiling(deb_dec/textile_quantity)) %>%
-           mutate(textile_quality_inferred = ifelse(value_per_piece < 4, 
+           mutate(textile_quality_inferred = ifelse(value_per_piece < 4,
                                                     "Inexpensive",
                                                     ifelse(value_per_piece >= 4 & value_per_piece <= 10,
                                                            "Mid-range",
@@ -242,15 +242,15 @@ value_per_cols <- function(data){
 #   #                                                 ifelse(is.na(quant_ells),
 #   #                                                        textile_quantity,
 #   #                                                        quant_ells)))),'quantity'))
-#   
+#
 #   return(as.numeric(ifelse(is.na(col2) & is.na(col1),
 #                                                   1,
 #                                                   ifelse(is.na(col2),
 #                                                          col1,
 #                                                          col2))))
-#   
+#
 # }
-# 
+#
 
 
 #if NA set to 1 unit
@@ -263,7 +263,7 @@ value_per_cols <- function(data){
 #                                                ifelse(is.na(col1),
 #                                                       col2,
 #                                                       col1))),'quantity')
-#   
+#
 #   return(vector)
 # }
 
@@ -277,7 +277,7 @@ value_per_cols <- function(data){
 #                                       ifelse(is.na(col1),
 #                                              col2,
 #                                              col1)))
-#   
+#
 #   return(data)
 # }
 
@@ -286,70 +286,70 @@ value_per_cols <- function(data){
 clean_textile_name <- function(data){
   cleaned <- data %>%
     mutate(textile_name = str_replace_all(data$textile_name,
-                                          "adaties", 
+                                          "adaties",
                                           "adathaies")) %>%
     mutate(textile_name = str_replace_all(data$textile_name,
-                                          "aliabalijs", 
+                                          "aliabalijs",
                                           "alliballes")) %>%
     mutate(textile_name = str_replace_all(data$textile_name,
-                                          "alibanees", 
+                                          "alibanees",
                                           "allibannes")) %>%
     mutate(textile_name = str_replace_all(data$textile_name,
-                                          "allegias", 
+                                          "allegias",
                                           "allejaes")) %>%
     mutate(textile_name = str_replace_all(data$textile_name,
-                                          "amirtje|amirtjes", 
+                                          "amirtje|amirtjes",
                                           "amirtje")) %>%
     mutate(textile_name = str_replace_all(data$textile_name,
-                                          "armozijn", 
+                                          "armozijn",
                                           "armosynen")) %>%
     mutate(textile_name = str_replace_all(data$textile_name,
-                                          "atchiabanijs", 
+                                          "atchiabanijs",
                                           "aichuabannys")) %>%
     mutate(textile_name = str_replace_all(data$textile_name,
-                                          "broules|sjadderboraal", 
+                                          "broules|sjadderboraal",
                                           "Chiadder Boraal")) %>%
     mutate(textile_name = str_replace_all(data$textile_name,
-                                          "cabayen|cambayen", 
+                                          "cabayen|cambayen",
                                           "cabajen")) %>%
     mutate(textile_name = str_replace_all(data$textile_name,
-                                          "cambolin", 
+                                          "cambolin",
                                           "camboolees")) %>%
     mutate(textile_name = str_replace_all(data$textile_name,
-                                          "mannenhoed", 
+                                          "mannenhoed",
                                           "hoed")) %>%
     mutate(textile_name = str_replace_all(data$textile_name,
-                                          "muris", 
+                                          "muris",
                                           "morees")) %>%
     mutate(textile_name = str_replace_all(data$textile_name,
-                                          "negros kleden", 
+                                          "negros kleden",
                                           "negro kleden")) %>%
     mutate(textile_name = str_replace_all(data$textile_name,
-                                          "niquanias", 
+                                          "niquanias",
                                           "nickanees")) %>%
     mutate(textile_name = str_replace_all(data$textile_name,
-                                          "patholen", 
+                                          "patholen",
                                           "patola")) %>%
     mutate(textile_name = str_replace_all(data$textile_name,
-                                          "photas", 
+                                          "photas",
                                           "photaes")) %>%
     mutate(textile_name = str_replace_all(data$textile_name,
-                                          "rok", 
+                                          "rok",
                                           "rocken")) %>%
     mutate(textile_name = str_replace_all(data$textile_name,
-                                          "salempuris|Salempuris|salempouris", 
+                                          "salempuris|Salempuris|salempouris",
                                           "salempores")) %>%
     mutate(textile_name = str_replace_all(data$textile_name,
-                                          "serassen", 
+                                          "serassen",
                                           "sarassa")) %>%
     mutate(textile_name = str_replace_all(data$textile_name,
-                                          "sjaalkoord|sjaalstof", 
+                                          "sjaalkoord|sjaalstof",
                                           "sjaal")) %>%
     mutate(textile_name = str_replace_all(data$textile_name,
-                                          "tansjeebs", 
+                                          "tansjeebs",
                                           "tanjeebs")) %>%
     mutate(textile_name = str_replace_all(data$textile_name,
-                                          "tessergaren|tesser", 
+                                          "tessergaren|tesser",
                                           "tussur"))
   return(cleaned)
 }
@@ -357,7 +357,7 @@ clean_textile_name <- function(data){
 
 #get color groups
 getColorGroups <- function(data){
-  
+
   data <- data %>% mutate(colorGroup = ifelse(is.na(textile_color_arch),
                                               "No color indicated",
                                               ifelse(str_detect(textile_color_arch, "gold"),
@@ -377,7 +377,7 @@ getColorGroups <- function(data){
                                                                                                ifelse(str_detect(textile_color_arch, "silver"),
                                                                                                       "silver",
                                                                                                       no = "Other"))))))))))
-  
+
   return(data)
 }
 
@@ -388,28 +388,28 @@ getColorGroups <- function(data){
 #unfinished
 
 sort_inputs <- function(){
-  
-  
+
+
 }
 
 
 # private_filter_by <- function(data, col, data_col){
 #   if(length(col) != 0){
-#     data <- data %>% 
+#     data <- data %>%
 #       filter(data_col %in% col)
 #   }
 #   return(data)
-#   
+#
 # }
 
 #return a function if a condition is TRUE, else return onFalse function
 return_function_onCondition <- function(functionToReturn, condition=TRUE, onFalse = geom_blank()){
-  
+
   if(condition){
     return(functionToReturn)
   }
   return(onFalse)
-  
+
 }
 
 
@@ -424,13 +424,13 @@ return_stringByDataType <- function(dataType){
     return('Value')
   }
   else if (dataType == 'Quantity'){
-    
+
     return('Quantity')
   }
   else{
     return(NULL)
   }
-  
+
 }
 
 
@@ -443,13 +443,14 @@ get_col <- function(data,colname){
     x <- data[[deparse(substitute(colname))]]
   }
   return(x)
-  
+
 }
 
 return_colByDataType <- function(data,dataType){
-  return(switch(dataType,'Value'= get_col(data,'total_Dec'),
+  return(switch(dataType,
+                'Value'= get_col(data,'total_Dec'),
                 'Quantity'= get_col(data,'total_Quant')))
-  
+
 }
 
 return_titleByDataType <- function(dataType){
@@ -467,13 +468,13 @@ return_popupByDataType <- function(data,dataType){
   col <- return_colByDataType(data,dataType)
   if(dataType == 'Value'){
     popup = paste("Total Value:", format(ifelse(is.na(col), 0, col), big.mark = ",", scientific = FALSE), "guilders", sep = " ")
-    
+
   }
   else if (dataType == 'Quantity'){
     popup = paste("Total Quantity:", format(ifelse(is.na(col), 0, col), big.mark = ",", scientific = FALSE), sep = " ")
-    
+
   }
-  
+
   return(popup)
 }
 
@@ -484,7 +485,7 @@ get_binByDataType <- function(data,dataType){
   col <- return_colByDataType(data,dataType)
   bins <- col %>%
     auto_bin()
-  
+
   return(country.colors <- colorBin(palette = "YlOrRd",
                                     domain = col,
                                     bins = bins))
@@ -499,10 +500,10 @@ return_yrColname <- function(region){
     return("orig_yr")
   }
   else{
-    return(NULL) 
+    return(NULL)
   }
-  
-  
+
+
 }
 
 return_yrString <- function(region){
@@ -513,10 +514,10 @@ return_yrString <- function(region){
     return("orig_yr")
   }
   else{
-    return(NULL) 
+    return(NULL)
   }
-  
-  
+
+
 }
 
 
@@ -525,13 +526,13 @@ return_yrString <- function(region){
 filter_by_inputs <- function(data,input){
   private_filter_by <- function(data, col, data_col){
     if(length(col) != 0){
-      data <- data %>% 
+      data <- data %>%
         filter(data_col %in% col)
     }
     return(data)
-    
+
   }
-  
+
   if(isolate(input$dataSet) != "Both"){
     data <- private_filter_by(data,isolate(input$dataSet),data$company)
   }
@@ -546,8 +547,8 @@ filter_by_inputs <- function(data,input){
   data <- private_filter_by(data,isolate(input$year),data[[return_yrColname(isolate(input$regionChoice))]])
 
   return(data)
-  
-  
+
+
 }
 
 
@@ -570,27 +571,27 @@ create_leaflet_map <- function(mapdata,valuedata,dataType,lat_long=c(lat,long,zo
     addLegend(pal = country.colors,
               values = mapdata@data$ADMIN,
               title = return_titleByDataType(dataType))
-  
-  
+
+
 }
 
 #problem here with group by dest_country
 
 filter_totalValue <- function(data,region,dataSet){
-  
+
   choice <- get_regionChoice(region)
   # if(dataSet != "Both"){
   #   data <- data %>% filter(company == dataSet)
   # }
-  
+
   data <- data %>% #Total values to graph things later on and color the map
-    group_by_at(choice)  %>% 
+    group_by_at(choice)  %>%
     select(choice, 'textile_quantity', 'deb_dec') %>%
     na.omit() %>%
     summarise(total_Quant = sum(textile_quantity),
               total_Dec = sum(deb_dec))
 
-  return(data) 
+  return(data)
 }
 
 get_regionCol <- function(data,region){
@@ -601,13 +602,13 @@ get_regionCol <- function(data,region){
   #   return(get_col(data,'orig_country'))
   # }
   # else{
-  #   return(NULL) 
+  #   return(NULL)
   # }
-  
-  
+
+
   return(get_col(data,get_regionChoice(region)))
-  
-  
+
+
 }
 
 
@@ -620,9 +621,9 @@ get_regionChoice <- function(region){
     return("orig_country")
   }
   else{
-    return(NULL) 
+    return(NULL)
   }
-  
+
 }
 
 
@@ -632,49 +633,49 @@ get_regionChoice <- function(region){
 # get_orig_or_dest <- function(input,output="function"){
 #   #uses button input to determine outputting dest or orig results, and output to determine
 #   #whether to output a string or a function (for ggplot)
-#   
-#   
-#   
+#
+#
+#
 #   switch(output){
-#     
-#     
-#     
-#     
-#     
+#
+#
+#
+#
+#
 #   }
-#   
-#   
-#   
+#
+#
+#
 #   if (output=='function'){
 #     if (input=="orig"){
 #       out <- geom_
-#       
+#
 #     }
 #     else{
-#       
-#       
+#
+#
 #     }
-#     
+#
 #   }
 #   else if (output=='string'){
 #     if (input=="orig"){
-#       
-#       
+#
+#
 #     }
 #     else{
-#       
-#       
+#
+#
 #     }
 #   }
 #   else{
 #     #defualt edge case (return NULL)
 #    out <-  NULL
 #   }
-#   
+#
 #   return(out)
-#   
+#
 #   }
-# 
+#
 
 
 # get_quantity_base <- function(element1,element2){
@@ -684,7 +685,7 @@ get_regionChoice <- function(region){
 #          ifelse(is.na(element1),
 #                 return(element2),
 #                 return(element1)))
-#   
+#
 # }
 
 # get_quantity_base <- function(element1,element2){
@@ -695,10 +696,10 @@ get_regionChoice <- function(region){
 #     return(element2)
 #   }
 #   else if(is.na(element2)){
-#     return(element1) 
+#     return(element1)
 #   }
 #   else{
-#     return(0) 
+#     return(0)
 #   }
 # }
 
@@ -713,18 +714,18 @@ get_regionChoice <- function(region){
 #   #compare length to number of capitals
 #   if (str_count("[[:upper:]]" < length(temp))) {
 #     #we need to remove words, keep last word plus preceding if upper
-#     
+#
 #   }
 #   else{
 #     countries[i] <- temp
 #   }
 # }
-# 
+#
 # countries <- str_split(nameList, ', ')[[1]][2]
 # #split by space, keep last word then check if prior words are capitalized, if so, keep them
 # countries <- str_split(nameList, ' ')
 # countries <- if(str_detect(countries,"[[:upper:]]")){
-#   
+#
 # }
 # return(countries)
 
@@ -733,15 +734,15 @@ get_regionChoice <- function(region){
 #   col1 <- getElement(data,"quant_ells")
 #   col2 <- getElement(data, "textile_quantity")
 #   Vectorize(FUN = get_quantity_base(col1,col2))
-#   
+#
 # }
-# 
-# 
+#
+#
 # test <-  Vectorize(get_quantity_base,
 #                    vectorize.args = c('element1','element2'))
-# getElement(data,new_colname) <- 
-# 
-# data <- data %>% 
+# getElement(data,new_colname) <-
+#
+# data <- data %>%
 #   mutate(new_colname = str_split(nameList, ', ')[[1]][2]) %>%
 #   mutate(new_colname = ifelse(
 #     str_count(new_colname,"[[:upper:]]" < length(nameList)),
@@ -749,9 +750,9 @@ get_regionChoice <- function(region){
 #     paste(ifelse(str_detect(new_colname[length(new_colname)-1],"[[:upper:]]")),
 #           as.character(new_colname[length(new_colname)-1]),
 #           NULL)
-#     
+#
 #   #new_colname <- paste(type,'_countries', sep="")
-#     
-#   )            
+#
 #   )
-# 
+#   )
+#
