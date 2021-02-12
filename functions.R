@@ -38,7 +38,7 @@ clean_deb_values <- function(data,col){
 }
 
 
-
+#No longer needed
 # valueToNumeric_or_na_toZero <- function(data,value){
 #   #replace x with 0
 #   str_replace_all(getElement(data,value),'x','0')
@@ -65,7 +65,7 @@ clean_deb_values <- function(data,col){
 #   }
 # }
 
-#create deb dec col
+#create deb dec col using debkeepr
 new_deb_dec_col<- function(data,
                            l="value_guldens",
                            s="value_stuivers",
@@ -234,7 +234,7 @@ value_per_cols <- function(data){
                                                                   NA)))))
 }
 
-
+#No longer needed
 # get_quantity <- function(col1,col2){
 #   # return(select(mutate(data,
 #   #                      quantity=as.numeric(ifelse(is.na(quant_ells) & is.na(textile_quantity),
@@ -357,7 +357,6 @@ clean_textile_name <- function(data){
 
 #get color groups
 getColorGroups <- function(data){
-
   data <- data %>% mutate(colorGroup = ifelse(is.na(textile_color_arch),
                                               "No color indicated",
                                               ifelse(str_detect(textile_color_arch, "gold"),
@@ -385,7 +384,7 @@ getColorGroups <- function(data){
 
 
 
-#unfinished
+#unfinished - idea for future
 
 sort_inputs <- function(){
 
@@ -412,13 +411,7 @@ return_function_onCondition <- function(functionToReturn, condition=TRUE, onFals
 
 }
 
-
-
-
-
-
-
-
+#Makes sure that you're using a string value
 return_stringByDataType <- function(dataType){
   if(dataType == 'Value'){
     return('Value')
@@ -430,11 +423,10 @@ return_stringByDataType <- function(dataType){
   else{
     return(NULL)
   }
-
 }
 
 
-
+#Pull out a specific column
 get_col <- function(data,colname){
   if(typeof(colname) == typeof('')){
     x <- data[[colname]]
@@ -446,6 +438,7 @@ get_col <- function(data,colname){
 
 }
 
+#Pull a specific column based on data type
 return_colByDataType <- function(data,dataType){
   return(switch(dataType,
                 'Value'= get_col(data,'total_Dec'),
@@ -453,6 +446,7 @@ return_colByDataType <- function(data,dataType){
 
 }
 
+#Used to title the graphs
 return_titleByDataType <- function(dataType){
   if(dataType == 'Value'){
     title = "Value of Textiles Shipped"
@@ -463,7 +457,7 @@ return_titleByDataType <- function(dataType){
   return(title)
 }
 
-
+#Determine what will pop-up when the map is clicked
 return_popupByDataType <- function(data,dataType){
   col <- return_colByDataType(data,dataType)
   if(dataType == 'Value'){
@@ -479,8 +473,7 @@ return_popupByDataType <- function(data,dataType){
 }
 
 
-#total_Quant, total_Deb
-
+#grab the correct colors based on the bin
 get_binByDataType <- function(data,dataType){
   col <- return_colByDataType(data,dataType)
   bins <- col %>%
@@ -491,7 +484,7 @@ get_binByDataType <- function(data,dataType){
                                     bins = bins))
 }
 
-
+#grab the column name based on the input of regionChoice
 return_yrColname <- function(region){
   if(region == "Destination"){
     return("dest_yr")
@@ -502,10 +495,9 @@ return_yrColname <- function(region){
   else{
     return(NULL)
   }
-
-
 }
 
+#make sure you're using a string
 return_yrString <- function(region){
   if(region == "Destination"){
     return("dest_yr")
@@ -516,13 +508,11 @@ return_yrString <- function(region){
   else{
     return(NULL)
   }
-
-
 }
 
 
 
-#filter inputs
+#filter inputs based on all selections
 filter_by_inputs <- function(data,input){
   private_filter_by <- function(data, col, data_col){
     if(length(col) != 0){
@@ -547,12 +537,9 @@ filter_by_inputs <- function(data,input){
   data <- private_filter_by(data,isolate(input$year),data[[return_yrColname(isolate(input$regionChoice))]])
 
   return(data)
-
-
 }
 
-
-
+#Creates the map based on some data set and the certain zoom
 create_leaflet_map <- function(mapdata,valuedata,dataType,lat_long=c(lat,long,zoom)){
   country.colors <- get_binByDataType(valuedata,dataType)
   #Mapping the data
@@ -571,7 +558,6 @@ create_leaflet_map <- function(mapdata,valuedata,dataType,lat_long=c(lat,long,zo
     addLegend(pal = country.colors,
               values = mapdata@data$ADMIN,
               title = return_titleByDataType(dataType))
-
 
 }
 
@@ -594,6 +580,7 @@ filter_totalValue <- function(data,region,dataSet){
   return(data)
 }
 
+#Grabs the column of interest
 get_regionCol <- function(data,region){
   # if(region == "Destination"){
   #   return(get_col(data,'dest_country'))
@@ -611,8 +598,7 @@ get_regionCol <- function(data,region){
 
 }
 
-
-
+#grab the desired region
 get_regionChoice <- function(region){
   if(region == "Destination"){
     return("dest_country")
@@ -626,6 +612,9 @@ get_regionChoice <- function(region){
 
 }
 
+
+
+##___A lot of functions that may be useful, but we did not end up using___##
 
 
 #function to get/return orig or dest

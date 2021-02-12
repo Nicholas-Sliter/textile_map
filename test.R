@@ -151,6 +151,9 @@ write.csv(VOC_toJoin,'VOC_clean.csv')
 #replace x with 0, replace strings to NA, replace entire string with NA if / is present?
 #split weird fractions before fraction
 
+
+
+###____This code below was used in order to filter the geojson file with every country to only have what we had data for___###
 map.data <- readOGR("countries.geojson")         
 
 map.data %>%
@@ -159,8 +162,9 @@ map.data %>%
          
 countries <- joined.data %>%
   group_by(dest_loc_region) %>%
-  summarise()
+  summarise() #List of regions
 
+#put everything into a country
 joined.data <- joined.data %>%
   mutate(dest_country = ifelse(str_detect(dest_loc_region, "Indonesia"),
                                "Indonesia",
@@ -169,6 +173,7 @@ joined.data <- joined.data %>%
                                       ifelse(str_detect(dest_loc_region, "Malaysia"),
                                              "Malaysia",
                                              dest_loc_region))))
+#Same thing for origin country
 joined.data <- joined.data %>%
   mutate(orig_country = ifelse(str_detect(orig_loc_region_modern, "Indonesia"),
                                "Indonesia",
@@ -178,6 +183,7 @@ joined.data <- joined.data %>%
                                              "Malaysia",
                                              dest_loc_region))))
 
+#Testing totalValues
 totalValues <- joined.data %>%
   group_by(dest_country) %>%
   select(dest_country, textile_quantity, deb_dec) %>%
@@ -192,19 +198,22 @@ totalValues <- joined.data %>%
   summarise(total_Quant = sum(textile_quantity),
             total_Dec = sum(deb_dec))
 
+#Give vectors of the country names
 dest_country <- as.vector(totalValues[['dest_country']])
 orig_country <- as.vector(totalValues[['orig_country']])
 
 print(dest_country)
 print(orig_country)
 
+#Subset the data to only have information for countries of interest
 map.data <- map.data %>%
   subset(ADMIN %in% dest_country | ADMIN %in% orig_country)
 
+#Write that data to a file
 map.data %>%
   writeOGR(dsn = "countriesFiltered.geoJSON", layer = "countriesFiltered.geoJSON", driver = "geoJSON")
 
-map.data %>%
+map.data %>% #Make sure the map works as intended
   leaflet() %>%
   addPolygons(fillColor = ~country.colors(textile_quantity),
               fillOpacity = .7,

@@ -11,7 +11,6 @@ library(debkeepr)
 library(leaflet)
 library(viridis)
 
-
 #source to function file
 source('functions.R')
 
@@ -126,13 +125,13 @@ ui <- fluidPage(theme = shinytheme("sandstone"),
                                label = 'Click to update graphs!')
                 ),
                 mainPanel(
-                  tabsetPanel(#All of the outputs go here in seperate tabs (introduction, map/graphs, data tables, sources)
+                  tabsetPanel(#All of the outputs go here in separate tabs (introduction, map/graphs, data tables, sources)
                     tabPanel(title= "Introduction",
                              h2("Dutch Textile Trade from 1710 to 1715", align = "center"),
                              img(src = "HARC_textiles.png", height = 350, width = 550, style="display: block; margin-left: auto; margin-right: auto;"),
                              br(),br(),
                              p("Through the seventeenth and early eighteenth centuries, the Dutch Republic – what we would today call the Netherlands – dominated global trade. The Dutch East India Company (VOC for short), chartered in 1602, commanded the Indian Ocean, while the Dutch West India Company (WIC for short), chartered in 1621, sought to gain control over trade in Western Africa and the Americas. The companies traded goods ranging from gold, ivory, and enslaved peoples to sugar, spices, and especially textiles. In fact, of the many types of commodities included on Dutch East and West India Company cargo lists, textiles – of every color and variety – were by far the most numerous. This app is the first in a three part series – which bring together archival, visual, and material data collected by Professors Marsely Kehoe and Carrie Anderson – and will enable scholars in a range of disciplines to make meaningful connections between these data types and thus contribute more broadly to our understanding of historic textiles. Some of the questions our apps aim to answer are:"),
-                             em("What kinds of and how many textiles were exported/imported by the Dutch East and West Indies Company and where? How did patterns in textile circulation change over time? Which textile types were most popular and in which geographical regions? Which colors? Which patterns? What did these textiles look like? How were they represented in images and what social values did they carry?"),
+                             em("What kinds of and how many textiles were exported/imported by the Dutch East and West India Company and where? How did patterns in textile circulation change over time? Which textile types were most popular and in which geographical regions? Which colors? Which patterns? What did these textiles look like? How were they represented in images and what social values did they carry?"),
                              br(), br(),
                              p("The app that we designed is an interactive map focused on the trade of textiles from 1710 to 1715. The Map Explorer allows the user to choose a company and data type of interest, while filtering by textile modifiers, and displays an interactive world map with a complementary pie chart and bar chart when a specific country is selected. The Table Explorer displays the compiled and cleaned dataset."),
                              p("The information presented within this app is messy historical data transcribed from invoices and ledgers that is currently part of a larger ongoing research project investigating interconnected patterns of textile trade in the VOC and WIC. Many of the textile names and types are now obsolete and at present have been cleaned and grouped to the best of our ability using secondary source materials. Historically, the Dutch used the tripartite format of Holland guilders as their currency. Using the debkeepr package developed by Dr. Jesse Sadler, a historian of early modern Europe from Virginia Tech, the currency values are converted in a decimal format for ease of visualization. Uncertainty still remains between differences between Dutch and Indian guilders and unit discrepancies. For the WIC dataset, one piece is equal to one ell (~ 27 inches), but for the VOC dataset this relationship varies."),
@@ -277,7 +276,7 @@ server <- function(input, output, session) {
                all_of(modifier),
                company)
       
-      
+      #No longer needed. Region choice handled elsewhere
       #   if(regionChoice == "Destination"){ #Only dest_country
       #   pie.data <- joined.data %>%
       #     filter(dest_country == name) %>%
@@ -365,13 +364,12 @@ server <- function(input, output, session) {
   #Rendering the bar chart - this works nearly the exact same way as the pie chart
   #except when it is graphing the outputs, it is doing so with a bar chart instead of a pie chart
   output$barChart <- renderPlot({
-    input$updateBtn
+    input$updateBtn #This could be taken out if you don't want the chart to chance when the map changes
     input$graph_updateBtn
     name <- input$countriesMap_shape_click$id
     
     if(length(name) != 0){
       modifier <- isolate(input$barChart)
-      modifierObj <- paste("`", names(modVec)[modVec == modifier], "`", sep = "")
       dataSet <- isolate(input$dataSet)
       regionChoice <- isolate(input$regionChoice)
       textileName <- isolate(input$textileName)
@@ -384,6 +382,7 @@ server <- function(input, output, session) {
       inferredQualities <- isolate(input$inferredQualities)
       orig_yr <- isolate(input$orig_yr)
       
+      #start with unfiltered data
       joined.data <- joined.data.original
       
       joined.data <- isolate(filter_by_inputs(joined.data,isolate(input)))
@@ -424,7 +423,7 @@ server <- function(input, output, session) {
       
       if(isolate(input$dataType) == "Quantity"){
         if(nrow(bar.data) != 0){
-          if(isolate(input$facet)){
+          if(isolate(input$facet)){ #Faceted bar graph
             bar.data %>%
               ggplot(aes(x = factor(orig_yr), y = textile_quantity)) +
               geom_bar(stat="identity",
@@ -439,7 +438,7 @@ server <- function(input, output, session) {
               ggtitle(label = paste(names(modVec)[modVec == modifier], "distribution for", name, "with these filters.")) +
               facet_wrap(~get(modifier))
           }
-          else{
+          else{ #Unfaceted bar graph
             bar.data %>%
               ggplot(aes(x = factor(orig_yr), y = textile_quantity)) +
               geom_bar(stat="identity",
@@ -453,12 +452,12 @@ server <- function(input, output, session) {
               theme_bw() +
               ggtitle(label = paste(names(modVec)[modVec == modifier], "distribution for", name, "with these filters."))
           }}
-        else{
+        else{ #Nothing would show up on the graph
           ggplot() +
             ggtitle(label = paste(name, " has no data for these filters and ", names(modVec)[modVec == modifier], ".", sep = ""))
         }}
       else{
-        if(nrow(bar.data) != 0){
+        if(nrow(bar.data) != 0){ #Same exact thing except now graphing value instead of quantity
           if(isolate(input$facet)){
             bar.data %>%
               ggplot(aes(x = factor(orig_yr), y = deb_dec)) +

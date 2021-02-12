@@ -134,6 +134,7 @@ WIC_toJoin <- WIC_deb %>% select(-'source',
 WIC_toJoin <- WIC_toJoin %>% mutate(dest_yr = ifelse(is.na(dest_yr), final_dest_yr, dest_yr)) %>%
   select(-'final_dest_yr') %>% mutate(units_ells = as.numeric(units_ells))
 
+#Unique identifiers
 VOC_toJoin <- VOC_toJoin %>%
   mutate(ID = paste(company, row_number(), sep = "_"))
 WIC_toJoin <- WIC_toJoin %>%
@@ -162,6 +163,7 @@ VOC_toJoin <- VOC_toJoin %>% mutate(textile_name = str_to_lower(textile_name))
 WIC_toJoin <- clean_textile_name(WIC_toJoin)
 VOC_toJoin <- clean_textile_name(VOC_toJoin)
 
+#Standardize capitalization
 WIC_toJoin <- WIC_toJoin %>% mutate(textile_name = str_to_title(textile_name))
 VOC_toJoin <- VOC_toJoin %>% mutate(textile_name = str_to_title(textile_name))
 
@@ -193,4 +195,6 @@ write.csv(VOC_toJoin,'VOC_clean.csv')
 #replace x with 0, replace strings to NA, replace entire string with NA if / is present?
 #split weird fractions before fraction
 
+##### Note: See test.R line 156 in order to see how the geojson file of all the countries
+#was filtered done to just the countries we had interest in
 
