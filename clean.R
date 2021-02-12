@@ -1,5 +1,6 @@
 #Clean
 
+#load required packages
 library(shiny)
 library(tidyverse)
 library(readxl)
@@ -9,7 +10,7 @@ library(debkeepr)
 #source to function file
 source('functions.R')
 
-
+#bring in raw data and save copies
 VOC <- read_xlsx('VOC_2021_TextilesDataset.xlsx')
 VOC_main <-  VOC
 WIC <- read_xlsx('WIC_2021_Total_InELLS.xlsx')
@@ -20,7 +21,7 @@ WIC_main <- WIC
 #VOC_valueVector <- str_split(VOC_main$total_value,',')
 
 
-#add if NA then set to 0
+#add if NA then set to 0 for currency values
 VOC_deb <- VOC_main %>% mutate(value_guldens = ifelse(is.na(value_guldens),
                                                       0,
                                                       as.numeric(value_guldens)),
@@ -33,7 +34,7 @@ VOC_deb <- VOC_main %>% mutate(value_guldens = ifelse(is.na(value_guldens),
 
 
 
-
+#using debkeepr add a new column of total values in lsd with guilders as base
 VOC_deb <- VOC_deb %>% mutate(deb_lsd = deb_lsd(l = VOC_deb$value_guldens,
                                                 s = VOC_deb$value_stuivers,
                                                 d = VOC_deb$value_penningen,
@@ -62,7 +63,7 @@ VOC_deb <- VOC_deb %>% mutate(deb_lsd = deb_lsd(l = VOC_deb$value_guldens,
 # }
 
 
-#create debkeepr cols
+#create debkeepr cols in decimal format
 WIC_deb <- WIC_main %>% new_deb_lsd_col() %>% deb_dec_from_lsd
 
 VOC_deb <- VOC_main %>% new_deb_lsd_col() %>% deb_dec_from_lsd
@@ -109,10 +110,11 @@ VOC_toJoin <- VOC_toJoin %>%
   mutate(dest_yr = as.numeric(dest_yr)) %>%
   mutate(textile_quantity = as.numeric(textile_quantity))
 
-#change col names
+#change col names to be consistent across VOC and WIC data
 colnames(VOC_toJoin)[which(names(VOC_toJoin) == "dest_loc_port_modern")] <- "dest_loc_port"
 colnames(VOC_toJoin)[which(names(VOC_toJoin) == "dest_loc_region_modern")] <- "dest_loc_region"           
 
+#remove columns we don't want
 WIC_toJoin <- WIC_deb %>% select(-'source',
                                  -'exchange_nr',
                                  -'orig_date',
@@ -178,7 +180,7 @@ VOC_toJoin <- VOC_toJoin %>%
 
 #fix NA not being 0
 
-
+#join cleaned VOC and WIC data
 joined <- full_join(WIC_toJoin,VOC_toJoin,by=colnames(WIC_toJoin))
 #use quant_ells if available if not, use textile_quantity
 
