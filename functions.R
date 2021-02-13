@@ -425,13 +425,13 @@ filter_by_inputs <- function(data,input){
   }
   
   data <- private_filter_by(data,isolate(input$textileName),data$textile_name)
-  data <- private_filter_by(data,isolate(input$colors),data$colorGroup)
-  data <- private_filter_by(data,isolate(input$patterns),data$textile_pattern_arch)
-  data <- private_filter_by(data,isolate(input$process),data$textile_process_arch)
-  data <- private_filter_by(data,isolate(input$fibers),data$textile_fiber_arch)
-  data <- private_filter_by(data,isolate(input$geography),data$textile_geography_arch)
-  data <- private_filter_by(data,isolate(input$qualities),data$textile_quality_arch)
-  data <- private_filter_by(data,isolate(input$inferredQualities),data$textile_quality_inferred)
+  data <- private_filter_by(data,isolate(input$mod1),data$colorGroup)
+  data <- private_filter_by(data,isolate(input$mod2),data$textile_pattern_arch)
+  data <- private_filter_by(data,isolate(input$mod3),data$textile_process_arch)
+  data <- private_filter_by(data,isolate(input$mod4),data$textile_fiber_arch)
+  data <- private_filter_by(data,isolate(input$mod5),data$textile_geography_arch)
+  data <- private_filter_by(data,isolate(input$mod6),data$textile_quality_arch)
+  data <- private_filter_by(data,isolate(input$mod7),data$textile_quality_inferred)
   
   return(data)
   
