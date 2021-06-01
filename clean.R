@@ -7,6 +7,7 @@ library(readxl)
 library(stringr)
 library(leaflet)
 library(debkeepr)
+library(jsonlite)
 #source to function file
 source('functions.R')
 
@@ -153,6 +154,35 @@ VOC_toJoin <- VOC_toJoin %>% mutate(textile_quantity = ifelse(is.na(textile_quan
                                                                      1,
                                                                      textile_quantity)))
 
+#fix half ps
+WIC_toJoin <- WIC_toJoin %>% mutate(textile_quantity = ifelse(str_detect(textile_unit,"half"),
+                                                              ceiling(textile_quantity / 2),
+                                                              textile_quantity))
+  
+  
+VOC_toJoin <- VOC_toJoin %>% mutate(textile_quantity = ifelse(str_detect(textile_unit,"half"),
+                                                              ceiling(textile_quantity / 2),
+                                                              textile_quantity))
+
+WIC_toJoin <- WIC_toJoin %>% mutate(textile_unit = ifelse(str_detect(textile_unit,"half"),
+                                                              as.character(str_split(textile_unit," ",simplify = TRUE)[,2]),
+                                                              textile_unit))
+
+
+VOC_toJoin <- VOC_toJoin %>% mutate(textile_unit = ifelse(str_detect(textile_unit,"half"),
+                                                          as.character(str_split(textile_unit," ",simplify = TRUE)[,2]),
+                                                          textile_unit))
+
+
+
+
+### THIS CREATES NA instead of just changing the name
+
+
+#problem is wiht [[1]], [[2]] gets second element...... want [[i]]
+
+
+#"half" ps.
 #add value per col
 WIC_toJoin <- value_per_cols(WIC_toJoin)
 VOC_toJoin <- value_per_cols(VOC_toJoin)
@@ -167,9 +197,16 @@ VOC_toJoin <- clean_textile_name(VOC_toJoin)
 WIC_toJoin <- WIC_toJoin %>% mutate(textile_name = str_to_title(textile_name))
 VOC_toJoin <- VOC_toJoin %>% mutate(textile_name = str_to_title(textile_name))
 
+#add colorLists
+WIC_toJoin <- getColorLists(WIC_toJoin)
+VOC_toJoin <- getColorLists(VOC_toJoin)
+
+
 #add color groups
 WIC_toJoin <- getColorGroups(WIC_toJoin)
 VOC_toJoin <- getColorGroups(VOC_toJoin)
+
+
 
 #clean country (region) names for dest and orig
 WIC_toJoin <- WIC_toJoin %>% 

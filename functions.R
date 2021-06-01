@@ -2,6 +2,42 @@
 library(tidyverse)
 library(debkeepr)
 library(leaflet)
+library(jsonlite)
+
+
+#https://stackoverflow.com/a/52511866
+getExtension <- function(file){ 
+  ex <- strsplit(basename(file), split="\\.")[[1]]
+  return(ex[-1])
+} 
+
+
+
+
+
+
+
+# validate_read_datasets <- function(path){
+#   x
+#   type
+#   
+#   if (!file.exists(path)){
+#     #Create files
+#     clean.R
+#   }
+#   
+#   #Get type and file
+#   type <- getExtension(path);
+#   
+#   if (type == 'csv'){
+#     
+#     
+#   }
+#   
+#   
+#   return(x)
+#   
+# }
 
 
 #Create a new col deb_lsd in data containing the total value in guilders, stuivers, and penningen
@@ -316,6 +352,9 @@ clean_textile_name <- function(data){
                                           "cambolin",
                                           "camboolees")) %>%
     mutate(textile_name = str_replace_all(textile_name,
+                                          "Deken",
+                                          "Dekens")) %>%
+    mutate(textile_name = str_replace_all(textile_name,
                                           "mannenhoed",
                                           "hoed")) %>%
     mutate(textile_name = str_replace_all(textile_name,
@@ -337,7 +376,7 @@ clean_textile_name <- function(data){
                                           "rok",
                                           "rocken")) %>%
     mutate(textile_name = str_replace_all(textile_name,
-                                          "salempuris|Salempuris|salempouris",
+                                          "salempuris|salempuris|salempouris",
                                           "salempores")) %>%
     mutate(textile_name = str_replace_all(textile_name,
                                           "serassen",
@@ -381,6 +420,77 @@ getColorGroups <- function(data){
 }
 
 
+
+getColorLists <- function(x, colors = c("white","yellow","red","blue","purple","green","black", "brown", "grey", "silver", "gold")){
+  ##define color list
+  
+  ##a private function that takes in a string and a list of colors and returns a vector of the colors in the list
+  identifyColors <- function(string, colors){
+    
+    l = c()
+    if(is.na(string) || length(string) == 0){
+      l <- append(l,"No color indicated")
+      return(l)
+    }
+    
+    for (c in colors){
+      if (str_detect(string, c)){
+        l <- append(l,c)
+      }
+    }
+    if (length(l) == 0){
+      l <- append(l,"Other")
+    }
+    
+    return(toString(l))
+  }
+  
+  identifyColors_vec <- Vectorize(identifyColors,vectorize.args = "string")
+  
+  ##Create a empty vector for each element in colorList
+  data <- x %>% mutate(colorList = identifyColors_vec(x$textile_color_arch,colors))
+  
+  return (data)
+}
+
+
+
+flatten <- function(list){
+  #string <- ""
+  
+  
+  
+  string <- toString(list)
+  #for (i in 1:length(list)){
+    
+    #string <- paste0(string,", ",list[i])
+    
+  #}
+  
+  return (string)
+}
+
+
+unflatten <- function(string){
+  list <- c()
+  
+  split <- str_split(string, ", ")[[1]]
+  
+  for (i in 1:length(split)){
+    
+    list <- append(list, split[i])
+    
+  }
+  
+  
+  return (list)
+  #return (as.list(split[[1]]))
+  
+  
+  
+}
+
+vec_unflatten <- Vectorize(unflatten, vectorize.args = 'string', SIMPLIFY = TRUE)
 
 
 
@@ -440,11 +550,152 @@ get_col <- function(data,colname){
 
 #Pull a specific column based on data type
 return_colByDataType <- function(data,dataType){
+  # return(switch(dataType,
+  #               'Value'= get_col(data,'textile_quantity'),
+  #               'Quantity'= get_col(data,'deb_dec')))
+  
+  
   return(switch(dataType,
-                'Value'= get_col(data,'total_Dec'),
-                'Quantity'= get_col(data,'total_Quant')))
+               'Value'= get_col(data,'total_Dec'),
+               'Quantity'= get_col(data,'total_Quant')))
 
 }
+
+
+return_colnameByDataType <- function(dataType){
+ 
+  return(switch(dataType,
+                'Value' = 'textile_quantity',
+                'Quantity' = 'deb_dec'))
+  
+  
+}
+
+
+
+
+
+
+
+createBarChart <- function(data,input_vec){#dataType,year,modVec,regionChoice,modifier,facet){
+  
+  countryName <- input_vec['name']
+  modifier <- input_vec['modifier']
+  modifierObj <- input_vec['modifierObj']
+  dataSet <- input_vec['dataSet']
+  dataType <- input_vec['dataType']
+  regionChoice <- input_vec['regionChoice']
+  textileName <- input_vec['textileName']
+  colors <- input_vec['colors']
+  patterns <- input_vec['patterns']
+  process <- input_vec['process']
+  fibers <- input_vec['fibers']
+  geography <- input_vec['geography']
+  qualities <- input_vec['qualities']
+  inferredQualities <-input_vec['inferredQualities']
+  #orig_yr <- input_vec['orig_yr']
+  #dest_yr <- input_vec['dest_yr']
+  year <- input_vec['year']
+  facet <- input_vec['facet']
+  
+  if(length(countryName) == 0 || (is.null(countryName) || is.na(countryName))){
+    return( 
+      
+      ggplot() +
+                ggtitle(label = "Select a country with data for these textiles in order to display a bar chart here.")
+      
+      
+      )
+      
+  }
+    
+  
+  x_col <- c()
+  if (regionChoice == "Origin"){
+  
+    x_col <- data$orig_yr
+  }
+  else{
+    x_col <- data$dest_yr
+  
+  }
+  
+  y_col <- c()
+  if (dataType == "Quantity"){
+    
+    y_col <- data$textile_quantity
+    
+  }
+  else{
+    
+    y_col <- data$deb_dec
+    
+  }
+  
+  
+  
+  
+  if(nrow(data) != 0){
+    
+    bar_plot <- data %>%
+      
+     ggplot(
+        #aes_string
+       #return_yrColname(regionChoice)
+        aes(x = factor(x_col),#factor(data[year]), #want to change this from orig year to be determined based on dest or origin
+                   y = y_col #data[modifierObj])
+        )
+        
+        
+      ) +
+      
+      geom_bar(stat = 'identity',
+               aes_string(fill = modifier)
+               
+      ) +
+      
+      labs(x = paste(regionChoice, "Year"),
+            y = paste0("Textile ", return_stringByDataType(dataType)),
+            fill = NULL
+       ) +
+       
+      scale_fill_viridis(discrete = TRUE,
+                          name = modifierObj,
+                          option = "magma"
+      ) +
+       
+      theme_bw() +
+       
+      ggtitle(label = paste(modifierObj, "distribution for", countryName, "with these filters."))
+      
+      if(facet){
+        bar_plot <- bar_plot + facet_wrap(~get(modifier))
+      }
+
+      return(bar_plot)
+    
+    
+  
+  }
+  
+  else{
+           ggplot() +
+             ggtitle(label = paste(name, " has no data for these filters and ", modifierObj, ".", sep = ""))
+         }
+
+
+  
+}
+
+
+
+createPieChart <- function(data){
+  
+  
+  
+}
+
+
 
 #Used to title the graphs
 return_titleByDataType <- function(dataType){
@@ -512,6 +763,61 @@ return_yrString <- function(region){
 
 
 
+
+get_unique_colors <- function(data){
+  list <- c()
+  
+  pre_unique <- unique(as.vector(
+    data$colorList))
+  
+  numRows = length(pre_unique)
+  
+  for (i in 1:numRows){
+    
+    str <- pre_unique[i]
+    strlist <- strsplit(str, ", ")
+    
+    for (j in 1:length(strlist)){
+      list <- append(list,strlist[[1]][j])
+    }
+    
+  }
+  
+  return (colors <-
+    unique(as.vector(
+      list
+    )))
+  
+  
+  
+}
+
+
+
+filter_colors <- function(data,color_choices){
+  
+  if (!is.null(color_choices)){
+  
+  #data <- data %>% filter(colorList %in% color_choices)
+  
+  data <- data %>% filter(str_detect(colorList,color_choices))
+  
+  
+  # colors <- get_unique_colors(data)
+  # 
+  # data <- data %>% filter(colorList %in% colors)
+  
+  }
+  
+  return (data)
+  
+  
+  
+}
+
+
+
+
 #filter inputs based on all selections
 filter_by_inputs <- function(data,input){
   private_filter_by <- function(data, col, data_col){
@@ -527,7 +833,15 @@ filter_by_inputs <- function(data,input){
     data <- private_filter_by(data,isolate(input$dataSet),data$company)
   }
   data <- private_filter_by(data,isolate(input$textileName),data$textile_name)
-  data <- private_filter_by(data,isolate(input$colors),data$colorGroup)
+  #data <- private_filter_by(data,isolate(input$colors),data$colorList)#data$colorGroup)
+  
+  
+  
+  data <- filter_colors(data,input$colors)
+  #filter by color
+  
+  
+  
   data <- private_filter_by(data,isolate(input$patterns),data$textile_pattern_arch)
   data <- private_filter_by(data,isolate(input$process),data$textile_process_arch)
   data <- private_filter_by(data,isolate(input$fibers),data$textile_fiber_arch)
